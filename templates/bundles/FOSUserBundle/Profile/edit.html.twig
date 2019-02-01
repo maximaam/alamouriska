@@ -1,0 +1,21 @@
+{% extends "@FOSUser/layout.html.twig" %}
+
+{% block fos_user_content %}
+
+    <h1 class="text-center">Profil</h1>
+
+    {{ form_start(form, {'method': 'post', 'action': path('fos_user_profile_edit'), 'attr': {'class': 'form-horizontal'}}) }}
+
+    {{ form_row(form.email) }}
+
+    <div class="form-group">
+        <button type="submit" id="_submit" name="_submit" class="btn btn-primary float-right">
+            Actualiser
+        </button>
+    </div>
+
+    {{ form_row(form._token) }}
+
+    {{ form_end(form, {'render_rest': false}) }}
+
+{% endblock %}

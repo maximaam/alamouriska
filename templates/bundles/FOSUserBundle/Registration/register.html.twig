@@ -1,0 +1,71 @@
+{% extends "@FOSUser/layout.html.twig" %}
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block title %}
+    {{ 'security.login.submit'|trans }} - {{ parent() }}
+{% endblock %}
+
+{% block fos_user_content %}
+
+    <h1 class="text-center">Inscription</h1>
+
+    <form action="{{ path("fos_user_registration_register") }}" method="post" class="form-horizontal">
+
+        {% if not form.vars.valid %}
+        <div class="alert alert-danger">
+            {{ form_errors(form.email) }}
+            {{ form_errors(form.plainPassword.first) }}
+        </div>
+        {% endif %}
+
+        <div class="form-group">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">@</div>
+                </div>
+                <label for="fos_user_registration_form_email" class="required"></label>
+                <input type="email" id="fos_user_registration_form_email" name="fos_user_registration_form[email]" required="required" class="form-control">
+                <div class="input-group-append">
+                    <span class="input-group-text input-hint">Adresse Email</span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <div class="input-group-text"><i class="fa fa-lock"></i></div>
+                </div>
+                <label for="fos_user_registration_form_plainPassword_first" class="required"></label>
+                <input type="password" id="fos_user_registration_form_plainPassword_first" name="fos_user_registration_form[plainPassword][first]" required="required" autocomplete="new-password" class="form-control" aria-autocomplete="list">
+                <div class="input-group-append">
+                    <span class="input-group-text input-hint">Mot de passe</span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <div class="input-group-text"><i class="fa fa-lock"></i></div>
+                </div>
+                <label for="fos_user_registration_form_plainPassword_second" class="required"></label>
+                <input type="password" id="fos_user_registration_form_plainPassword_second" name="fos_user_registration_form[plainPassword][second]" required="required" autocomplete="new-password" class="form-control">
+                <div class="input-group-append">
+                    <span class="input-group-text input-hint">Mot de passe confirmation</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+
+            <button type="submit" id="_submit" name="_submit" class="btn btn-primary float-right">
+                <i class="fa fa-sign-in"></i> Créer un compte
+            </button>
+
+        </div>
+
+        {{ form_row(form._token) }}
+
+    </form>
+
+{% endblock %}

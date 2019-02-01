@@ -1,0 +1,72 @@
+{% extends "@FOSUser/layout.html.twig" %}
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block title %}
+    {{ 'security.login.submit'|trans }} - {{ parent() }}
+{% endblock %}
+
+{% block fos_user_content %}
+    {# include('@FOSUser/Security/login_content.html.twig') #} {# Default layout #}
+
+    {% if error %}
+        <div class="alert alert-danger">
+            {{ error.messageKey|trans(error.messageData, 'security') }}
+        </div>
+    {% endif %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm">
+                <h1 class="text-center">Connexion</h1>
+
+                <form action="{{ path("fos_user_security_check") }}" method="post" class="form-horizontal">
+                    {% if csrf_token %}
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+                    {% endif %}
+
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text"><i class="fa fa-user"></i></div>
+                            </div>
+                            <input type="text" id="username" name="_username" class="form-control" value="{{ last_username }}" placeholder="Email" required="required">
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text"><i class="fa fa-lock"></i></div>
+                            </div>
+                            <input type="password" id="password" name="_password" class="form-control" value="{{ last_username }}" placeholder="Mot de passe" required="required">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="pull-right">
+                            <button type="submit" id="_submit" name="_submit" class="btn btn-primary">
+                                <i class="fa fa-sign-in"></i>
+                                Connexion
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-sm">
+                <div style="height: 50px"></div>
+                <div>
+                    <abbr title="Comment, t'as pas encore de compte?">Kifech?</abbr> Oulech el compte oulech?
+                    <br>
+                    <i class="fa fa-arrow-circle-right"></i> <a href="{{ path('fos_user_registration_register') }}" title="Inscris-toi">Sadjal rou7ak!</a>
+                </div>
+                <hr>
+                <div>
+                    <abbr title="Quoi? T'as perdu le mot de passe?">Weshnou?</abbr> T'ba7arlak el mot de passe?
+                    <br>
+                    <i class="fa fa-arrow-circle-right"></i> <a href="{{ path('fos_user_resetting_request') }}" title="Clique ici">3abaz h'na</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

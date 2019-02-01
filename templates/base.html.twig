@@ -1,12 +1,114 @@
 <!DOCTYPE html>
-<html>
+<html lang="{{ app.request.locale }}">
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>
+            {% block title %}
+                {{ site_name }} -
+            {% endblock %}
+        </title>
+
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="robots" content="index,follow">
+        <meta name="author" content="{{ site_name }}">
+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link href="https://fonts.googleapis.com/css?family=Chelsea+Market" rel="stylesheet">
+
+        <link rel="stylesheet" href="{{ asset('css/main.css') }}">
+
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
+
+    <header class="main-header">
+        <nav class="navbar fixed-top navbar-expand-lg navbar-dark">
+            <div class="container">
+
+                <a class="navbar-brand" href="/">
+                    <img src="{{ asset('images/logo-alamouriska.jpg') }}" alt="{{ site_name }} Logo" title="{{ site_name }}" width="60" height="60">
+                    <!--<span class="d-none d-md-inline">{{ site_name }}</span>-->
+                </a>
+
+                <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+
+                    {{ knp_menu_render('main') }}
+
+                    <form class="form-inline mt-2 mt-md-0 d-none d-md-inline" method="get" action="{{ path('index_index') }}" onsubmit="">
+                        <div class="input-group">
+                            <input class="form-control py-2 border-right-0 border" type="search" name="query" placeholder="Recherche..." required pattern=".{3,}" title="3 chars minimum" autocomplete="false" value="{{ app.request.get('query') }}">
+
+                            <!--
+                            <span class="input-group-append">
+                                <button class="btn btn-outline-secondary border-left-0 border" type="button">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </span>
+                            -->
+                        </div>
+                    </form>
+
+                    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                        <a href="{{ path('fos_user_profile_show') }}" title="{{ app.user.email }} - Afficher profil" class="user btn btn-secondary">
+                            <i class="fa fa-user"></i> Profil
+                        </a>
+                    {% else %}
+                        <a href="{{ path('fos_user_security_login') }}" title="Se connecter ou S'inscrire" class="user btn btn-primary">
+                            <i class="fa fa-user"></i> Compte
+                        </a>
+                    {% endif %}
+
+                </div>
+            </div>
+        </nav>
+
+        <div class="wave"></div>
+
+    </header>
+
+    <main>
         {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
+    </main>
+
+    <footer class="main-footer text-muted">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                   hfghfghfgh
+                </div>
+                <div class="col-md-4">
+                    <p class="copyright">
+                        <small>
+                            &copy; {{ 'copyright'|trans }}
+                        </small>
+                    </p>
+                </div>
+                <div class="col-md-4 socials">
+                    <a href="https://www.facebook.com/Rezouani-222633031878310/" target="_blank">
+                        <i class="fa fa-facebook-official" title="REZOUANI Facebook page"></i>
+                    </a>
+                    <a href="https://www.facebook.com/Rezouani-222633031878310/" target="_blank">
+                        <i class="fa fa-twitter" title="REZOUANI Twitter page"></i>
+                    </a>
+                </div>
+            </div>
+
+
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+    <script src="{{ asset('js/main.js') }}"></script>
+
+    {% block javascripts %}{% endblock %}
     </body>
 </html>
