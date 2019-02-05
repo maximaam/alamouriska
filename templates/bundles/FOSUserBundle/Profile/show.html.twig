@@ -1,5 +1,7 @@
 {% extends "@FOSUser/layout.html.twig" %}
 
+{% trans_default_domain 'FOSUserBundle' %}
+
 {% block fos_user_content %}
 
     <h1 class="text-center">Profil</h1>
@@ -7,7 +9,9 @@
     <hr>
 
     <dl class="dl-horizontal">
-        <dt>Email</dt>
+        <dt>{{ 'form.username' | trans }}</dt>
+        <dd>{{ user.username }}</dd>
+        <dt>{{ 'form.email' | trans }}</dt>
         <dd>{{ user.email }}</dd>
     </dl>
 
@@ -20,19 +24,17 @@
             </a>
         {% endif  %}
 
-        <a href="{{ path('fos_user_resetting_request') }}" class="btn btn-primary">
-            <i class="fa fa-lock"></i>
-            Réinitialiser le mot de passe
-        </a>
-
         <a href="{{ path('fos_user_profile_edit') }}" class="btn btn-primary">
             <i class="fa fa-edit"></i>
-            Modifier profil
+            {{ 'profile.edit.submit' | trans }}
         </a>
-
+        <a href="{{ path('fos_user_resetting_request') }}" class="btn btn-primary">
+            <i class="fa fa-lock"></i>
+            {{ 'resetting.reset.submit' | trans }}
+        </a>
         <a href="{{ path('fos_user_security_logout') }}" class="btn btn-danger">
             <i class="fa fa-sign-out"></i>
-            Déconnexion
+            {{ 'layout.logout' | trans }}
         </a>
     </div>
 
