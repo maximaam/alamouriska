@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Mot{% endblock %}
+
+{% block body %}
+    <h1>Create new Mot</h1>
+
+    {{ include('mot/_form.html.twig') }}
+
+    <a href="{{ path('mot_index') }}">back to list</a>
+{% endblock %}

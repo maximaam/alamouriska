@@ -1,4 +1,10 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: mimosa
+ * Date: 02.02.19
+ * Time: 16:29
+ */
 
 namespace App\Entity;
 
@@ -24,18 +30,5 @@ class User extends BaseUser
     public function __construct()
     {
         parent::__construct();
-    }
-
-    /**
-     * Username is not needed
-     *
-     * @param string $email
-     * @return BaseUser
-     */
-    public function setEmail($email): BaseUser
-    {
-        $this->setUsername($email);
-
-        return parent::setEmail($email);
     }
 }

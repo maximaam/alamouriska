@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mot{% endblock %}
+
+{% block body %}
+    <h1>Mot</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ mot.id }}</td>
+            </tr>
+            <tr>
+                <th>CreatedAt</th>
+                <td>{{ mot.createdAt ? mot.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>UpdatedAt</th>
+                <td>{{ mot.updatedAt ? mot.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>InLatin</th>
+                <td>{{ mot.inLatin }}</td>
+            </tr>
+            <tr>
+                <th>InTamazight</th>
+                <td>{{ mot.inTamazight }}</td>
+            </tr>
+            <tr>
+                <th>InArabic</th>
+                <td>{{ mot.inArabic }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ mot.description }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('mot_index') }}">back to list</a>
+
+    <a href="{{ path('mot_edit', {'id': mot.id}) }}">edit</a>
+
+    {{ include('mot/_delete_form.html.twig') }}
+{% endblock %}

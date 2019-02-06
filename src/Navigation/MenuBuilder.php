@@ -60,16 +60,18 @@ class MenuBuilder
         $menu = $this->factory->createItem('root');
         $menu->setChildrenAttribute('class', 'navbar-nav mr-auto');
 
-        $items = ['mot', 'expression', 'proverbe'];
+        //$items = ['Mot' => 'mot_index', 'Expression' => 'expression_index' , 'Proverbe' => 'proverbe_index'];
+        $items = ['Mot' => 'mot_index'];
 
-        foreach ($items as $item) {
-            $item = \ucfirst($item);
-            $menu->addChild($item, [
-                'route' => 'crud_create',
-                'attributes' => ['class' => 'nav-item', 'title' => \sprintf('Ajouter des %ss', $item)],
-                'linkAttributes' => ['class' => 'nav-link'],
-                'routeParameters' => [
-                    'item' => $item
+        foreach ($items as $label => $route) {
+            $menu->addChild($label, [
+                'route' => $route,
+                'attributes' => [
+                    'class' => 'nav-item',
+                    'title' => \sprintf('Ajouter des %ss', $label)
+                ],
+                'linkAttributes' => [
+                    'class' => 'nav-link'
                 ]
             ]);
         }
