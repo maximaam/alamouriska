@@ -53,6 +53,12 @@ class Mot
     private $description;
 
     /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="mots")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
+
+    /**
      * Mot constructor.
      * @throws \Exception
      */
@@ -134,6 +140,18 @@ class Mot
     public function setDescription(string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }
