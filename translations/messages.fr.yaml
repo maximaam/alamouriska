@@ -1,0 +1,11 @@
+almrsk:
+  h1: "Liste des %almrsk% alamouriskés par les alamouriskeurs"
+  form:
+    new: "Insérer %almrsk%"
+
+
+label:
+  latin_char: "Caractères latins"
+  tamazight_char: "Caractères amazighs"
+  arabic_char: "Caractères arabes"
+  details_reactions: "Détails et Réactions"

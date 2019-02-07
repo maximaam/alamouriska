@@ -3,61 +3,48 @@
 {% block title %}Mot index{% endblock %}
 
 {% block body %}
-    <h1>Mot index</h1>
-
     <div class="container">
         <div class="row">
-            <div class="col-sm">
+
+            <div class="col-sm-8">
+                <h1 class="mb-3">{{ 'almrsk.h1' | trans({'%almrsk%' : 'mots'}) }}</h1>
 
                 {% for mot in mots %}
-                    <div class="card">
-                        <h2>{{ mot.inLatin }}</h2>
+                    <div class="media">
+                        <img class="align-self-start mr-3" src="{{ asset('images/sunny.png') }}" alt="Generic placeholder image">
+                        <div class="media-body">
+                            <h2 class="mt-0 mb-1" title="{{ 'label.latin_char' | trans }}">
+                                <a href="{{ path('mot_show', {'id': mot.id}) }}">
+                                    {{ mot.inLatin }}
+                                </a>
+                            </h2>
+                            <h3 class="mt-0">
+                                <span title="{{ 'label.tamazight_char' | trans }}">{{ mot.inTamazight }}</span> |
+                                <span title="{{ 'label.arabic_char' | trans }}">{{ mot.inArabic }}</span>
+                            </h3>
+                            <p>{{ mot.description }}</p>
+                            <p>
+                                <a href="{{ path('mot_show', {'id': mot.id}) }}" class="float-right">
+                                    <i class="fa fa-arrow-right"></i>
+                                    {{ 'label.details_reactions' | trans }}
+                                </a>
+                            </p>
+                        </div>
                     </div>
+                    <hr class="bg-white">
                 {% endfor %}
-
-
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>CreatedAt</th>
-                        <th>UpdatedAt</th>
-                        <th>InLatin</th>
-                        <th>InTamazight</th>
-                        <th>InArabic</th>
-                        <th>Description</th>
-                        <th>actions</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for mot in mots %}
-                        <tr>
-                            <td>{{ mot.id }}</td>
-                            <td>{{ mot.createdAt ? mot.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                            <td>{{ mot.updatedAt ? mot.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-                            <td>{{ mot.inLatin }}</td>
-                            <td>{{ mot.inTamazight }}</td>
-                            <td>{{ mot.inArabic }}</td>
-                            <td>{{ mot.description }}</td>
-                            <td>
-                                <a href="{{ path('mot_show', {'id': mot.id}) }}">show</a>
-                                <a href="{{ path('mot_edit', {'id': mot.id}) }}">edit</a>
-                            </td>
-                        </tr>
-                    {% else %}
-                        <tr>
-                            <td colspan="8">no records found</td>
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
             </div>
-            <div class="col-sm">
-                One of three columns
+
+            <div class="col-sm-4">
+                <div class="card text-dark">
+                    <p class="card-header">{{ 'almrsk.form.new' | trans({'%almrsk%' : 'un nouveau mot'}) }}</p>
+                    <div class="card-body">
+                        {{ include('mot/_form.html.twig') }}
+                    </div>
+                </div>
             </div>
+
         </div>
+
     </div>
-
-
-    <a href="{{ path('mot_new') }}">Create new</a>
 {% endblock %}

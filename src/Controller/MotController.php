@@ -22,21 +22,47 @@ use Symfony\Component\Routing\Annotation\Route;
 class MotController extends AbstractController
 {
     /**
-     * @Route("/", name="mot_index", methods={"GET"})
+     * @Route("/", name="mot_index", methods={"GET","POST"})
+     *
+     * @param MotRepository $motRepository
+     * @return Response
      */
-    public function index(MotRepository $motRepository): Response
+    public function index(MotRepository $motRepository, Request $request): Response
     {
+
+        $mot = new Mot();
+        $mot->setUser($this->getUser());
+
+        $form = $this->createForm(MotType::class, $mot);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($mot);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('mot_index');
+        }
+
         return $this->render('mot/index.html.twig', [
+            'mot' => $mot,
+            'form' => $form->createView(),
             'mots' => $motRepository->findAll(),
         ]);
     }
 
     /**
      * @Route("/new", name="mot_new", methods={"GET","POST"})
+     *
+     * @param Request $request
+     * @return Response
+     * @throws \Exception
      */
     public function new(Request $request): Response
     {
         $mot = new Mot();
+        $mot->setUser($this->getUser());
+
         $form = $this->createForm(MotType::class, $mot);
         $form->handleRequest($request);
 
