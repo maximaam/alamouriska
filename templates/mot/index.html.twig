@@ -1,6 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Mot index{% endblock %}
+{% block title %}
+    {{ parent() }}
+    {{ 'almrsk.h1' | trans({'%almrsk%' : 'mots'}) }}
+{% endblock %}
 
 {% block body %}
     <div class="container">
@@ -11,7 +14,20 @@
 
                 {% for mot in mots %}
                     <div class="media">
-                        <img class="align-self-start mr-3" src="{{ asset('images/sunny.png') }}" alt="Generic placeholder image">
+                        {% set avatar = asset('images/default-avatar.png') %}
+
+                        {% if mot.user.avatarName is not null %}
+                            {% set avatar = vich_uploader_asset(mot.user, 'avatarFile') %}
+                       {% endif %}
+
+                        {% if app.user %}
+                            <a href="{{ path('fos_user_profile_edit') }}" title="{{ 'user.change_avatar' | trans }}">
+                                <img class="align-self-start mr-3 rounded" src="{{ avatar }}" alt="{{ 'almrsk.by_user' | trans({'user': mot.user.username}) }}" width="64" height="64">
+                            </a>
+                        {% else %}
+                            <img class="align-self-start mr-3 rounded" src="{{ avatar }}" alt="{{ 'almrsk.by_user' | trans({'user': mot.user.username}) }}" title="{{ 'almrsk.by_user' | trans({'user': mot.user.username}) }}" width="64" height="64">
+                        {% endif %}
+
                         <div class="media-body">
                             <h2 class="mt-0 mb-1" title="{{ 'label.latin_char' | trans }}">
                                 <a href="{{ path('mot_show', {'id': mot.id}) }}">
@@ -36,15 +52,17 @@
             </div>
 
             <div class="col-sm-4">
-                <div class="card text-dark">
-                    <p class="card-header">{{ 'almrsk.form.new' | trans({'%almrsk%' : 'un nouveau mot'}) }}</p>
+                <div class="card text-dark almrsk-submission">
+                    <p class="card-header">
+                        <strong>{{ 'almrsk.form.new' | trans({'%almrsk%' : 'un nouveau mot'}) }}</strong>
+                    </p>
                     <div class="card-body">
-                        {{ include('mot/_form.html.twig') }}
+                        {{ include('partials/_form.html.twig') }}
                     </div>
+                    <img src="{{ asset('images/hippocampe.gif') }}" class="hippocampe" alt="Hippocampe">
                 </div>
             </div>
 
         </div>
-
     </div>
 {% endblock %}

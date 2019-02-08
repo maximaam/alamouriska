@@ -3,9 +3,18 @@ almrsk:
   form:
     new: "Insérer %almrsk%"
 
+user:
+  change_avatar: 'Change ta photo de profil'
+  password:
+    difficulty: 'Le mot de passe doit contenir des chiffres et des lettres.'
+
 
 label:
   latin_char: "Caractères latins"
   tamazight_char: "Caractères amazighs"
   arabic_char: "Caractères arabes"
   details_reactions: "Détails et Réactions"
+  duplicate_mot: "Ce mot a déjà alamouriské!"
+  required: 'Obligatoire'
+  optionnal: 'Optionnel'
+  optionnal_wished: 'Optionnel mais souhaité'
