@@ -9,9 +9,11 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\MotRepository")
+ * @UniqueEntity(fields={"inLatin"}, message="label.duplicate_mot")
  */
 class Mot
 {
@@ -33,7 +35,7 @@ class Mot
     private $updatedAt;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=128, unique=true)
      */
     private $inLatin;
 

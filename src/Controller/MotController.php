@@ -15,6 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
  * @Route("/mot")
@@ -25,7 +26,9 @@ class MotController extends AbstractController
      * @Route("/", name="mot_index", methods={"GET","POST"})
      *
      * @param MotRepository $motRepository
+     * @param Request $request
      * @return Response
+     * @throws \Exception
      */
     public function index(MotRepository $motRepository, Request $request): Response
     {
@@ -37,6 +40,8 @@ class MotController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($mot);
             $entityManager->flush();
@@ -53,6 +58,7 @@ class MotController extends AbstractController
 
     /**
      * @Route("/new", name="mot_new", methods={"GET","POST"})
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      *
      * @param Request $request
      * @return Response

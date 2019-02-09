@@ -9,6 +9,7 @@
 namespace App\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use FOS\UserBundle\Form\Type\RegistrationFormType as RegistrationFormType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -27,7 +28,12 @@ class RegistrationType extends AbstractType
     {
         parent::buildForm($builder, $options);
 
-        $builder->remove('username');
+        $builder->add('submit', SubmitType::class, [
+            'label'         => 'Envoyer',
+            'attr'  => [
+                'class' => 'btn btn-primary float-right'
+            ]
+        ]);
     }
 
     /**

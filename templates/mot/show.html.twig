@@ -42,5 +42,5 @@
 
     <a href="{{ path('mot_edit', {'id': mot.id}) }}">edit</a>
 
-    {{ include('mot/_delete_form.html.twig') }}
+    {{ include('partials/_delete_form.html.twig', {'route': 'mot_delete', 'routeId' : mot.id}) }}
 {% endblock %}

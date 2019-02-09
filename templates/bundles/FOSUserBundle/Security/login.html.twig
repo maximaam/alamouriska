@@ -43,7 +43,7 @@
                     </div>
                     <div class="form-group">
                         <div class="pull-right">
-                            <button type="submit" id="_submit" name="_submit" class="btn btn-primary">
+                            <button type="submit" id="_submit" name="_submit" class="btn btn-secondary">
                                 <i class="fa fa-sign-in"></i>
                                 {{ 'layout.login' | trans }}
                             </button>
@@ -51,18 +51,23 @@
                     </div>
                 </form>
             </div>
-            <div class="col-sm">
-                <div style="height: 50px"></div>
+            <div class="col-sm mt-5">
                 <div>
-                    <abbr title="Comment, t'as pas encore de compte?">Kifech?</abbr> Oulech el compte oulech?
+                    Tu n'es pas encore un alamouriskeur?
                     <br>
-                    <i class="fa fa-arrow-circle-right"></i> <a href="{{ path('fos_user_registration_register') }}" title="Inscris-toi">Sadjal rou7ak!</a>
+                    <a href="{{ path('fos_user_registration_register') }}" title="Inscris-toi">
+                        <i class="fa fa-arrow-circle-right"></i>
+                        Alamouriski rou7ak!
+                    </a>
                 </div>
                 <hr>
                 <div>
-                    <abbr title="Quoi? T'as perdu le mot de passe?">Weshnou?</abbr> T'ba7arlak el mot de passe?
+                    <abbr title="Quoi? T'as perdu le mot de passe?">Kifech?</abbr> T'ba7arlak el mot de passe?
                     <br>
-                    <i class="fa fa-arrow-circle-right"></i> <a href="{{ path('fos_user_resetting_request') }}" title="Clique ici">3abaz h'na</a>
+                    <a href="{{ path('fos_user_resetting_request') }}" title="Clique ici">
+                        <i class="fa fa-arrow-circle-right"></i>
+                        3abaz h'na
+                    </a>
                 </div>
             </div>
         </div>

@@ -26,15 +26,27 @@ class MotType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            //->add('createdAt')
-            //->add('updatedAt')
-            ->add('inLatin')
-            ->add('inTamazight')
-            ->add('inArabic')
-            ->add('description')
+            ->add('inLatin', null, [
+                'label' => 'label.latin_char',
+                'help' => 'label.required',
+            ])
+            ->add('inTamazight', null, [
+                'label' => 'label.tamazight_char',
+                'help'  => 'label.optionnal_wished'
+            ])
+            ->add('inArabic', null, [
+                'label' => 'label.arabic_char',
+                'help'  => 'label.optionnal_wished'
+            ])
+            ->add('description', null, [
+                'help'  => 'label.required'
+            ])
         ;
     }
 
+    /**
+     * @param OptionsResolver $resolver
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([

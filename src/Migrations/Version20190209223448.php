@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20190206101135 extends AbstractMigration
+final class Version20190209223448 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -22,8 +22,8 @@ final class Version20190206101135 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('CREATE TABLE IF NOT EXISTS mot (id INT AUTO_INCREMENT NOT NULL, user_id INT NOT NULL, created_at DATETIME NOT NULL, updated_at DATETIME DEFAULT NULL, in_latin VARCHAR(255) NOT NULL, in_tamazight VARCHAR(255) DEFAULT NULL, in_arabic VARCHAR(255) DEFAULT NULL, description LONGTEXT NOT NULL, INDEX IDX_A43432CA76ED395 (user_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
-        $this->addSql('ALTER TABLE mot ADD CONSTRAINT FK_A43432CA76ED395 FOREIGN KEY (user_id) REFERENCES fos_user (id)');
+        $this->addSql('CREATE TABLE locution (id INT AUTO_INCREMENT NOT NULL, locution LONGTEXT NOT NULL, description LONGTEXT DEFAULT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE proverbe (id INT AUTO_INCREMENT NOT NULL, proverbe LONGTEXT NOT NULL, description LONGTEXT DEFAULT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
     }
 
     public function down(Schema $schema) : void
@@ -31,6 +31,7 @@ final class Version20190206101135 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('DROP TABLE mot');
+        $this->addSql('DROP TABLE locution');
+        $this->addSql('DROP TABLE proverbe');
     }
 }

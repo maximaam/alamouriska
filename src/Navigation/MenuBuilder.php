@@ -19,6 +19,9 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class MenuBuilder
 {
+    /**
+     * @var FactoryInterface
+     */
     private $factory;
 
     /**
@@ -60,12 +63,18 @@ class MenuBuilder
         $menu = $this->factory->createItem('root');
         $menu->setChildrenAttribute('class', 'navbar-nav mr-auto');
 
-        //$items = ['Mot' => 'mot_index', 'Expression' => 'expression_index' , 'Proverbe' => 'proverbe_index'];
-        $items = ['Mot' => 'mot_index'];
+        $items = ['Mot' => 'mot', 'Locution' => 'locution' , 'Proverbe' => 'proverbe'];
+        //$items = ['Mot' => 'mot_index',];
 
         foreach ($items as $label => $route) {
             $menu->addChild($label, [
-                'route' => $route,
+                'route'     => $route . '_index',
+                'extras'    => [
+                    'routes'    =>
+                        ['route' => $route . '_show'],
+                        ['route' => $route . '_new'],
+                        ['route' => $route . '_edit'],
+                ],
                 'attributes' => [
                     'class' => 'nav-item',
                     'title' => \sprintf('Ajouter des %ss', $label)
