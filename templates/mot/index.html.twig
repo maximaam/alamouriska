@@ -2,7 +2,7 @@
 
 {% block title %}
     {{ parent() }}
-    {{ 'almrsk.h1' | trans({'%almrsk%' : 'mots'}) }}
+    {{ 'label.almrsk_h1' | trans({'%almrsk%' : 'mots'}) }}
 {% endblock %}
 
 {% block body %}
@@ -14,19 +14,8 @@
 
                 {% for mot in mots %}
                     <div class="media">
-                        {% set avatar = asset('images/default-avatar.png') %}
 
-                        {% if mot.user.avatarName is not null %}
-                            {% set avatar = vich_uploader_asset(mot.user, 'avatarFile') %}
-                       {% endif %}
-
-                        {% if app.user %}
-                            <a href="{{ path('fos_user_profile_edit') }}" title="{{ 'user.change_avatar' | trans }}">
-                                <img class="align-self-start mr-3 rounded" src="{{ avatar }}" alt="{{ 'almrsk.by_user' | trans({'user': mot.user.username}) }}" width="64" height="64">
-                            </a>
-                        {% else %}
-                            <img class="align-self-start mr-3 rounded" src="{{ avatar }}" alt="{{ 'almrsk.by_user' | trans({'user': mot.user.username}) }}" title="{{ 'almrsk.by_user' | trans({'user': mot.user.username}) }}" width="64" height="64">
-                        {% endif %}
+                        {%  include 'partials/avatar.html.twig' with {'almrsk': mot, 'user': app.user, 'size': 64 } only %}
 
                         <div class="media-body">
                             <h2 class="mt-0 mb-1" title="{{ 'label.latin_char' | trans }}">
@@ -39,12 +28,26 @@
                                 <span title="{{ 'label.arabic_char' | trans }}">{{ mot.inArabic }}</span>
                             </h3>
                             <p>{{ mot.description }}</p>
-                            <p>
-                                <a href="{{ path('mot_show', {'id': mot.id}) }}" class="float-right">
-                                    <i class="fa fa-arrow-right"></i>
-                                    {{ 'label.details_reactions' | trans }}
-                                </a>
-                            </p>
+
+                            <div class="row">
+                                <div class="col-6">
+                                    <i class="fa fa-user"></i>
+                                    <a class="btn btn-primary" href="{{ path('member_show', {'username': mot.user.username}) }}" title="{{'label.almrsk_by' | trans({'%username%': mot.user.username}) }}">
+                                        {{ mot.user.username }}
+                                    </a>
+                                </div>
+                                <div class="col-6">
+                                    <div class="float-right">
+                                        <a href="#" title="{{ 'label.details_reactions' | trans }}" class="btn btn-primary">
+                                            <i class="fa fa-thumbs-up"></i>
+                                        </a>
+
+                                        <a href="{{ path('mot_show', {'id': mot.id}) }}" title="{{ 'label.details_reactions' | trans }}" class="btn btn-primary">
+                                            <i class="fa fa-comment"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <hr class="bg-white">

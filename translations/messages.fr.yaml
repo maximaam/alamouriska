@@ -19,3 +19,4 @@ label:
   # Mots, locutions...etc pages
   almrsk_insert_new: 'Insérer %almrsk%'
   almrsk_h1: 'Liste des %almrsk% alamouriskés par les alamouriskeurs'
+  almrsk_by: 'Proposé par %username%'

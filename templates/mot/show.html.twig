@@ -1,46 +1,59 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Mot{% endblock %}
+{% block title %}
+    {{ parent() }}
+    {{ mot.inLatin }}
+{% endblock %}
 
 {% block body %}
-    <h1>Mot</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ mot.id }}</td>
-            </tr>
-            <tr>
-                <th>CreatedAt</th>
-                <td>{{ mot.createdAt ? mot.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>UpdatedAt</th>
-                <td>{{ mot.updatedAt ? mot.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>InLatin</th>
-                <td>{{ mot.inLatin }}</td>
-            </tr>
-            <tr>
-                <th>InTamazight</th>
-                <td>{{ mot.inTamazight }}</td>
-            </tr>
-            <tr>
-                <th>InArabic</th>
-                <td>{{ mot.inArabic }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ mot.description }}</td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="container">
+        <div class="row">
 
-    <a href="{{ path('mot_index') }}">back to list</a>
+            <div class="col-sm-2 mx-auto">
 
-    <a href="{{ path('mot_edit', {'id': mot.id}) }}">edit</a>
+                <p>{%  include 'partials/avatar.html.twig' with {'almrsk': mot, 'user': app.user, 'size': 128 } only %}</p>
 
-    {{ include('partials/_delete_form.html.twig', {'route': 'mot_delete', 'routeId' : mot.id}) }}
+                <p>
+                    <i class="fa fa-user"></i>
+                    <a href="{{ path('member_show', {'username': mot.user.username}) }}" title="{{'label.almrsk_by' | trans({'%username%': mot.user.username}) }}">
+                        {{ mot.user.username }}
+                    </a>
+                </p>
+
+            </div>
+
+            <div class="col-sm-10">
+                <h1 class="mb-3">{{ mot.inLatin }}</h1>
+
+                <div class="media">
+                    <div class="media-body">
+                        <h2 class="mt-0 mb-3" title="{{ 'label.latin_char' | trans }}">
+                            {{ 'label.tamazight_char' | trans }} : {{ mot.inTamazight }}<br>
+                            {{ 'label.arabic_char' | trans }} : {{ mot.inArabic }}
+                        </h2>
+                        <p>{{ mot.description }}</p>
+
+                        <p>
+                            <a href="#">
+                                J'aime
+                            </a>
+                        </p>
+
+                        <hr class="bg-white">
+
+                        <div class="comments">
+                            sdfsdfgsdfg
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+
+
+        </div>
+    </div>
+
 {% endblock %}

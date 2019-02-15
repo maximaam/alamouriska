@@ -32,7 +32,6 @@ class MotController extends AbstractController
      */
     public function index(MotRepository $motRepository, Request $request): Response
     {
-
         $mot = new Mot();
         $mot->setUser($this->getUser());
 
@@ -52,7 +51,7 @@ class MotController extends AbstractController
         return $this->render('mot/index.html.twig', [
             'mot' => $mot,
             'form' => $form->createView(),
-            'mots' => $motRepository->findAll(),
+            'mots' => $motRepository->findBy([], ['createdAt' => 'DESC']),
         ]);
     }
 
