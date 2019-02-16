@@ -7,15 +7,8 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\LocutionRepository")
  */
-class Locution
+class Locution extends AbstractEntity
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
-
     /**
      * @ORM\Column(type="text")
      */
@@ -26,16 +19,18 @@ class Locution
      */
     private $description;
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
+    /**
+     * @return string|null
+     */
     public function getLocution(): ?string
     {
         return $this->locution;
     }
 
+    /**
+     * @param string $locution
+     * @return Locution
+     */
     public function setLocution(string $locution): self
     {
         $this->locution = $locution;
@@ -43,11 +38,18 @@ class Locution
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getDescription(): ?string
     {
         return $this->description;
     }
 
+    /**
+     * @param string|null $description
+     * @return Locution
+     */
     public function setDescription(?string $description): self
     {
         $this->description = $description;

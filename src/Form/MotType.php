@@ -12,6 +12,7 @@ use App\Entity\Mot;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 /**
  * Class MotType
@@ -32,15 +33,27 @@ class MotType extends AbstractType
             ])
             ->add('inTamazight', null, [
                 'label' => 'label.tamazight_char',
-                'help'  => 'label.optionnal_wished'
+                'help'  => 'label.optional_wished'
             ])
             ->add('inArabic', null, [
                 'label' => 'label.arabic_char',
-                'help'  => 'label.optionnal_wished'
+                'help'  => 'label.optional_wished'
             ])
             ->add('description', null, [
-                'help'  => 'label.required'
+                'help'  => 'label.required',
+                'attr'  => [
+                    'rows'  => 5
+                ]
             ])
+            ->add('imageFile', VichImageType::class, [
+                'label'         => 'Photo (optionnel, jpeg uniquement)',
+                'required'      => false,
+                'allow_delete'  => true,
+                'help'  => 'label.optional',
+                //'download_link' => false,
+                //'download_uri'  => '',
+                //'download_label' => '...',
+            ]);
         ;
     }
 

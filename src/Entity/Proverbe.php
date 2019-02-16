@@ -7,15 +7,8 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ProverbeRepository")
  */
-class Proverbe
+class Proverbe extends AbstractEntity
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
-
     /**
      * @ORM\Column(type="text")
      */
@@ -26,16 +19,18 @@ class Proverbe
      */
     private $description;
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
+    /**
+     * @return string|null
+     */
     public function getProverbe(): ?string
     {
         return $this->proverbe;
     }
 
+    /**
+     * @param string $proverbe
+     * @return Proverbe
+     */
     public function setProverbe(string $proverbe): self
     {
         $this->proverbe = $proverbe;
@@ -43,11 +38,18 @@ class Proverbe
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getDescription(): ?string
     {
         return $this->description;
     }
 
+    /**
+     * @param string|null $description
+     * @return Proverbe
+     */
     public function setDescription(?string $description): self
     {
         $this->description = $description;

@@ -6,15 +6,18 @@ user:
 form:
   submit: 'Envoyer'
 
+msg:
+  duplicate_mot: 'Ce mot a déjà alamouriské!'
+  jpeg_only: 'Seul le format JPEG/JPG est accepté!'
+
 label:
   latin_char: 'Caractères latins'
   tamazight_char: 'Caractères amazighs'
   arabic_char: 'Caractères arabes'
   details_reactions: 'Détails et Réactions'
-  duplicate_mot: 'Ce mot a déjà alamouriské!'
   required: 'Obligatoire'
-  optionnal: 'Optionnel'
-  optionnal_wished: 'Optionnel mais souhaité'
+  optional: 'Optionnel'
+  optional_wished: 'Optionnel mais souhaité'
 
   # Mots, locutions...etc pages
   almrsk_insert_new: 'Insérer %almrsk%'
