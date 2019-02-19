@@ -14,9 +14,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Doctrine\Common\Collections\{
-    ArrayCollection, Collection
-};
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
@@ -97,6 +96,11 @@ class User extends BaseUser
     private $mots;
 
     /**
+     * @ORM\OneToMany(targetEntity="App\Entity\ThumbUp", mappedBy="user", orphanRemoval=true)
+     */
+    private $thumbUps;
+
+    /**
      * User constructor.
      * @throws \Exception
      */
@@ -106,6 +110,7 @@ class User extends BaseUser
 
         $this->createdAt = new \DateTimeImmutable();
         $this->mots = new ArrayCollection();
+        $this->thumbUps = new ArrayCollection();
     }
 
     /**
@@ -224,6 +229,37 @@ class User extends BaseUser
             // set the owning side to null (unless already changed)
             if ($mot->getUser() === $this) {
                 $mot->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ThumbUp[]
+     */
+    public function getThumbUps(): Collection
+    {
+        return $this->thumbUps;
+    }
+
+    public function addThumbUp(ThumbUp $thumbUp): self
+    {
+        if (!$this->thumbUps->contains($thumbUp)) {
+            $this->thumbUps[] = $thumbUp;
+            $thumbUp->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeThumbUp(ThumbUp $thumbUp): self
+    {
+        if ($this->thumbUps->contains($thumbUp)) {
+            $this->thumbUps->removeElement($thumbUp);
+            // set the owning side to null (unless already changed)
+            if ($thumbUp->getUser() === $this) {
+                $thumbUp->setUser(null);
             }
         }
 

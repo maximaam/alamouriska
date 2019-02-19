@@ -9,25 +9,15 @@
 
     <div class="container">
         <div class="row">
+            <div class="col-sm-8">
 
-            <div class="col-sm-2 mx-auto">
-
-                <p>{%  include 'partials/avatar.html.twig' with {'almrsk': mot, 'user': app.user, 'size': 128 } only %}</p>
-
-                <p>
-                    <i class="fa fa-user"></i>
-                    <a href="{{ path('member_show', {'username': mot.user.username}) }}" title="{{'label.almrsk_by' | trans({'%username%': mot.user.username}) }}">
-                        {{ mot.user.username }}
-                    </a>
-                </p>
-
-            </div>
-
-            <div class="col-sm-10">
-                <h1 class="mb-1">{{ mot.inLatin }}</h1>
 
                 <div class="media">
+
+                    {%  include 'partials/avatar.html.twig' with {'almrsk': mot, 'user': app.user, 'size': 64 } only %}
+
                     <div class="media-body">
+                        <h1 class="mb-1">{{ mot.inLatin }}</h1>
                         <h2 class="mt-0">
                             <span title="{{ 'label.tamazight_char' | trans }}">{{ mot.inTamazight }}</span> |
                             <span title="{{ 'label.arabic_char' | trans }}">{{ mot.inArabic }}</span>
@@ -39,28 +29,33 @@
 
                         <p>{{ mot.description }}</p>
 
-                        <div class="row">
-                            <div class="col-6"></div>
-                            <div class="col-6">
-                                <a href="#" title="{{ 'label.likes' | trans }}" class="float-right">
-                                    <i class="fa fa-thumbs-up"></i>
-                                    {{ 'label.likes' | trans }}
-                                </a>
-                            </div>
-                        </div>
-
-                        <hr class="bg-white">
-
-                        <div class="comments">
-                            sdfsdfgsdfg
+                        <div class="float-right">
+                            {%  include 'partials/likes.html.twig' with {'almrsk': mot } only %}
                         </div>
                     </div>
                 </div>
 
             </div>
 
+            <div class="col-sm-4">
+                <div class="card text-dark almrsk-comments">
+                    <p class="card-header">
+                        <strong>{{ 'label.comments' | trans }}</strong>
+                    </p>
+
+                    {% set comments = ['asdasdasd', 'asdasd'] %}
 
 
+                    <div class="card-body">
+                        {% for comment in comments %}
+                            <p>{{ comment }}</p>
+
+                        {% endfor %}
+
+
+                    </div>
+                </div>
+            </div>
 
         </div>
     </div>

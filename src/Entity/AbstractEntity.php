@@ -93,4 +93,12 @@ abstract class AbstractEntity
         return $this->updatedAt;
     }
 
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return static::class;
+    }
+
 }

@@ -49,9 +49,9 @@ class MotController extends AbstractController
         }
 
         return $this->render('mot/index.html.twig', [
-            'mot' => $mot,
-            'form' => $form->createView(),
-            'mots' => $motRepository->findBy([], ['createdAt' => 'DESC']),
+            'mot'   => $mot,
+            'mots'  => $motRepository->findBy([], ['createdAt' => 'DESC']),
+            'form'  => $form->createView(),
         ]);
     }
 

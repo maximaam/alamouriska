@@ -29,26 +29,13 @@
                             </h3>
                             <p>{{ mot.description }}</p>
 
-                            <div class="row">
-                                <div class="col-6">
-                                    <a href="{{ path('member_show', {'username': mot.user.username}) }}" title="{{'label.almrsk_by' | trans({'%username%': mot.user.username}) }}">
-                                        <i class="fa fa-user"></i>
-                                        {{ mot.user.username }}
-                                    </a>
-                                </div>
-                                <div class="col-6">
-                                    <div class="float-right">
-                                        <a href="#" title="{{ 'label.likes' | trans }}">
-                                            <i class="fa fa-thumbs-up"></i>
-                                            {{ 'label.likes' | trans }}
-                                        </a>
-                                        |
-                                        <a href="{{ path('mot_show', {'id': mot.id}) }}" title="{{ 'label.details_reactions' | trans }}">
-                                            <i class="fa fa-comment"></i>
-                                            {{ 'label.comments' | trans }}
-                                        </a>
-                                    </div>
-                                </div>
+                            <div class="float-right">
+                                {%  include 'partials/likes.html.twig' with {'almrsk': mot } only %}
+                                |
+                                <a href="{{ path('mot_show', {'id': mot.id}) }}" title="{{ 'label.details_reactions' | trans }}">
+                                    <i class="fa fa-comment"></i>
+                                    {{ 'label.comments' | trans }}
+                                </a>
                             </div>
 
                         </div>
