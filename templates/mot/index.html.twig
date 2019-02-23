@@ -30,7 +30,7 @@
                             <p>{{ mot.description }}</p>
 
                             <div class="float-right">
-                                {%  include 'partials/likes.html.twig' with {'almrsk': mot } only %}
+                                {%  include 'partials/thumbs_up.html.twig' with {'almrsk': mot } only %}
                                 |
                                 <a href="{{ path('mot_show', {'id': mot.id}) }}" title="{{ 'label.details_reactions' | trans }}">
                                     <i class="fa fa-comment"></i>

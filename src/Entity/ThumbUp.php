@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 class ThumbUp extends AbstractEntity
 {
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="likes")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="thumbUps")
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;

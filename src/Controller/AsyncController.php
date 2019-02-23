@@ -2,15 +2,13 @@
 
 namespace App\Controller;
 
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Entity\ThumbUp;
 use App\Repository\ThumbUpRepository;
-use phpDocumentor\Reflection\Types\This;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
 
 /**
  * Class AsyncController
@@ -22,49 +20,73 @@ use Symfony\Component\Routing\Annotation\Route;
 class AsyncController extends AbstractController
 {
     /**
-     * @Route("/like", name="async_like")
+     * @Route("/thumbs-up", name="async_like")
      *
      * @param Request $request
      * @param ThumbUpRepository $repository
      * @return Response
      * @throws \Exception
      */
-    public function like(Request $request, ThumbUpRepository $repository)
+    public function thumbsUp(Request $request, ThumbUpRepository $repository)
     {
+        //$this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        if ($request->isXmlHttpRequest()) {
+            return new JsonResponse([], 403);
+        }
+
         $user = $this->getUser();
 
         if ($user) {
             $entityManager = $this->getDoctrine()->getManager();
 
-            $like = $repository->findOneBy([
+            $thumbsUp = $repository->findOneBy([
                 'user'      => $user,
                 'owner'     => $request->get('owner'),
                 'ownerId'   => $request->get('id')
                 ]);
 
-            if (null === $like) {
-                $newLike = (new ThumbUp())
+            if (null === $thumbsUp) {
+                $newThumbsUp = (new ThumbUp())
                     ->setUser($user)
                     ->setOwner($request->get('owner'))
                     ->setOwnerId($request->get('id'));
 
-                $entityManager->persist($newLike);
+                $entityManager->persist($newThumbsUp);
                 $entityManager->flush();
 
             } else {
-                $entityManager->remove($like);
+                $entityManager->remove($thumbsUp);
             }
 
             return new JsonResponse([
                 'status'    => 'ok'
-            ]);
+            ], 200);
         }
 
         return new JsonResponse([
             'status'    => 'error'
-        ]);
+        ], 410);
 
     }
+
+    /**
+     * @Route("/ask-log-in", name="async_ask_log_in")
+     *
+     * @param Request $request
+     * @return Response
+     * @throws \Exception
+     */
+    public function askLogIn(Request $request)
+    {
+        if (false === $request->isXmlHttpRequest()) {
+            return new JsonResponse('Error', 403);
+        }
+
+        return $this->render('partials/modal.html.twig');
+    }
+
+
 
 
 }

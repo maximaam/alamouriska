@@ -18,6 +18,8 @@ label:
   required: 'Obligatoire'
   optional: 'Optionnel'
   optional_wished: 'Optionnel mais souhaité'
+  log_in: 'Connecte-toi'
+  thumbs_up_add: "J'aime"
 
   # Mots, locutions...etc pages
   almrsk_insert_new: 'Insérer %almrsk%'
