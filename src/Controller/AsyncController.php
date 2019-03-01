@@ -31,7 +31,7 @@ class AsyncController extends AbstractController
     {
         //$this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
-        if ($request->isXmlHttpRequest()) {
+        if (false === $request->isXmlHttpRequest()) {
             return new JsonResponse([], 403);
         }
 
@@ -43,21 +43,21 @@ class AsyncController extends AbstractController
             $thumbsUp = $repository->findOneBy([
                 'user'      => $user,
                 'owner'     => $request->get('owner'),
-                'ownerId'   => $request->get('id')
+                'ownerId'   => $request->get('ownerId')
                 ]);
 
             if (null === $thumbsUp) {
                 $newThumbsUp = (new ThumbUp())
                     ->setUser($user)
                     ->setOwner($request->get('owner'))
-                    ->setOwnerId($request->get('id'));
+                    ->setOwnerId($request->get('ownerId'));
 
                 $entityManager->persist($newThumbsUp);
-                $entityManager->flush();
-
             } else {
                 $entityManager->remove($thumbsUp);
             }
+
+            $entityManager->flush();
 
             return new JsonResponse([
                 'status'    => 'ok'
