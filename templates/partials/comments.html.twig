@@ -1,0 +1,19 @@
+
+{% set depth = depth|default(0) %}
+{% set view = view|default('tree') %}
+
+{% set count = thread.numComments %}
+<h3>{% transchoice count with {'%count%': count} from 'FOSCommentBundle' %}fos_comment_thread_comment_count{% endtranschoice %}</h3>
+
+{% for commentinfo in comments %}
+    {#{% if commentinfo.comment.state == 0 %}#}
+        {% include '@FOSComment/Thread/comment.html.twig' with { 'children': commentinfo.children, 'comment': commentinfo.comment, 'depth': depth, 'view': view } %}
+    {#{% endif %}#}
+{% endfor %}
+
+
+{% if depth == 0 %}
+    {% if fos_comment_can_comment_thread(thread) %}
+        {{ render(url('fos_comment_new_thread_comments', {"id": thread.id})) }}
+    {% endif %}
+{% endif %}

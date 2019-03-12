@@ -22,3 +22,8 @@ $(document).ready(function() {
 
 
 });
+
+$(document)
+    .on('fos_comment_show_form', '.fos_comment_comment_reply_show_form', function (event, data) {
+        alert('form');
+    });

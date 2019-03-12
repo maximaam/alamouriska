@@ -1,0 +1,36 @@
+fos_comment:
+  db_driver: orm
+  class:
+    model:
+      comment: App\Entity\Comment
+      thread: App\Entity\Thread
+
+  acl: true
+  service:
+    acl:
+      thread:  fos_comment.acl.thread.roles
+      comment: fos_comment.acl.comment.roles
+      #vote:    fos_comment.acl.vote.roles
+    manager:
+      thread:  fos_comment.manager.thread.acl
+      comment: fos_comment.manager.comment.acl
+      #vote:    fos_comment.manager.vote.acl
+  acl_roles:
+    comment:
+      view: IS_AUTHENTICATED_ANONYMOUSLY
+      create: IS_AUTHENTICATED_FULLY
+      edit: IS_AUTHENTICATED_FULLY
+      delete: IS_AUTHENTICATED_FULLY
+    thread:
+      view: IS_AUTHENTICATED_ANONYMOUSLY
+      create: IS_AUTHENTICATED_FULLY
+      edit: ROLE_ADMIN
+      delete: ROLE_ADMIN
+    vote:
+      create: IS_AUTHENTICATED_ANONYMOUSLY
+      view: IS_AUTHENTICATED_ANONYMOUSLY
+      edit: ROLE_ADMIN
+      delete: ROLE_ADMIN
+
+#assetic:
+#  bundles: [ "FOSCommentBundle" ]

@@ -174,8 +174,17 @@ footer.main-footer {
     position: absolute;
     right: -50px;
 }
-.almrsk-image
-
+.fos_comment_comment_reply {
+    display: none;
+}
+.fos_comment_comment_show {
+    border-bottom: 1px solid #666;
+    margin: 10px 0 10px 0;
+    padding-bottom: 10px;
+}
+.fos_comment_comment_form_holder {
+    margin-bottom: 40px;
+}
 
 
 

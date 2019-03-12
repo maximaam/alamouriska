@@ -16,6 +16,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use FOS\CommentBundle\Model\Thread;
+use FOS\CommentBundle\Model\ThreadManagerInterface;
+use FOS\CommentBundle\Model\CommentManagerInterface;
 
 /**
  * @Route("/mot")
@@ -88,10 +91,27 @@ class MotController extends AbstractController
     /**
      * @Route("/{id}", name="mot_show", methods={"GET"})
      */
-    public function show(Mot $mot): Response
+    public function show(Mot $mot, Request $request, ThreadManagerInterface $threadManager, CommentManagerInterface $commentManager): Response
     {
+        $id = $mot->getId();
+        $thread = $threadManager->findThreadById($id);
+        if (null === $thread) {
+            $thread = $threadManager->createThread();
+            $thread->setId($id);
+            $thread->setPermalink($request->getUri());
+
+            // Add the thread
+            $threadManager->saveThread($thread);
+        }
+
+        $comments = $commentManager->findCommentTreeByThread($thread);
+
+        //dd($comments);
+
         return $this->render('mot/show.html.twig', [
             'mot' => $mot,
+            'comments' => $comments,
+            'thread' => $thread,
         ]);
     }
 
