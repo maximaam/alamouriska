@@ -50,5 +50,5 @@ security:
         - { path: ^/admin/, role: ROLE_ADMIN }
 
 # Comment bundle
-acl:
-    connection: default
+#acl:
+#    connection: default

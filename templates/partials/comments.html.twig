@@ -11,9 +11,15 @@
     {#{% endif %}#}
 {% endfor %}
 
-
-{% if depth == 0 %}
-    {% if fos_comment_can_comment_thread(thread) %}
-        {{ render(url('fos_comment_new_thread_comments', {"id": thread.id})) }}
+{% if is_granted("IS_AUTHENTICATED_REMEMBERED") == false %}
+    <a href="{{ path('fos_user_security_login') }}" title="Se connecter ou S'inscrire" class="user btn btn-primary">
+        <i class="fa fa-user"></i> Connecte-toi pour ajouter des commentaies !
+    </a>
+{% else %}
+    {% if depth == 0 %}
+        {% if fos_comment_can_comment_thread(thread) %}
+            {{ render(url('fos_comment_new_thread_comments', {"id": thread.id})) }}
+        {% endif %}
     {% endif %}
 {% endif %}
+

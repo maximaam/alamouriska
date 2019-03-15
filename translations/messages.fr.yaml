@@ -20,8 +20,10 @@ label:
   optional_wished: 'Optionnel mais souhaité'
   log_in: 'Connecte-toi'
   thumbs_up_add: "J'aime"
+  comments: 'Avis et commentaires'
 
   # Mots, locutions...etc pages
-  almrsk_insert_new: 'Insérer %almrsk%'
-  almrsk_h1: 'Liste des %almrsk% alamouriskés par les alamouriskeurs'
-  almrsk_by: 'Proposé par %username%'
+  almrsk:
+      insert_new: 'Insérer %almrsk%'
+      h1: 'Liste des %almrsk% alamouriskés par les alamouriskeurs'
+      by_user: 'Proposé par %username%'

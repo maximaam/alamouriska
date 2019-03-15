@@ -20,5 +20,4 @@ return [
     JMS\SerializerBundle\JMSSerializerBundle::class => ['all' => true],
     FOS\RestBundle\FOSRestBundle::class => ['all' => true],
     FOS\CommentBundle\FOSCommentBundle::class => ['all' => true],
-    Symfony\Bundle\AclBundle\AclBundle::class => ['all' => true],
 ];
