@@ -38,6 +38,7 @@
 
                     {{ knp_menu_render('main') }}
 
+                    <!--
                     <form class="form-inline mt-2 mt-md-0 d-none d-md-inline" method="get" action="{{ path('index_index') }}" onsubmit="">
                         <div class="input-group">
                             <input class="form-control py-2 border-right-0 border" type="search" name="query" placeholder="Recherche..." required pattern=".{3,}" title="3 chars minimum" autocomplete="false" value="{{ app.request.get('query') }}">
@@ -49,16 +50,22 @@
                                 </button>
                             </span>
 
+
                         </div>
                     </form>
+                    -->
 
                     {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                        <a href="{{ path('fos_user_profile_show') }}" title="{{ app.user.email }} - Afficher profil" class="user btn btn-secondary">
-                            <i class="fa fa-user"></i>
+                        {%  include 'partials/avatar.html.twig' with { 'current_user': app.user, 'size': 32, 'classes': 'rounded' } only %}
+                        <a href="{{ path('fos_user_profile_edit') }}" class="user btn" title="Paramètres">
+                            <i class="fa fa-cog"></i>
+                        </a>
+                        <a href="{{ path('fos_user_security_logout') }}" class="user btn" title="Déconnexion">
+                            <i class="fa fa-sign-out"></i>
                         </a>
                     {% else %}
-                        <a href="{{ path('fos_user_security_login') }}" title="Se connecter ou S'inscrire" class="user btn btn-primary">
-                            <i class="fa fa-user"></i>
+                        <a href="{{ path('fos_user_security_login') }}" title="Se connecter ou S'inscrire" class="user btn">
+                            <i class="fa fa-user"></i> Connexion
                         </a>
                     {% endif %}
 

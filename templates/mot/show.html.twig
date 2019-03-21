@@ -9,7 +9,7 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-2">
-                {%  include 'partials/avatar.html.twig' with {'almrsk': mot, 'size': 128 } only %}
+                {%  include 'partials/avatar.html.twig' with {'current_user': mot.user, 'size': 128, 'classes': 'mr-3 rounded' } only %}
                 <p class="mt-1">
                     Par: {{ mot.user.username }}
                     <br>
@@ -35,7 +35,9 @@
 
                 <div class="card text-dark almrsk-comments">
                     <p class="card-header">
-                        <strong>{{ 'label.comments' | trans }}</strong>
+                        <strong>
+                            {{ 'label.comments' | trans }}
+                        </strong>
                     </p>
 
                     <div class="card-body">

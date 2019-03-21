@@ -90,23 +90,37 @@ class MotController extends AbstractController
 
     /**
      * @Route("/{id}", name="mot_show", methods={"GET"})
+     *
+     * @param Mot $mot
+     * @param Request $request
+     * @param ThreadManagerInterface $threadManager
+     * @param CommentManagerInterface $commentManager
+     * @return Response
+     * @throws \ReflectionException
      */
     public function show(Mot $mot, Request $request, ThreadManagerInterface $threadManager, CommentManagerInterface $commentManager): Response
     {
-        $id = $mot->getId();
-        $thread = $threadManager->findThreadById($id);
+        //Use a hash of the entity and its ID as the thread id to enable multilple entities having same IDs to get comments
+        $threadIdentifier = \md5(\get_class($mot) . $mot->getId());
+
+        /** @var ThreadManagerInterface $thread */
+        $thread = $threadManager->findThreadById($threadIdentifier);
+
         if (null === $thread) {
+            $owner = new \ReflectionClass($mot);
+
+            /** @var \App\Entity\Thread $thread */
             $thread = $threadManager->createThread();
-            $thread->setId($id);
+            $thread->setId($threadIdentifier);
             $thread->setPermalink($request->getUri());
+            $thread->setOwner(\strtolower($owner->getShortName()));
+            $thread->setOwnerId($mot->getId());
 
             // Add the thread
             $threadManager->saveThread($thread);
         }
 
         $comments = $commentManager->findCommentTreeByThread($thread);
-
-        //dd($comments);
 
         return $this->render('mot/show.html.twig', [
             'mot' => $mot,

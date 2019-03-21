@@ -1,10 +1,9 @@
 {% set avatar = asset('images/default-avatar.jpg') %}
-{% set title = 'label.almrsk.by_user' | trans({'%username%': almrsk.user.username}) %}
 
-{% if almrsk.user.avatarName is not null %}
-    {% set avatar = vich_uploader_asset(almrsk.user, 'avatarFile') %}
+{% if current_user.avatarName is not null %}
+    {% set avatar = vich_uploader_asset(current_user, 'avatarFile') %}
 {% endif %}
 
-<a href="{{ path('member_show', {'username': almrsk.user.username}) }}" title="{{ title }}">
-    <img class="align-self-start mr-3 rounded" src="{{ avatar }}" alt="{{ title }}" width="{{ size }}" height="{{ size }}">
+<a href="{{ path('member_show', {'username': current_user.username}) }}" title="Profil: {{ current_user.username }}" class="user">
+    <img class="align-self-start {{ classes }}" src="{{ avatar }}" alt="{{ current_user.username }}" width="{{ size }}" height="{{ size }}">
 </a>

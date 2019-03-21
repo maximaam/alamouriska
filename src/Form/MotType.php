@@ -49,7 +49,7 @@ class MotType extends AbstractType
                 'label'         => 'Photo (optionnel, jpeg uniquement)',
                 'required'      => false,
                 'allow_delete'  => true,
-                'help'  => 'label.optional',
+                //'help'  => 'label.optional',
                 //'download_link' => false,
                 //'download_uri'  => '',
                 //'download_label' => '...',

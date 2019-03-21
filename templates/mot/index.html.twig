@@ -15,7 +15,7 @@
                 {% for mot in mots %}
                     <div class="media">
 
-                        {%  include 'partials/avatar.html.twig' with {'almrsk': mot, 'user': app.user, 'size': 64 } only %}
+                        {%  include 'partials/avatar.html.twig' with {'current_user': mot.user, 'size': 64, 'classes': 'mr-3 rounded' } only %}
 
                         <div class="media-body">
                             <h2 class="mt-0 mb-1" title="{{ 'label.latin_char' | trans }}">
@@ -27,6 +27,11 @@
                                 <span title="{{ 'label.tamazight_char' | trans }}">{{ mot.inTamazight }}</span> |
                                 <span title="{{ 'label.arabic_char' | trans }}">{{ mot.inArabic }}</span>
                             </h3>
+
+                            {% if mot.imageName %}
+                                <p>{%  include 'partials/almrsk_image.html.twig' with {'almrsk': mot } only %}</p>
+                            {% endif %}
+
                             <p>{{ mot.description }}</p>
 
                             <div class="float-right">
@@ -62,7 +67,7 @@
                     {% endif %}
 
                     <p class="card-header">
-                        <strong>{{ 'label.almrsk_insert_new' | trans({'%almrsk%' : 'un nouveau mot'}) }}</strong>
+                        <strong>{{ 'label.almrsk.insert_new' | trans({'%almrsk%' : 'un nouveau mot'}) }}</strong>
                     </p>
                     <div class="card-body">
                         {{ include('partials/_form.html.twig') }}
