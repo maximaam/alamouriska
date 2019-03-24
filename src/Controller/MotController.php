@@ -66,7 +66,7 @@ class MotController extends AbstractController
      * @return Response
      * @throws \Exception
      */
-    public function new(Request $request): Response
+    public function new(Request $request, ThreadManagerInterface $threadManager): Response
     {
         $mot = new Mot();
         $mot->setUser($this->getUser());
