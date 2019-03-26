@@ -31,7 +31,7 @@ class RegistrationType extends AbstractType
         $builder->add('submit', SubmitType::class, [
             'label'         => 'Envoyer',
             'attr'  => [
-                'class' => 'btn btn-primary float-right'
+                'class' => 'btn btn-warning float-right'
             ]
         ]);
     }

@@ -43,7 +43,7 @@
                     </div>
                     <div class="form-group">
                         <div class="pull-right">
-                            <button type="submit" id="_submit" name="_submit" class="btn btn-secondary">
+                            <button type="submit" id="_submit" name="_submit" class="btn btn-warning">
                                 <i class="fa fa-sign-in"></i>
                                 {{ 'layout.login' | trans }}
                             </button>
@@ -55,7 +55,7 @@
                 <div>
                     Tu n'es pas encore un alamouriskeur?
                     <br>
-                    <a href="{{ path('fos_user_registration_register') }}" title="Inscris-toi">
+                    <a href="{{ path('fos_user_registration_register') }}" title="Inscris-toi" class="text-warning">
                         <i class="fa fa-arrow-circle-right"></i>
                         Alamouriski rou7ak!
                     </a>
@@ -64,7 +64,7 @@
                 <div>
                     <abbr title="Quoi? T'as perdu le mot de passe?">Kifech?</abbr> T'ba7arlak el mot de passe?
                     <br>
-                    <a href="{{ path('fos_user_resetting_request') }}" title="Clique ici">
+                    <a href="{{ path('fos_user_resetting_request') }}" title="Clique ici" class="text-warning">
                         <i class="fa fa-arrow-circle-right"></i>
                         3abaz h'na
                     </a>

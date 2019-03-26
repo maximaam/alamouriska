@@ -26,11 +26,11 @@ h3 {
     font-size: 1.1rem !important;
 }
 a {
-    color: #d9ba21;
+    color: #0076a1;
 }
 
 a:hover {
-    color: #e3c324;
+    color: #00bbff;
 }
 
 footer.main-footer {
@@ -133,22 +133,6 @@ footer.main-footer {
 }
 .btn-primary:hover {
     background: #008abd;
-}
-
-.btn-secondary {
-    background: #d9ba21;
-    border: none;
-}
-.btn-secondary:hover {
-    background: #e3c324;
-}
-
-.input-hint {
-    width: 250px;
-}
-
-.insertion-form {
-    background: #d9ba21;
 }
 
 .custom-file-label { opacity: 0; }

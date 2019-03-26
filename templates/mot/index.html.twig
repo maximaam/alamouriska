@@ -13,38 +13,51 @@
                 <h1 class="mb-3">{{ 'label.almrsk.h1' | trans({'%almrsk%' : 'mots'}) }}</h1>
 
                 {% for mot in mots %}
-                    <div class="media">
+                    <div class="bg-white rounded text-dark mb-4">
 
-                        {%  include 'partials/avatar.html.twig' with {'current_user': mot.user, 'size': 64, 'classes': 'mr-3 rounded' } only %}
 
-                        <div class="media-body">
-                            <h2 class="mt-0 mb-1" title="{{ 'label.latin_char' | trans }}">
-                                <a href="{{ path('mot_show', {'id': mot.id}) }}">
-                                    {{ mot.inLatin }}
-                                </a>
-                            </h2>
-                            <h3 class="mt-0">
-                                <span title="{{ 'label.tamazight_char' | trans }}">{{ mot.inTamazight }}</span> |
-                                <span title="{{ 'label.arabic_char' | trans }}">{{ mot.inArabic }}</span>
-                            </h3>
+                            <div class="media p-1 border-bottom">
+                                {%  include 'partials/avatar.html.twig' with {'current_user': mot.user, 'size': 64, 'classes': 'mr-3 rounded' } only %}
+                                <div class="media-body">
+                                    <p class="mt-1">
+                                        <strong>Par: {{ mot.user.username }}</strong>
+                                        <br>
+                                        <span class="text-secondary">Le: {{ mot.createdAt | date('d/m/Y') }}</span>
+                                    </p>
+                                </div>
+                            </div>
 
                             {% if mot.imageName %}
-                                <p>{%  include 'partials/almrsk_image.html.twig' with {'almrsk': mot } only %}</p>
+                                <div class="img-container bg-light">
+                                    <a href="{{ path('mot_show', {'id': mot.id}) }}">
+                                        {%  include 'partials/almrsk_image.html.twig' with {'almrsk': mot } only %}
+                                    </a>
+                                </div>
                             {% endif %}
 
-                            <p>{{ mot.description }}</p>
+                            <div class="center-container p-3 bg-light border-bottom">
+                                <h2 class="mt-0 mb-1" title="{{ 'label.latin_char' | trans }}">
+                                    <a href="{{ path('mot_show', {'id': mot.id}) }}">
+                                        {{ mot.inLatin }}
+                                    </a>
+                                </h2>
+                                <h3 class="mt-0">
+                                    <span title="{{ 'label.tamazight_char' | trans }}">{{ mot.inTamazight }}</span> |
+                                    <span title="{{ 'label.arabic_char' | trans }}">{{ mot.inArabic }}</span>
+                                </h3>
 
-                            <div class="float-right">
+                                <p>{{ mot.description }}</p>
+                            </div>
+
+                            <div class="bottom-container p-2 text-right">
                                 {%  include 'partials/thumbs_up.html.twig' with {'almrsk': mot } only %}
-                                |
-                                <a href="{{ path('mot_show', {'id': mot.id}) }}" title="{{ 'label.details_reactions' | trans }}">
+                                <a href="{{ path('mot_show', {'id': mot.id}) }}" title="{{ 'label.details_reactions' | trans }}" class="ml-3">
                                     <i class="fa fa-comment"></i>
                                     {{ 'label.comments' | trans }}
                                 </a>
                             </div>
-                        </div>
+
                     </div>
-                    <hr class="bg-white">
                 {% endfor %}
             </div>
 
