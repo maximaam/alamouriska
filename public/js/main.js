@@ -1,13 +1,20 @@
 $(document).ready(function() {
 
     //Thumbs up
-    $('.js_almrsk-thumbs-up').on('click', function(e) {
+    $('.js_almrsk-liking').on('click', function(e) {
         e.preventDefault();
 
         let $this = $(this);
 
-        $.get('/async/thumbs-up?owner=' + $this.data('owner') + '&ownerId=' + $this.data('id'), function (data) {
-            alert(data.status);
+        $.get('/async/liking?owner=' + $this.data('owner') + '&ownerId=' + $this.data('id'), function (data) {
+            if (+data.status === 1) {
+                let $sumLikings = $('.likings-sum'),
+                    $labelLikings = $('.likings-label'),
+                    sumLikings = +$sumLikings.text();
+
+                $sumLikings.text(+data.action === 1 ? (sumLikings + 1) : (sumLikings - 1));
+                $labelLikings.text(data.actionLabel);
+            }
         });
     });
 

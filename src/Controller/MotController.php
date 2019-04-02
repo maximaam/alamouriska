@@ -8,9 +8,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Liking;
 use App\Entity\Mot;
 use App\Form\MotType;
 use App\Repository\MotRepository;
+use App\Utils\LikingUtils;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -33,8 +35,37 @@ class MotController extends AbstractController
      * @return Response
      * @throws \Exception
      */
-    public function index(MotRepository $motRepository, Request $request): Response
+    public function index(MotRepository $motRepository, Request $request, \Swift_Mailer $mailer): Response
     {
+
+//        $message = (new \Swift_Message('Hello Email'))
+//            //->setFrom('no-reply@sparheld.de')
+//            ->setFrom('alamouriska.app@gmail.com', $this->getParameter('app_name'))
+//            ->setTo('mimoberlino@gmail.com' )
+//            ->setBody('<h1>test</h1>',
+//                /*
+//                $this->renderView(
+//                // templates/emails/registration.html.twig
+//                    'emails/registration.html.twig',
+//                    ['name' => 'mimoberlino@gmail.com']
+//                ),
+//                */
+//                'text/html'
+//            )
+//            /*
+//             * If you also want to include a plaintext version of the message
+//            ->addPart(
+//                $this->renderView(
+//                    'emails/registration.txt.twig',
+//                    ['name' => $name]
+//                ),
+//                'text/plain'
+//            )
+//            */
+//        ;
+//
+//        $mailer->send($message);
+
         $mot = new Mot();
         $mot->setUser($this->getUser());
 
@@ -51,10 +82,14 @@ class MotController extends AbstractController
             return $this->redirectToRoute('mot_index');
         }
 
+        $likings = $this->getDoctrine()->getRepository(Liking::class)
+            ->findBy(['owner' => 'mot']);
+
         return $this->render('mot/index.html.twig', [
             'mot'   => $mot,
             'mots'  => $motRepository->findBy([], ['createdAt' => 'DESC']),
             'form'  => $form->createView(),
+            'likings' => LikingUtils::getLikingsUsersIds($likings)
         ]);
     }
 

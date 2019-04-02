@@ -3,12 +3,13 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use App\Entity\ThumbUp;
-use App\Repository\ThumbUpRepository;
+use App\Entity\Liking;
+use App\Repository\LikingRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Class AsyncController
@@ -19,15 +20,18 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class AsyncController extends AbstractController
 {
+    const STATUS_SUCCESS = 1;
+    const STATUS_ERROR = 2;
+
     /**
-     * @Route("/thumbs-up", name="async_like")
+     * @Route("/liking", name="async_liking")
      *
      * @param Request $request
-     * @param ThumbUpRepository $repository
+     * @param LikingRepository $repository
      * @return Response
      * @throws \Exception
      */
-    public function thumbsUp(Request $request, ThumbUpRepository $repository)
+    public function liking(Request $request, LikingRepository $repository, TranslatorInterface $translator)
     {
         //$this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
@@ -40,33 +44,39 @@ class AsyncController extends AbstractController
         if ($user) {
             $entityManager = $this->getDoctrine()->getManager();
 
-            $thumbsUp = $repository->findOneBy([
+            $liking = $repository->findOneBy([
                 'user'      => $user,
                 'owner'     => $request->get('owner'),
                 'ownerId'   => $request->get('ownerId')
                 ]);
 
-            if (null === $thumbsUp) {
-                $newThumbsUp = (new ThumbUp())
+            //var_dump($liking); die;
+
+            if (null === $liking) {
+                $newLiking = (new Liking())
                     ->setUser($user)
                     ->setOwner($request->get('owner'))
                     ->setOwnerId($request->get('ownerId'));
 
-                $entityManager->persist($newThumbsUp);
+                $entityManager->persist($newLiking);
+                $action = 1;
+                $actionLabel = $translator->trans('label.liking_remove');
             } else {
-                $entityManager->remove($thumbsUp);
+                $entityManager->remove($liking);
+                $action = 2;
+                $actionLabel = $translator->trans('label.liking_add');
             }
 
             $entityManager->flush();
 
             return new JsonResponse([
-                'status'    => 'ok'
+                'status' => self::STATUS_SUCCESS,
+                'action' => $action,
+                'actionLabel' => $actionLabel,
             ], 200);
         }
 
-        return new JsonResponse([
-            'status'    => 'error'
-        ], 410);
+        return new JsonResponse(['status' => self::STATUS_ERROR], 410);
 
     }
 

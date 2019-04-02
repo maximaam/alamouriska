@@ -5,12 +5,12 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\ThumbUpRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\LikingRepository")
  */
-class ThumbUp extends AbstractEntity
+class Liking extends AbstractEntity
 {
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="thumbUps")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User")
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
@@ -35,7 +35,7 @@ class ThumbUp extends AbstractEntity
 
     /**
      * @param User|null $user
-     * @return ThumbUp
+     * @return Liking
      */
     public function setUser(?User $user): self
     {
@@ -54,7 +54,7 @@ class ThumbUp extends AbstractEntity
 
     /**
      * @param string $owner
-     * @return ThumbUp
+     * @return Liking
      */
     public function setOwner(string $owner): self
     {
@@ -73,7 +73,7 @@ class ThumbUp extends AbstractEntity
 
     /**
      * @param int $ownerId
-     * @return ThumbUp
+     * @return Liking
      */
     public function setOwnerId(int $ownerId): self
     {
