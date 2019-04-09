@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello MemberController!{% endblock %}
+
+{% block body %}
+    <div class="container">
+
+        <div class="row mb-5">
+            <div class="col-sm-12">
+                <div class="media p-1">
+                    {%  include 'partials/avatar.html.twig' with {'current_user': user, 'size': 128, 'classes': 'mr-3 rounded' } only %}
+                    <div class="media-body">
+                        <h1 class="d-inline">Publications faites par {{ user.username }}</h1>
+                        <h2>Membre depuis le {{ user.createdAt | localizeddate('long', 'none', app.request.locale) }}</h2>
+                        <h5>{{ mots | length }} publication(s).</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+
+            <div class="col-sm-4">
+                <div class="card text-dark">
+                    <p class="card-header">
+                        <strong>{{ 'label.user.almrsk.list' | trans({'%almrsk%' : 'mots'}) }}</strong>
+                    </p>
+                    <div class="card-body">
+                        <ul>
+                            {% for mot in mots %}
+                                <li><a href="{{ path('mot_show', { 'id': mot.id }) }}">{{ mot.inLatin }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-4">
+                <div class="card text-dark">
+                    <p class="card-header">
+                        <strong>{{ 'label.user.almrsk.list' | trans({'%almrsk%' : 'locutions'}) }}</strong>
+                    </p>
+                    <div class="card-body">
+                        <ul>
+                            {% for locution in locutions %}
+                                <li><a href="{{ path('locution_show', { 'id': locution.id }) }}">{{ locution }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-4">
+                <div class="card text-dark">
+                    <p class="card-header">
+                        <strong>{{ 'label.user.almrsk.list' | trans({'%almrsk%' : 'proverbes'}) }}</strong>
+                    </p>
+                    <div class="card-body">
+                        <ul>
+                            {% for proverbe in proverbes %}
+                                <li><a href="{{ path('proverbe_show', { 'id': proverbe.id }) }}">{{ proverbe }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

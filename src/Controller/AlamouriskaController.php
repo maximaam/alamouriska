@@ -9,9 +9,12 @@
 namespace App\Controller;
 
 use App\Entity\Liking;
+use App\Entity\Locution;
 use App\Entity\Mot;
 use App\Form\MotType;
+use App\Repository\LocutionRepository;
 use App\Repository\MotRepository;
+use App\Repository\ProverbeRepository;
 use App\Utils\LikingUtils;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,19 +26,20 @@ use FOS\CommentBundle\Model\ThreadManagerInterface;
 use FOS\CommentBundle\Model\CommentManagerInterface;
 
 /**
- * @Route("/mot")
+ * Class AlamouriskaController
+ * @package App\Controller
  */
-class MotController extends AbstractController
+class AlamouriskaController extends AbstractController
 {
     /**
-     * @Route("/", name="mot_index", methods={"GET","POST"})
+     * @Route("/mot", name="mot_index", methods={"GET","POST"})
      *
-     * @param MotRepository $motRepository
+     * @param MotRepository $repository
      * @param Request $request
      * @return Response
      * @throws \Exception
      */
-    public function index(MotRepository $motRepository, Request $request, \Swift_Mailer $mailer): Response
+    public function motIndex(MotRepository $repository, Request $request, \Swift_Mailer $mailer): Response
     {
 
 //        $message = (new \Swift_Message('Hello Email'))
@@ -85,12 +89,38 @@ class MotController extends AbstractController
         $likings = $this->getDoctrine()->getRepository(Liking::class)
             ->findBy(['owner' => 'mot']);
 
-        return $this->render('mot/index.html.twig', [
+        return $this->render('alamouriska/mot_index.html.twig', [
             'mot'   => $mot,
-            'mots'  => $motRepository->findBy([], ['createdAt' => 'DESC']),
+            'mots'  => $repository->findBy([], ['createdAt' => 'DESC']),
             'form'  => $form->createView(),
             'likings' => LikingUtils::getLikingsUsersIds($likings)
         ]);
+    }
+
+    /**
+     * @Route("/locution", name="locution_index", methods={"GET","POST"})
+     *
+     * @param LocutionRepository $repository
+     * @param Request $request
+     * @return Response
+     * @throws \Exception
+     */
+    public function locutionIndex(LocutionRepository $repository, Request $request, \Swift_Mailer $mailer): Response
+    {
+
+    }
+
+    /**
+     * @Route("/proverbe", name="proverbe_index", methods={"GET","POST"})
+     *
+     * @param ProverbeRepository $repository
+     * @param Request $request
+     * @return Response
+     * @throws \Exception
+     */
+    public function proverbeIndex(ProverbeRepository $repository, Request $request, \Swift_Mailer $mailer): Response
+    {
+
     }
 
     /**
@@ -124,7 +154,7 @@ class MotController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="mot_show", methods={"GET"})
+     * @Route("/mot/{id}", name="mot_show", methods={"GET"})
      *
      * @param Mot $mot
      * @param Request $request
@@ -133,7 +163,7 @@ class MotController extends AbstractController
      * @return Response
      * @throws \ReflectionException
      */
-    public function show(Mot $mot, Request $request, ThreadManagerInterface $threadManager, CommentManagerInterface $commentManager): Response
+    public function motShow(Mot $mot, Request $request, ThreadManagerInterface $threadManager, CommentManagerInterface $commentManager): Response
     {
         //Use a hash of the entity and its ID as the thread id to enable multilple entities having same IDs to get comments
         $threadIdentifier = \md5(\get_class($mot) . $mot->getId());
@@ -157,46 +187,11 @@ class MotController extends AbstractController
 
         $comments = $commentManager->findCommentTreeByThread($thread);
 
-        return $this->render('mot/show.html.twig', [
+        return $this->render('alamouriska/mot_show.html.twig', [
             'mot' => $mot,
             'comments' => $comments,
             'thread' => $thread,
         ]);
     }
 
-    /**
-     * @Route("/{id}/edit", name="mot_edit", methods={"GET","POST"})
-     */
-    public function edit(Request $request, Mot $mot): Response
-    {
-        $form = $this->createForm(MotType::class, $mot);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('mot_index', [
-                'id' => $mot->getId(),
-            ]);
-        }
-
-        return $this->render('mot/edit.html.twig', [
-            'mot' => $mot,
-            'form' => $form->createView(),
-        ]);
-    }
-
-    /**
-     * @Route("/{id}", name="mot_delete", methods={"DELETE"})
-     */
-    public function delete(Request $request, Mot $mot): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$mot->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($mot);
-            $entityManager->flush();
-        }
-
-        return $this->redirectToRoute('mot_index');
-    }
 }

@@ -7,7 +7,7 @@ body {
 main {
     min-height: 80rem;
     padding: 20px 0;
-    margin-top: 80px;
+    margin-top: 60px;
 }
 
 h1,h2,h3,h4,h5,h6 {
@@ -63,7 +63,6 @@ footer.main-footer {
 }
 
 .navbar-nav a.nav-link {
-    font-family: 'Chelsea Market', cursive;
     color: #0076a1 !important;
     letter-spacing: 1px;
     border-radius: .3rem;
@@ -188,6 +187,16 @@ footer.main-footer {
     background: #004359;
     padding: 10px 0 10px;
 }
+
+/*
+#fos_user_registration_form .form-group {
+    background: #eee;
+    padding: 5px;
+    color: #333;
+    border-radius: .3rem;
+
+}
+*/
 
 
 @media (min-width:1025px) { /* big landscape tablets, laptops, and desktops */
