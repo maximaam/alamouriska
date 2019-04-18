@@ -65,6 +65,11 @@ class Mot extends AbstractEntity
     private $user;
 
     /**
+     * @ORM\Column(type="boolean")
+     */
+    private $question = false;
+
+    /**
      * @return string|null
      */
     public function getInLatin(): ?string
@@ -198,6 +203,25 @@ class Mot extends AbstractEntity
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getQuestion(): bool
+    {
+        return $this->question;
+    }
+
+    /**
+     * @param bool $question
+     * @return Mot
+     */
+    public function setQuestion(bool $question): self
+    {
+        $this->question = $question;
 
         return $this;
     }

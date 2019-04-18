@@ -76,7 +76,7 @@ class MenuBuilder
                         ['route' => $route . '_edit'],
                 ],
                 'attributes' => [
-                    'class' => 'nav-item',
+                    'class' => 'nav-item rounded',
                     'title' => \sprintf('Ajouter des %ss', $label)
                 ],
                 'linkAttributes' => [

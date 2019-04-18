@@ -4,20 +4,25 @@
 
 {% block fos_user_content %}
 
-    <h1 class="text-center">{{ 'resetting.reset.submit'|trans }}</h1>
-
-    {{ form_start(form, { 'action': path('fos_user_resetting_reset', {'token': token}), 'attr': { 'class': 'form-horizontal fos_user_resetting_reset' } }) }}
-    {{ form_widget(form) }}
-
-
-    <div class="form-group">
-        <div class="pull-right">
-            <button type="submit" id="_submit" name="_submit" class="btn btn-warning">
-                {{ 'form.submit'|trans({}, 'messages') }}
-            </button>
+    <div class="card text-dark">
+        <div class="card-header">
+            <h1 class="text-center">{{ 'resetting.reset.submit'|trans }}</h1>
+        </div>
+        <div class="card-body">
+            {{ form_start(form, { 'action': path('fos_user_resetting_reset', {'token': token}), 'attr': { 'class': 'form-horizontal fos_user_resetting_reset' } }) }}
+            {{ form_widget(form) }}
+            <div class="form-group">
+                <div class="pull-right">
+                    <button type="submit" id="_submit" name="_submit" class="btn btn-happy">
+                        {{ 'form.submit'|trans({}, 'messages') }}
+                    </button>
+                </div>
+            </div>
+            {{ form_end(form) }}
         </div>
     </div>
 
 
-    {{ form_end(form) }}
+
+
 {% endblock fos_user_content %}

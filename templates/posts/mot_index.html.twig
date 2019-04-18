@@ -50,9 +50,13 @@
                             </div>
 
                             <div class="bottom-container p-2 text-right">
+
+
+
+
                                 {%  include 'partials/liking.html.twig' with {
                                     'almrsk': mot,
-                                    'liking_users': likings | length > 0 ? likings[mot.id] : []
+                                    'liking_users': likings | length > 0 ? likings[mot.id] is defined ? likings[mot.id] : [] : []
                                 } only %}
 
                                 <a href="{{ path('mot_show', {'id': mot.id}) }}" title="{{ 'label.details_reactions' | trans }}" class="ml-3">
@@ -66,7 +70,7 @@
             </div>
 
             <div class="col-sm-4">
-                <div class="card text-dark almrsk-submission">
+                <div class="card text-dark">
 
                     {% if is_granted("IS_AUTHENTICATED_REMEMBERED") == false %}
                         <div class="post-form-layer">
@@ -88,9 +92,6 @@
                     <div class="card-body">
                         {{ include('partials/_form.html.twig') }}
                     </div>
-                    <!--
-                    <img src="{{ asset('images/hippocampe.gif') }}" class="hippocampe" alt="Hippocampe">
-                    -->
                 </div>
             </div>
 

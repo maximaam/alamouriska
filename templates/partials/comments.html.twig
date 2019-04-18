@@ -7,7 +7,7 @@
 
 {% if is_granted("IS_AUTHENTICATED_REMEMBERED") == false %}
     <a href="{{ path('fos_user_security_login') }}" title="Se connecter ou S'inscrire" class="user btn btn-primary">
-        <i class="fa fa-user"></i> Connecte-toi pour ajouter des commentaies !
+        <i class="fa fa-user"></i> Connecte-toi pour ajouter des commentaires !
     </a>
 {% else %}
     {% if fos_comment_can_comment_thread(thread) %}

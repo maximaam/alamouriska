@@ -43,6 +43,7 @@ class User extends BaseUser
 
     /**
      * @Assert\NotBlank()
+     * @Assert\Regex("/^[[:alnum:]]+$/")
      * @Assert\Length(
      *     min=4,
      *     max=30,
@@ -61,11 +62,6 @@ class User extends BaseUser
      *     maxMessage="fos_user.password.long",
      *     groups={"Profile", "ResetPassword", "Registration", "ChangePassword"}
      * )
-     * @Assert\Regex(
-     *     pattern="/^[^\W_]+$/",
-     *     message="user.password.difficulty",
-     *     groups={"Profile", "ResetPassword", "Registration", "ChangePassword"}
-     * )
      */
     protected $plainPassword;
 
@@ -80,8 +76,8 @@ class User extends BaseUser
      * @Assert\Image(
      *     maxSize = "1M",
      *     mimeTypes = {"image/jpeg", "image/png"},
-     *     minWidth = 128, maxWidth = 512,
-     *     minHeight = 128, maxHeight = 512,
+     *     minWidth = 128, maxWidth = 800,
+     *     minHeight = 128, maxHeight = 800,
      *     minWidthMessage="Votre photo doit faire minimum 128px de largeur.",
      *     minHeightMessage="Votre photo doit faire minimum 128px de hauteur.",
      *     maxSizeMessage = "The maxmimum allowed file size is 1MB.",
@@ -106,7 +102,6 @@ class User extends BaseUser
 
         $this->createdAt = new \DateTimeImmutable();
         $this->mots = new ArrayCollection();
-        $this->likings = new ArrayCollection();
     }
 
     /**

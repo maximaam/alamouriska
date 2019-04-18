@@ -8,12 +8,14 @@ $(document).ready(function() {
 
         $.get('/async/liking?owner=' + $this.data('owner') + '&ownerId=' + $this.data('id'), function (data) {
             if (+data.status === 1) {
-                let $sumLikings = $('.likings-sum'),
-                    $labelLikings = $('.likings-label'),
+                let $sumLikings = $this.find('.likings-sum'),
+                    $labelLikings = $this.find('.likings-label'),
+                    $containerLikings = $this.find('.likings-container'),
                     sumLikings = +$sumLikings.text();
 
                 $sumLikings.text(+data.action === 1 ? (sumLikings + 1) : (sumLikings - 1));
-                $labelLikings.text(data.actionLabel);
+                $containerLikings.toggleClass('text-danger', +data.action === 1);
+                $labelLikings.attr('title', data.actionLabel);
             }
         });
     });

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Mot;
 use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,7 +26,7 @@ class UserController extends AbstractController
     {
         return $this->render('user/index.html.twig', [
             'user' => $user,
-            'mots'  => $this->getDoctrine()->getRepository(User::class)->findBy(['user' => $user]),
+            'mots'  => $this->getDoctrine()->getRepository(Mot::class)->findBy(['user' => $user]),
             //'lo'  => $this->getDoctrine()->getRepository(Location::class)->findBy(['user' => $user]),
             //'mots'  => $this->getDoctrine()->getRepository(User::class)->findBy(['user' => $user]),
         ]);

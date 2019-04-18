@@ -36,14 +36,10 @@ class ProfileType extends AbstractType
             'download_link' => false,
             'download_uri'  => '',
             //'download_label' => '...',
-        ]);
+        ])
 
-        $builder->add('submit', SubmitType::class, [
-            'label'         => 'Envoyer',
-            'attr'  => [
-                'class' => 'btn btn-warning float-right'
-            ]
-        ]);
+        ->remove('current_password')
+        ;
     }
 
     /**

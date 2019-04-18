@@ -19,8 +19,9 @@ label:
   optional: 'Optionnel'
   optional_wished: 'Optionnel mais souhaité'
   log_in: 'Connecte-toi'
-  thumbs_up_add: "J'aime"
-  comments: 'Avis et commentaires'
+  liking_add: "J'aime"
+  liking_remove: "J'aime déjà"
+  comments: 'Commentaires'
 
   # Mots, locutions...etc pages
   almrsk:

@@ -11,11 +11,13 @@ namespace App\Controller;
 use App\Entity\Liking;
 use App\Entity\Locution;
 use App\Entity\Mot;
+use App\Entity\Proverbe;
 use App\Form\MotType;
 use App\Repository\LocutionRepository;
 use App\Repository\MotRepository;
 use App\Repository\ProverbeRepository;
 use App\Utils\LikingUtils;
+use FOS\CommentBundle\Model\ThreadInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,10 +28,10 @@ use FOS\CommentBundle\Model\ThreadManagerInterface;
 use FOS\CommentBundle\Model\CommentManagerInterface;
 
 /**
- * Class AlamouriskaController
+ * Class PostsController
  * @package App\Controller
  */
-class AlamouriskaController extends AbstractController
+class PostsController extends AbstractController
 {
     /**
      * @Route("/mot", name="mot_index", methods={"GET","POST"})
@@ -89,7 +91,7 @@ class AlamouriskaController extends AbstractController
         $likings = $this->getDoctrine()->getRepository(Liking::class)
             ->findBy(['owner' => 'mot']);
 
-        return $this->render('alamouriska/mot_index.html.twig', [
+        return $this->render('posts/mot_index.html.twig', [
             'mot'   => $mot,
             'mots'  => $repository->findBy([], ['createdAt' => 'DESC']),
             'form'  => $form->createView(),
@@ -124,36 +126,6 @@ class AlamouriskaController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="mot_new", methods={"GET","POST"})
-     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
-     *
-     * @param Request $request
-     * @return Response
-     * @throws \Exception
-     */
-    public function new(Request $request, ThreadManagerInterface $threadManager): Response
-    {
-        $mot = new Mot();
-        $mot->setUser($this->getUser());
-
-        $form = $this->createForm(MotType::class, $mot);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($mot);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('mot_index');
-        }
-
-        return $this->render('mot/new.html.twig', [
-            'mot' => $mot,
-            'form' => $form->createView(),
-        ]);
-    }
-
-    /**
      * @Route("/mot/{id}", name="mot_show", methods={"GET"})
      *
      * @param Mot $mot
@@ -163,35 +135,48 @@ class AlamouriskaController extends AbstractController
      * @return Response
      * @throws \ReflectionException
      */
-    public function motShow(Mot $mot, Request $request, ThreadManagerInterface $threadManager, CommentManagerInterface $commentManager): Response
+    public function motShow(Mot $mot, CommentManagerInterface $commentManager, ThreadManagerInterface $threadManager, Request $request): Response
     {
-        //Use a hash of the entity and its ID as the thread id to enable multilple entities having same IDs to get comments
-        $threadIdentifier = \md5(\get_class($mot) . $mot->getId());
+        $thread = $this->createThread($threadManager, $request, $mot);
+        $comments = $commentManager->findCommentTreeByThread($thread);
+
+        return $this->render('posts/mot_show.html.twig', [
+            'mot' => $mot,
+            'comments' => $comments,
+            'thread' => $thread,
+        ]);
+    }
+
+    /**
+     * @param ThreadManagerInterface $threadManager
+     * @param Request $request
+     * @param Mot|Locution|Proverbe $post
+     * @return ThreadInterface
+     * @throws \ReflectionException
+     */
+    private function createThread(ThreadManagerInterface $threadManager, Request $request, $post): ThreadInterface
+    {
+        //Use a hash of the entity and its ID as the thread id to enable multiple entities having same IDs to get comments
+        $threadIdentifier = \md5(\get_class($post) . $post->getId());
 
         /** @var ThreadManagerInterface $thread */
         $thread = $threadManager->findThreadById($threadIdentifier);
 
         if (null === $thread) {
-            $owner = new \ReflectionClass($mot);
+            $owner = new \ReflectionClass($post);
 
             /** @var \App\Entity\Thread $thread */
             $thread = $threadManager->createThread();
             $thread->setId($threadIdentifier);
             $thread->setPermalink($request->getUri());
             $thread->setOwner(\strtolower($owner->getShortName()));
-            $thread->setOwnerId($mot->getId());
+            $thread->setOwnerId($post->getId());
 
             // Add the thread
             $threadManager->saveThread($thread);
         }
 
-        $comments = $commentManager->findCommentTreeByThread($thread);
-
-        return $this->render('alamouriska/mot_show.html.twig', [
-            'mot' => $mot,
-            'comments' => $comments,
-            'thread' => $thread,
-        ]);
+        return $thread;
     }
 
 }

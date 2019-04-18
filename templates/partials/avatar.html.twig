@@ -4,6 +4,6 @@
     {% set avatar = vich_uploader_asset(current_user, 'avatarFile') %}
 {% endif %}
 
-<a href="{{ path('user_show', { 'username': current_user.username, 'id': current_user.id }) }}" title="Profil: {{ current_user.username }}" class="user">
+<a href="{{ path('user_show', { 'username': current_user.username, 'id': current_user.id }) }}" title="Profil: {{ current_user.username }}" class="user img">
     <img class="align-self-start {{ classes }}" src="{{ avatar }}" alt="{{ current_user.username }}" width="{{ size }}" height="{{ size }}">
 </a>

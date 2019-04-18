@@ -8,7 +8,7 @@ twig:
         '%kernel.project_dir%/templates': app
 
     globals:
-        site_name: '%app_name%'
+        app_name: '%app_name%'
 
     date:
         format: d/m/Y à H:i

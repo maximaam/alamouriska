@@ -41,10 +41,11 @@
                         <strong>{{ 'label.user.almrsk.list' | trans({'%almrsk%' : 'locutions'}) }}</strong>
                     </p>
                     <div class="card-body">
+
                         <ul>
-                            {% for locution in locutions %}
-                                <li><a href="{{ path('locution_show', { 'id': locution.id }) }}">{{ locution }}</a></li>
-                            {% endfor %}
+{#                            {% for locution in locutions %}#}
+{#                                <li><a href="{{ path('locution_show', { 'id': locution.id }) }}">{{ locution }}</a></li>#}
+{#                            {% endfor %}#}
                         </ul>
                     </div>
                 </div>
@@ -57,9 +58,9 @@
                     </p>
                     <div class="card-body">
                         <ul>
-                            {% for proverbe in proverbes %}
-                                <li><a href="{{ path('proverbe_show', { 'id': proverbe.id }) }}">{{ proverbe }}</a></li>
-                            {% endfor %}
+{#                            {% for proverbe in proverbes %}#}
+{#                                <li><a href="{{ path('proverbe_show', { 'id': proverbe.id }) }}">{{ proverbe }}</a></li>#}
+{#                            {% endfor %}#}
                         </ul>
                     </div>
                 </div>

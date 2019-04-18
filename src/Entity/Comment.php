@@ -5,7 +5,6 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\CommentBundle\Entity\Comment as BaseComment;
 use FOS\CommentBundle\Model\SignedCommentInterface;
-use mysql_xdevapi\Exception;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -35,16 +34,29 @@ class Comment extends BaseComment implements SignedCommentInterface
      */
     protected $author;
 
-    public function setAuthor(UserInterface $author)
+    /**
+     * @param UserInterface $author
+     * @return Comment
+     */
+    public function setAuthor(UserInterface $author): self
     {
         $this->author = $author;
+
+        return $this;
     }
 
-    public function getAuthor()
+    /**
+     * @return UserInterface|null
+     */
+    public function getAuthor(): ?UserInterface
     {
         return $this->author;
     }
 
+    /**
+     * @return string
+     * @throws \Exception
+     */
     public function getAuthorName()
     {
         if (null === $this->getAuthor()) {

@@ -39,3 +39,7 @@ services:
             - { name: knp_menu.menu_builder, method: createMainMenu, alias: main }
             - { name: knp_menu.menu_builder, method: createSubCategoryMenu, alias: subCategory }
             - { name: knp_menu.menu_builder, method: createFooterMenu, alias: footer }
+
+    #App\EventListener\ConfirmEmailChangeSubscriber:
+        #tags:
+            #- { name: kernel.}
