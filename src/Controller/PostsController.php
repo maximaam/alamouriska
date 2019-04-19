@@ -17,6 +17,7 @@ use App\Repository\LocutionRepository;
 use App\Repository\MotRepository;
 use App\Repository\ProverbeRepository;
 use App\Utils\LikingUtils;
+use App\Utils\Linguistic;
 use FOS\CommentBundle\Model\ThreadInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -72,14 +73,15 @@ class PostsController extends AbstractController
 //
 //        $mailer->send($message);
 
-        $mot = new Mot();
-        $mot->setUser($this->getUser());
+        $mot = (new Mot())->setUser($this->getUser());
 
         $form = $this->createForm(MotType::class, $mot);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+            $mot->setSlug(Linguistic::toSlug($mot->getInLatin()));
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($mot);
@@ -126,7 +128,7 @@ class PostsController extends AbstractController
     }
 
     /**
-     * @Route("/mot/{id}", name="mot_show", methods={"GET"})
+     * @Route("/mot/{id}/{slug}", name="mot_show", methods={"GET"})
      *
      * @param Mot $mot
      * @param Request $request

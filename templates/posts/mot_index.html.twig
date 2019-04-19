@@ -27,17 +27,9 @@
                                 </div>
                             </div>
 
-                            {% if mot.imageName %}
-                                <div class="img-container bg-light">
-                                    <a href="{{ path('mot_show', {'id': mot.id}) }}">
-                                        {%  include 'partials/almrsk_image.html.twig' with {'almrsk': mot } only %}
-                                    </a>
-                                </div>
-                            {% endif %}
-
                             <div class="center-container p-3 bg-light border-bottom">
                                 <h2 class="mt-0 mb-1" title="{{ 'label.latin_char' | trans }}">
-                                    <a href="{{ path('mot_show', {'id': mot.id}) }}">
+                                    <a href="{{ path('mot_show', {'id': mot.id, 'slug': mot.slug|default('hhh')}) }}">
                                         {{ mot.inLatin }}
                                     </a>
                                 </h2>
@@ -46,25 +38,33 @@
                                     <span title="{{ 'label.arabic_char' | trans }}">{{ mot.inArabic }}</span>
                                 </h3>
 
+                                {% if mot.imageName %}
+                                    <div class="img-container mb-3 bg-light">
+                                        <a href="{{ path('mot_show', {'id': mot.id, 'slug': mot.slug|default('hhh')}) }}">
+                                            {%  include 'partials/almrsk_image.html.twig' with {'almrsk': mot } only %}
+                                        </a>
+                                    </div>
+                                {% endif %}
+
                                 <p>{{ mot.description }}</p>
                             </div>
 
+
+                        <!--
+                        <div class="fb-like" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
+                        -->
                             <div class="bottom-container p-2 text-right">
-
-
-
 
                                 {%  include 'partials/liking.html.twig' with {
                                     'almrsk': mot,
                                     'liking_users': likings | length > 0 ? likings[mot.id] is defined ? likings[mot.id] : [] : []
                                 } only %}
 
-                                <a href="{{ path('mot_show', {'id': mot.id}) }}" title="{{ 'label.details_reactions' | trans }}" class="ml-3">
+                                <a href="{{ path('mot_show', {'id': mot.id, 'slug': mot.slug|default('hhh')}) }}" title="{{ 'label.details_reactions' | trans }}" class="ml-3">
                                     <i class="fa fa-comment"></i>
                                     {{ 'label.comments' | trans }}
                                 </a>
                             </div>
-
                     </div>
                 {% endfor %}
             </div>

@@ -41,6 +41,12 @@ footer.main-footer {
     height: 400px;
     background-size: cover;
 }
+
+footer.main-footer .container {
+    border-top: 1px solid #87CEEB;
+    padding: 20px 0;
+}
+
 .fa-facebook-official,
 .fa-twitter {
     font-size: 48px;
@@ -163,15 +169,44 @@ footer.main-footer {
     color: #f8ea49;
 }
 
-.btn-happy {
+.btn-happy,
+.fos_comment_submit input,
+.fos_comment_comment_remove,
+.fos_comment_comment_edit_show_form {
     color: #333;
     background-color: #f8ea49;
     border-color: #f8ea49;
     font-weight: bold;
 }
 
-.btn-happy:hover {
+.btn-happy:hover,
+.fos_comment_submit input:hover,
+.fos_comment_comment_remove:hover,
+.fos_comment_comment_edit_show_form:hover {
     background-color: #e6d845;
+}
+.fos_comment_submit {
+    margin-top: 10px;
+    text-align: right;
+}
+.fos_comment_submit input,
+.fos_comment_comment_remove,
+.fos_comment_comment_edit_show_form {
+    display: inline-block;
+    font-weight: 400;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border: 1px solid transparent;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: .25rem;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
 
 .custom-file-label { opacity: 0; }

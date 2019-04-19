@@ -45,8 +45,6 @@ class NotificationManager
      */
     public function send(Comment $comment, array $recipients, $post): void
     {
-        return;
-
         //Do not notify if the recipients are empty - for example when the post owner comments his post
         if (empty($recipients)) {
             return;

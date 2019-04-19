@@ -10,7 +10,7 @@
                 <div class="media p-1">
                     {%  include 'partials/avatar.html.twig' with {'current_user': user, 'size': 128, 'classes': 'mr-3 rounded' } only %}
                     <div class="media-body">
-                        <h1 class="d-inline">Publications faites par {{ user.username }}</h1>
+                        <h1 class="d-inline">Publications de {{ user.username }}</h1>
                         <h2>Membre depuis le {{ user.createdAt | localizeddate('long', 'none', app.request.locale) }}</h2>
                         <h5>{{ mots | length }} publication(s).</h5>
                     </div>

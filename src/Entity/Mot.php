@@ -70,6 +70,11 @@ class Mot extends AbstractEntity
     private $question = false;
 
     /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $slug;
+
+    /**
      * @return string|null
      */
     public function getInLatin(): ?string
@@ -222,6 +227,25 @@ class Mot extends AbstractEntity
     public function setQuestion(bool $question): self
     {
         $this->question = $question;
+
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    /**
+     * @param string $slug
+     * @return Mot
+     */
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
 
         return $this;
     }
