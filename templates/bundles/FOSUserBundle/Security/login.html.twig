@@ -25,6 +25,10 @@
                         <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
                     {% endif %}
 
+                    <input type="hidden"
+                           name="_target_path"
+                           value="{{ app.request.headers.get('referer') }}">
+
                     <div class="form-group">
                         <div class="input-group">
                             <div class="input-group-prepend">

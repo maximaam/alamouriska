@@ -28,7 +28,11 @@
                     <div class="card-body">
                         <ul>
                             {% for mot in mots %}
-                                <li><a href="{{ path('mot_show', { 'id': mot.id }) }}">{{ mot.inLatin }}</a></li>
+                                <li>
+                                    <a href="{{ path('mot_show', { 'id': mot.id, 'slug': mot.slug|default('hhh') }) }}">
+                                        {{ mot.inLatin }}
+                                    </a>
+                                </li>
                             {% endfor %}
                         </ul>
                     </div>

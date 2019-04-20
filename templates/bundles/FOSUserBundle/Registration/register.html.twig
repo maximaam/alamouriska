@@ -8,9 +8,18 @@
 
 {% block fos_user_content %}
 
-    <h1 class="text-center">{{ 'layout.register' | trans }}</h1>
-    <p>Inscris-toi pour pouvoir ajouter des publications ou interagir avec celles des autres.</p>
+    <div class="card text-dark">
+        <div class="card-header">
+            <h1 class="text-center">{{ 'layout.register' | trans }}</h1>
+        </div>
+        <div class="card-body">
+            <p>Inscris-toi pour pouvoir ajouter des publications ou interagir avec celles des autres.</p>
 
-    {{ form(form) }}
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <button class="btn btn-happy float-right">{{ 'form.submit' | trans }}</button>
+            {{ form_end(form) }}
+        </div>
+    </div>
 
 {% endblock %}

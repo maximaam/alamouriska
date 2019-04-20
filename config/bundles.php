@@ -19,4 +19,5 @@ return [
     Vich\UploaderBundle\VichUploaderBundle::class => ['all' => true],
     FOS\RestBundle\FOSRestBundle::class => ['all' => true],
     FOS\CommentBundle\FOSCommentBundle::class => ['all' => true],
+    Knp\Bundle\PaginatorBundle\KnpPaginatorBundle::class => ['all' => true],
 ];

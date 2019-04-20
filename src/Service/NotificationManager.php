@@ -52,8 +52,9 @@ class NotificationManager
 
         $recipients = implode(',', $recipients);
         $recipients = trim($recipients, ',');
+        $route = $comment->getThread()->getOwner() . '_show';
 
-        $postUrl = $this->router->generate($comment->getThread()->getOwner() . '_show', ['id' => $post->getId()], UrlGenerator::ABSOLUTE_URL);
+        $postUrl = $this->router->generate($route, ['id' => $post->getId(), 'slug' => $post->getSlug()], UrlGenerator::ABSOLUTE_URL);
 
         $messageToOwner = (new \Swift_Message('Un commentaire a été ajouté à ta publication.'))
             ->setFrom('alamouriska.app@gmail.com', 'ALAMOURISKA')

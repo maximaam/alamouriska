@@ -1,7 +1,6 @@
 body {
     background: #0076a1;
     font-family: Arial, Helvetica, sans-serif;
-    color: #fff;
 }
 
 main {
@@ -172,7 +171,9 @@ footer.main-footer .container {
 .btn-happy,
 .fos_comment_submit input,
 .fos_comment_comment_remove,
-.fos_comment_comment_edit_show_form {
+.fos_comment_comment_edit_show_form,
+.fos_comment_comment_edit_cancel,
+.pagination a {
     color: #333;
     background-color: #f8ea49;
     border-color: #f8ea49;
@@ -182,16 +183,30 @@ footer.main-footer .container {
 .btn-happy:hover,
 .fos_comment_submit input:hover,
 .fos_comment_comment_remove:hover,
-.fos_comment_comment_edit_show_form:hover {
+.fos_comment_comment_edit_show_form:hover,
+.fos_comment_comment_edit_cancel:hover,
+.pagination a:hover {
     background-color: #e6d845;
 }
 .fos_comment_submit {
     margin-top: 10px;
     text-align: right;
 }
+.pagination {
+    text-align: center;
+    display: block;
+}
+
+.pagination .current {
+    background: #ccc;
+}
+
 .fos_comment_submit input,
 .fos_comment_comment_remove,
-.fos_comment_comment_edit_show_form {
+.fos_comment_comment_edit_show_form,
+.fos_comment_comment_edit_cancel,
+.pagination a,
+.pagination .current {
     display: inline-block;
     font-weight: 400;
     text-align: center;
@@ -207,6 +222,10 @@ footer.main-footer .container {
     line-height: 1.5;
     border-radius: .25rem;
     transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.fos_comment_comment_metas {
+    margin-bottom: 10px;
 }
 
 .custom-file-label { opacity: 0; }
@@ -266,7 +285,7 @@ footer.main-footer .container {
     text-align: center;
     margin-top: 120px;
     font-weight: bold;
-    background: #FFC56C;
+    background: #f8ea49;
     padding: 10px 0 10px;
 }
 
@@ -279,6 +298,8 @@ footer.main-footer .container {
 
 }
 */
+
+
 
 
 @media (min-width:1025px) { /* big landscape tablets, laptops, and desktops */

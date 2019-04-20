@@ -19,7 +19,7 @@ use Doctrine\Common\Collections\Collection;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
- * @ORM\Table(name="fos_user")
+ * @ORM\Table(name="fos_user", indexes={@ORM\Index(name="username_idx", columns={"username"})})
  * @Vich\Uploadable
  */
 class User extends BaseUser

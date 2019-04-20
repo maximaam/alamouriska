@@ -17,7 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class UserController extends AbstractController
 {
     /**
-     * @Route("/{id}/{username}", name="user_show")
+     * @Route("/{username}", name="user_show")
      *
      * @param User $user
      * @return Response
@@ -26,7 +26,7 @@ class UserController extends AbstractController
     {
         return $this->render('user/profile.html.twig', [
             'user' => $user,
-            'mots'  => $this->getDoctrine()->getRepository(Mot::class)->findBy(['user' => $user]),
+            'mots'  => $this->getDoctrine()->getRepository(Mot::class)->findBy(['user' => $user, 'status' => Mot::STATUS_ACTIVE]),
             //'lo'  => $this->getDoctrine()->getRepository(Location::class)->findBy(['user' => $user]),
             //'mots'  => $this->getDoctrine()->getRepository(User::class)->findBy(['user' => $user]),
         ]);

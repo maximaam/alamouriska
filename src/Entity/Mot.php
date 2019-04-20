@@ -15,12 +15,21 @@ use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
+ * @ORM\Table(name="mot",indexes={@ORM\Index(name="created_at_idx", columns={"created_at"})})
  * @ORM\Entity(repositoryClass="App\Repository\MotRepository")
  * @UniqueEntity(fields={"inLatin"}, message="msg.duplicate_mot")
  * @Vich\Uploadable
  */
 class Mot extends AbstractEntity
 {
+    const STATUS_ACTIVE = 1;
+    const STATUS_DELETED = 2;
+
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    private $status = self::STATUS_ACTIVE;
+
     /**
      * @ORM\Column(type="string", length=128, unique=true)
      */
@@ -73,6 +82,8 @@ class Mot extends AbstractEntity
      * @ORM\Column(type="string", length=255)
      */
     private $slug;
+
+
 
     /**
      * @return string|null
@@ -246,6 +257,25 @@ class Mot extends AbstractEntity
     public function setSlug(string $slug): self
     {
         $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getStatus(): ?int
+    {
+        return $this->status;
+    }
+
+    /**
+     * @param int $status
+     * @return Mot
+     */
+    public function setStatus(int $status): self
+    {
+        $this->status = $status;
 
         return $this;
     }

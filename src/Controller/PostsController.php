@@ -20,6 +20,7 @@ use App\Utils\LikingUtils;
 use App\Utils\Linguistic;
 use FOS\CommentBundle\Model\ThreadInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -27,6 +28,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use FOS\CommentBundle\Model\Thread;
 use FOS\CommentBundle\Model\ThreadManagerInterface;
 use FOS\CommentBundle\Model\CommentManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 
 /**
  * Class PostsController
@@ -37,12 +39,11 @@ class PostsController extends AbstractController
     /**
      * @Route("/mot", name="mot_index", methods={"GET","POST"})
      *
-     * @param MotRepository $repository
      * @param Request $request
      * @return Response
      * @throws \Exception
      */
-    public function motIndex(MotRepository $repository, Request $request, \Swift_Mailer $mailer): Response
+    public function motIndex(Request $request, \Swift_Mailer $mailer, PaginatorInterface $paginator): Response
     {
 
 //        $message = (new \Swift_Message('Hello Email'))
@@ -93,12 +94,47 @@ class PostsController extends AbstractController
         $likings = $this->getDoctrine()->getRepository(Liking::class)
             ->findBy(['owner' => 'mot']);
 
+        $motsQuery = $this->getDoctrine()->getRepository(Mot::class)
+            ->createQueryBuilder('m')
+            ->where('m.status = :status')
+            ->setParameter('status', Mot::STATUS_ACTIVE)
+            ->orderBy('m.createdAt', 'DESC')
+            ->getQuery();
+
+        $mots = $paginator->paginate($motsQuery, $request->query->getInt('page', 1), 3);
+
         return $this->render('posts/mot_index.html.twig', [
             'mot'   => $mot,
-            'mots'  => $repository->findBy([], ['createdAt' => 'DESC']),
+            'mots'  => $mots,
             'form'  => $form->createView(),
             'likings' => LikingUtils::getLikingsUsersIds($likings)
         ]);
+    }
+
+    /**
+     * @Route("/mot/supprimer/{id}", name="mot_delete", methods={"GET"})
+     *
+     * @param Mot $mot
+     * @return RedirectResponse
+     * @throws \Exception
+     */
+    public function motDelete(Mot $mot): RedirectResponse
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        if ($mot) {
+
+            if ($mot->getUser() !== $this->getUser()) {
+                throw new \Exception('Error.');
+            }
+
+            $mot->setStatus(Mot::STATUS_DELETED);
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('user_show', ['username' => $this->getUser()->getUsername()]);
+        }
+
+        throw new \Exception('Cette publication est inconnue.');
     }
 
     /**
