@@ -2,13 +2,24 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\Timestampable;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\LikingRepository")
+ * @ORM\HasLifecycleCallbacks
  */
-class Liking extends AbstractEntity
+final class Liking
 {
+    use Timestampable;
+
+    /**
+     * @ORM\Column(type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User")
      * @ORM\JoinColumn(nullable=false)
@@ -24,6 +35,14 @@ class Liking extends AbstractEntity
      * @ORM\Column(type="integer")
      */
     private $ownerId;
+
+    /**
+     * @return int|null
+     */
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
 
     /**
      * @return User|null

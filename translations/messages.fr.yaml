@@ -7,7 +7,6 @@ form:
   submit: 'Envoyer'
 
 msg:
-  duplicate_mot: 'Ce mot a déjà alamouriské!'
   jpeg_only: 'Seul le format JPEG/JPG est accepté!'
 
 label:

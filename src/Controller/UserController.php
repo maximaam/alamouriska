@@ -26,7 +26,7 @@ class UserController extends AbstractController
     {
         return $this->render('user/profile.html.twig', [
             'user' => $user,
-            'mots'  => $this->getDoctrine()->getRepository(Mot::class)->findBy(['user' => $user, 'status' => Mot::STATUS_ACTIVE]),
+            'mots'  => $this->getDoctrine()->getRepository(Mot::class)->findBy(['user' => $user]),
             //'lo'  => $this->getDoctrine()->getRepository(Location::class)->findBy(['user' => $user]),
             //'mots'  => $this->getDoctrine()->getRepository(User::class)->findBy(['user' => $user]),
         ]);

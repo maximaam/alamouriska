@@ -11,6 +11,7 @@ namespace App\Controller;
 use App\Entity\Liking;
 use App\Entity\Locution;
 use App\Entity\Mot;
+use App\Entity\MotDeleted;
 use App\Entity\Proverbe;
 use App\Form\MotType;
 use App\Repository\LocutionRepository;
@@ -96,8 +97,6 @@ class PostsController extends AbstractController
 
         $motsQuery = $this->getDoctrine()->getRepository(Mot::class)
             ->createQueryBuilder('m')
-            ->where('m.status = :status')
-            ->setParameter('status', Mot::STATUS_ACTIVE)
             ->orderBy('m.createdAt', 'DESC')
             ->getQuery();
 
@@ -128,8 +127,19 @@ class PostsController extends AbstractController
                 throw new \Exception('Error.');
             }
 
-            $mot->setStatus(Mot::STATUS_DELETED);
-            $this->getDoctrine()->getManager()->flush();
+            $motDeleted = (new MotDeleted())
+                ->setInLatin($mot->getInLatin())
+                ->setInArabic($mot->getInArabic())
+                ->setInTamazight($mot->getInTamazight())
+                ->setDescription($mot->getDescription())
+                ->setUserId($mot->getUser()->getId())
+                ->setCreatedAt($mot->getCreatedAt())
+            ;
+
+            $manager = $this->getDoctrine()->getManager();
+            $manager->persist($motDeleted);
+            $manager->remove($mot);
+            $manager->flush();
 
             return $this->redirectToRoute('user_show', ['username' => $this->getUser()->getUsername()]);
         }
