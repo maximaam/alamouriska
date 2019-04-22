@@ -8,6 +8,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\Timestampable;
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -24,22 +25,14 @@ use Doctrine\Common\Collections\Collection;
  */
 class User extends BaseUser
 {
+    use Timestampable;
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
     protected $id;
-
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    private $createdAt;
-
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private $updatedAt;
 
     /**
      * @Assert\NotBlank()
@@ -93,6 +86,20 @@ class User extends BaseUser
     private $mots;
 
     /**
+     * Allow member to write to another member
+     *
+     * @ORM\Column(type="boolean")
+     */
+    private $allowMemberContact = true;
+
+    /**
+     * Member gets a notification on every new post
+     *
+     * @ORM\Column(type="boolean")
+     */
+    private $allowPostNotification = false;
+
+    /**
      * User constructor.
      * @throws \Exception
      */
@@ -100,46 +107,7 @@ class User extends BaseUser
     {
         parent::__construct();
 
-        $this->createdAt = new \DateTimeImmutable();
         $this->mots = new ArrayCollection();
-    }
-
-    /**
-     * @return \DateTimeInterface|null
-     */
-    public function getCreatedAt(): ?\DateTimeInterface
-    {
-        return $this->createdAt;
-    }
-
-    /**
-     * @param \DateTimeInterface $createdAt
-     * @return User
-     */
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-    /**
-     * @return \DateTimeInterface|null
-     */
-    public function getUpdatedAt(): ?\DateTimeInterface
-    {
-        return $this->updatedAt;
-    }
-
-    /**
-     * @param \DateTimeInterface|null $updatedAt
-     * @return User
-     */
-    public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
-    {
-        $this->updatedAt = $updatedAt;
-
-        return $this;
     }
 
     /**
@@ -222,6 +190,44 @@ class User extends BaseUser
                 $mot->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function getAllowMemberContact(): ?bool
+    {
+        return $this->allowMemberContact;
+    }
+
+    /**
+     * @param bool $val
+     * @return User
+     */
+    public function setAllowMemberContact(bool $val): self
+    {
+        $this->allowMemberContact = $val;
+
+        return $this;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function getAllowPostNotification(): ?bool
+    {
+        return $this->allowPostNotification;
+    }
+
+    /**
+     * @param bool $val
+     * @return User
+     */
+    public function setAllowPostNotification(bool $val): self
+    {
+        $this->allowPostNotification = $val;
 
         return $this;
     }

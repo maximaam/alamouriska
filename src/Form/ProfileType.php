@@ -29,16 +29,23 @@ class ProfileType extends AbstractType
     {
         parent::buildForm($builder, $options);
 
-        $builder->add('avatarFile', VichImageType::class, [
-            'label'         => 'Photo (jpeg uniquement)',
-            'required'      => false,
-            'allow_delete'  => true,
-            'download_link' => false,
-            'download_uri'  => '',
-            //'download_label' => '...',
-        ])
+        $builder
+            ->add('allowMemberContact', null, [
+                'label' => 'Les membres peuvent me contacter directement'
+            ])
+            ->add('allowPostNotification', null, [
+                'label' => 'Envoyez-moi un email à chaque nouvelle publication'
+            ])
+            ->add('avatarFile', VichImageType::class, [
+                'label'         => 'Photo (jpeg uniquement)',
+                'required'      => false,
+                'allow_delete'  => true,
+                'download_link' => false,
+                'download_uri'  => '',
+                //'download_label' => '...',
+                ])
 
-        ->remove('current_password')
+            ->remove('current_password')
         ;
     }
 

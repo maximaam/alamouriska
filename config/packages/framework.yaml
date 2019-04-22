@@ -1,7 +1,8 @@
 framework:
     secret: '%env(APP_SECRET)%'
     default_locale: 'en'
-    translator: ~
+    translator:
+        fallbacks: [ "en" ]
     #csrf_protection: true
     #http_method_override: true
 
@@ -17,10 +18,7 @@ framework:
     php_errors:
         log: true
 
-
-
     templating: { engines: ['twig'] }
-
 
     # Comment bundle
     http_method_override: true
