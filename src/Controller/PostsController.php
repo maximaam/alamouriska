@@ -11,14 +11,17 @@ namespace App\Controller;
 use App\Entity\Liking;
 use App\Entity\Locution;
 use App\Entity\Mot;
+use App\Entity\MotDeleted;
 use App\Entity\Proverbe;
 use App\Form\MotType;
 use App\Repository\LocutionRepository;
 use App\Repository\MotRepository;
 use App\Repository\ProverbeRepository;
 use App\Utils\LikingUtils;
+use App\Utils\Linguistic;
 use FOS\CommentBundle\Model\ThreadInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -26,6 +29,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use FOS\CommentBundle\Model\Thread;
 use FOS\CommentBundle\Model\ThreadManagerInterface;
 use FOS\CommentBundle\Model\CommentManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 
 /**
  * Class PostsController
@@ -36,12 +40,11 @@ class PostsController extends AbstractController
     /**
      * @Route("/mot", name="mot_index", methods={"GET","POST"})
      *
-     * @param MotRepository $repository
      * @param Request $request
      * @return Response
      * @throws \Exception
      */
-    public function motIndex(MotRepository $repository, Request $request, \Swift_Mailer $mailer): Response
+    public function motIndex(Request $request, \Swift_Mailer $mailer, PaginatorInterface $paginator): Response
     {
 
 //        $message = (new \Swift_Message('Hello Email'))
@@ -72,14 +75,15 @@ class PostsController extends AbstractController
 //
 //        $mailer->send($message);
 
-        $mot = new Mot();
-        $mot->setUser($this->getUser());
+        $mot = (new Mot())->setUser($this->getUser());
 
         $form = $this->createForm(MotType::class, $mot);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+            $mot->setSlug(Linguistic::toSlug($mot->getInLatin()));
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($mot);
@@ -91,12 +95,56 @@ class PostsController extends AbstractController
         $likings = $this->getDoctrine()->getRepository(Liking::class)
             ->findBy(['owner' => 'mot']);
 
+        $motsQuery = $this->getDoctrine()->getRepository(Mot::class)
+            ->createQueryBuilder('m')
+            ->orderBy('m.createdAt', 'DESC')
+            ->getQuery();
+
+        $mots = $paginator->paginate($motsQuery, $request->query->getInt('page', 1), 3);
+
         return $this->render('posts/mot_index.html.twig', [
             'mot'   => $mot,
-            'mots'  => $repository->findBy([], ['createdAt' => 'DESC']),
+            'mots'  => $mots,
             'form'  => $form->createView(),
             'likings' => LikingUtils::getLikingsUsersIds($likings)
         ]);
+    }
+
+    /**
+     * @Route("/mot/supprimer/{id}", name="mot_delete", methods={"GET"})
+     *
+     * @param Mot $mot
+     * @return RedirectResponse
+     * @throws \Exception
+     */
+    public function motDelete(Mot $mot): RedirectResponse
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        if ($mot) {
+
+            if ($mot->getUser() !== $this->getUser()) {
+                throw new \Exception('Error.');
+            }
+
+            $motDeleted = (new MotDeleted())
+                ->setInLatin($mot->getInLatin())
+                ->setInArabic($mot->getInArabic())
+                ->setInTamazight($mot->getInTamazight())
+                ->setDescription($mot->getDescription())
+                ->setUserId($mot->getUser()->getId())
+                ->setCreatedAt($mot->getCreatedAt())
+            ;
+
+            $manager = $this->getDoctrine()->getManager();
+            $manager->persist($motDeleted);
+            $manager->remove($mot);
+            $manager->flush();
+
+            return $this->redirectToRoute('user_show', ['username' => $this->getUser()->getUsername()]);
+        }
+
+        throw new \Exception('Cette publication est inconnue.');
     }
 
     /**
@@ -126,7 +174,7 @@ class PostsController extends AbstractController
     }
 
     /**
-     * @Route("/mot/{id}", name="mot_show", methods={"GET"})
+     * @Route("/mot/{id}/{slug}", name="mot_show", methods={"GET"})
      *
      * @param Mot $mot
      * @param Request $request

@@ -1,0 +1,68 @@
+easy_admin:
+    site_name: '%app_name%'
+    #disabled_actions: ['new']
+    entities:
+        Mot:
+            class: App\Entity\Mot
+            list:
+                fields:
+                    - id
+                    - createdAt
+                    - inLatin
+                    - inTamazight
+                    - inArabic
+                    #- description
+                    - { property: 'imageName', label: 'Image', type: 'image', base_path: '/images/posts/' }
+                    - question
+                    - user
+            show:
+                fields:
+                    - inLatin
+                    - description
+        Locution:
+            class: App\Entity\Locution
+            list:
+                fields:
+                    - id
+                    - createdAt
+                    - locution
+                    - description
+                    - { property: 'imageName', label: 'Image', type: 'image', base_path: '/images/posts/' }
+                    - question
+        Proverbe:
+            class: App\Entity\Proverbe
+            list:
+                fields:
+                    - id
+                    - createdAt
+                    - proverbe
+                    - description
+                    - { property: 'imageName', label: 'Image', type: 'image', base_path: '/images/posts/' }
+                    - question
+        MotDeleted:
+            class: App\Entity\MotDeleted
+            list:
+                fields:
+                    - id
+                    - createdAt
+                    - inLatin
+                    - inTamazight
+                    - inArabic
+                    - description
+                    - userId
+        Comment:
+            class: App\Entity\Comment
+            list:
+                fields: ['id', 'comment', 'user']
+        User:
+            class: App\Entity\User
+            list:
+                fields:
+                    - id
+                    - createdAt
+                    - username
+                    - email
+                    - roles
+                    - { property: 'avatarName', label: 'Image', type: 'image', base_path: '/images/profiles/' }
+        Page:
+            class: App\Entity\Page

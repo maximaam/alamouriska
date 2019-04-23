@@ -9,6 +9,9 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class EntityBase
@@ -16,6 +19,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Super abstract class to define shared mapping information between entities
  *
  * @ORM\MappedSuperclass
+ * @Vich\Uploadable
  *
  * @package App\Entity
  */
@@ -29,23 +33,42 @@ abstract class AbstractEntity
     protected $id;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="text")
      */
-    protected $createdAt;
+    protected $description;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
+     * @var string
+     * @ORM\Column(type="string", length=128, nullable=true)
      */
-    protected $updatedAt;
+    protected $imageName;
 
     /**
-     * AbstractEntity constructor.
-     * @throws \Exception
+     * @var File
+     * @Assert\Image(
+     *     maxSize = "1M",
+     *     mimeTypes = {"image/jpeg"},
+     *     mimeTypesMessage = "msg.jpeg_only"
+     * )
+     * @Vich\UploadableField(mapping="mot_image", fileNameProperty="imageName")
      */
-    public function __construct()
-    {
-        $this->createdAt = new \DateTime();
-    }
+    protected $imageFile;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="mots")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    protected $user;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $question = false;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    protected $slug;
 
     /**
      * @return int|null
@@ -56,41 +79,122 @@ abstract class AbstractEntity
     }
 
     /**
-     * @param \DateTimeInterface $date
-     * @return $this
+     * @return string|null
      */
-    public function setCreatedAt(\DateTimeInterface $date): self
+    public function getDescription(): ?string
     {
-        $this->createdAt = $date;
+        return $this->description;
+    }
+
+    /**
+     * @param string $description
+     * @return Mot
+     */
+    public function setDescription(string $description): self
+    {
+        $this->description = $description;
 
         return $this;
     }
 
     /**
-     * @param \DateTimeInterface|null $date
-     * @return $this
+     * @return string|null
      */
-    public function setUpdatedAt(?\DateTimeInterface $date): self
+    public function getImageName(): ?string
     {
-        $this->updatedAt = $date;
+        return $this->imageName;
+    }
+
+    /**
+     * @param string|null $imageName
+     * @return Mot
+     */
+    public function setImageName(?string $imageName): self
+    {
+        $this->imageName = $imageName;
 
         return $this;
     }
 
     /**
-     * @return \DateTimeInterface
+     * @return File|null
      */
-    public function getCreatedAt(): \DateTimeInterface
+    public function getImageFile(): ?File
     {
-        return $this->createdAt;
+        return $this->imageFile;
     }
 
     /**
-     * @return \DateTimeInterface
+     * @param File|null $imageFile
+     * @return Mot
+     * @throws \Exception
      */
-    public function getUpdatedAt(): ?\DateTimeInterface
+    public function setImageFile(?File $imageFile = null): self
     {
-        return $this->updatedAt;
+        $this->imageFile = $imageFile;
+
+        if (null !== $imageFile) {
+            $this->updatedAt = new \DateTimeImmutable();
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return User|null
+     */
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param User|null $user
+     * @return Mot
+     */
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getQuestion(): bool
+    {
+        return $this->question;
+    }
+
+    /**
+     * @param bool $question
+     * @return Mot
+     */
+    public function setQuestion(bool $question): self
+    {
+        $this->question = $question;
+
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    /**
+     * @param string $slug
+     * @return Mot
+     */
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
+
+        return $this;
     }
 
     /**

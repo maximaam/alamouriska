@@ -61,7 +61,7 @@ class CommentNotificationListener implements EventSubscriberInterface
             return;
         }
 
-        file_put_contents(__FILE__ . '.html', serialize($comment));
+        //file_put_contents(__FILE__ . '.html', serialize($comment));
 
         //if (!$this->commentManager->isNewComment($comment)) {
             //return;
