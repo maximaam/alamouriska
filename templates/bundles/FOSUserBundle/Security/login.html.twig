@@ -32,7 +32,7 @@
                     <div class="form-group">
                         <div class="input-group">
                             <div class="input-group-prepend">
-                                <div class="input-group-text"><i class="fa fa-user"></i></div>
+                                <div class="input-group-text"><i class="fa fa-user-circle"></i></div>
                             </div>
                             <input type="text" id="username" name="_username" class="form-control" value="{{ last_username }}" placeholder="{{ 'form.email' | trans }}" required="required">
                         </div>
@@ -59,7 +59,7 @@
                 <div>
                     Tu n'es pas encore un alamouriskeur?
                     <br>
-                    <a href="{{ path('fos_user_registration_register') }}" title="Inscris-toi" class="text-warning">
+                    <a href="{{ path('fos_user_registration_register') }}" title="Inscris-toi" class="light">
                         <i class="fa fa-arrow-circle-right"></i>
                         Alamouriski rou7ak!
                     </a>
@@ -68,7 +68,7 @@
                 <div>
                     <abbr title="Quoi? T'as perdu le mot de passe?">Kifech?</abbr> T'ba7arlak el mot de passe?
                     <br>
-                    <a href="{{ path('fos_user_resetting_request') }}" title="Clique ici" class="text-warning">
+                    <a href="{{ path('fos_user_resetting_request') }}" title="Clique ici" class="light">
                         <i class="fa fa-arrow-circle-right"></i>
                         3abaz h'na
                     </a>

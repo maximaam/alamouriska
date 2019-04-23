@@ -63,7 +63,7 @@ class MenuBuilder
         $menu = $this->factory->createItem('root');
         $menu->setChildrenAttribute('class', 'navbar-nav mr-auto');
 
-        $items = ['Mot' => 'mot', 'Locution' => 'locution' , 'Proverbe' => 'proverbe'];
+        $items = ['Mots' => 'mot', 'Locutions' => 'locution' , 'Proverbes' => 'proverbe'];
         //$items = ['Mot' => 'mot_index',];
 
         foreach ($items as $label => $route) {
