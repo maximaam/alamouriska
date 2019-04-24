@@ -1,0 +1,7 @@
+<h3>Bonjour {{ receiver.username }},</h3>
+
+<p>Le membre <a href="{{ url('user_show', { username: sender.username}) }}">{{ sender.username }}</a> t'as envoyé un message.</p>
+<p>----------</p>
+<p>{{ message }}</p>
+<p>----------</p>
+<p>A bientôt,<br>{{ app_name }}</p>

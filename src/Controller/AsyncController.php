@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Entity\Liking;
 use App\Repository\LikingRepository;
@@ -94,6 +96,44 @@ class AsyncController extends AbstractController
         }
 
         return $this->render('partials/modal.html.twig');
+    }
+
+    /**
+     * @Route("/member-contact", name="async_member_contact")
+     *
+     * @param Request $request
+     * @return Response
+     * @throws \Exception
+     */
+    public function memberContact(Request $request, \Swift_Mailer $mailer): Response
+    {
+        if (false === $request->isXmlHttpRequest()) {
+            return new JsonResponse('Error', 403);
+        }
+
+        /** @var UserRepository $userRepo */
+        $userRepo = $this->getDoctrine()->getRepository(User::class);
+        $sender = $userRepo->find($request->get('sender'));
+        $receiver = $userRepo->find($request->get('receiver'));
+
+        if ($sender && $receiver) {
+            $message = (new \Swift_Message('Message privé de ' . $sender->getUsername()))
+                ->setFrom('alamouriska.app@gmail.com', 'ALAMOURISKA')
+                ->setTo($receiver->getEmail())
+                ->setBody($this->render('emails/message__to-member.html.twig', [
+                    'sender'  => $sender,
+                    'receiver' => $receiver,
+                    'message' => $request->get('message')]
+                ), 'text/html');
+
+            $mailer->send($message);
+
+            return new Response('<i class="fa fa-thumbs-up"></i> Merci. <br>Ton message a été envoyé.');
+        }
+
+        return new Response('Erreur inconnue.');
+
+
     }
 
 
