@@ -80,9 +80,13 @@
 
     <main>
         {% block body %}{% endblock %}
+
+
     </main>
 
     <footer class="main-footer text-muted">
+
+
         <div class="container">
             <div class="row">
                 <div class="col-md-4">
@@ -109,6 +113,8 @@
         </div>
     </footer>
 
+
+
     <script
             src="https://code.jquery.com/jquery-3.3.1.min.js"
             integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
@@ -119,5 +125,11 @@
     <script src="{{ asset('js/main.js') }}"></script>
 
     {% block javascripts %}{% endblock %}
+
+    <!--
+    <video playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop">
+        <source src="" type="video/mp4">
+    </video>
+    -->
     </body>
 </html>

@@ -5,6 +5,14 @@ body {
     background-size: contain;
 }
 
+#myVideo {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    min-width: 100%;
+    min-height: 100%;
+}
+
 main {
     min-height: 80rem;
     padding: 20px 0;
