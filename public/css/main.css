@@ -148,6 +148,9 @@ footer.main-footer .container {
 .text-happy {
     color: #e6d845;
 }
+.bg-happy {
+    background-color: #e6d845;
+}
 
 .btn-happy,
 .fos_comment_submit input,

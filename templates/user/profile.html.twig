@@ -1,13 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello MemberController!{% endblock %}
+{% block title %}
+    Profil de {{ user.username }} - {{ parent() }}
+{% endblock %}
 
 {% block body %}
     <div class="container">
 
         <div class="row mb-5">
-            <div class="col-sm-12">
-                <div class="media p-1">
+            <div class="col-sm-8">
+                <div class="media">
                     {%  include 'partials/avatar.html.twig' with {'current_user': user, 'size': 128, 'classes': 'mr-3 rounded' } only %}
                     <div class="media-body">
                         <h1 class="d-inline">Publications de {{ user.username }}</h1>
@@ -15,6 +17,19 @@
                         <h5>{{ mots | length }} publication(s).</h5>
                     </div>
                 </div>
+            </div>
+            <div class="col-sm-4 text-dark">
+                {% if user.allowMemberContact is same as(true) %}
+                <form method="post" name="member-contact" id="member-contact" class="bg-happy p-2 rounded">
+                    <div class="form-group m-0">
+                        <label for="message" class="d-inline"></label>
+                        <textarea name="message" id="message" class="w-100 border-0 p-1 rounded" rows="2">Contacter {{ user.username }}...</textarea>
+                    </div>
+                    <input type="hidden" name="sender" value="{{ app.user.id }}">
+                    <input type="hidden" name="receiver" value="{{ user.id }}">
+                    <button type="submit" class="btn btn-primary right">OK</button>
+                </form>
+                {% endif %}
             </div>
         </div>
 

@@ -28,8 +28,18 @@ $(document).ready(function() {
         });
     });
 
+    $('#member-contact').submit(function(event){
+        event.preventDefault(); //prevent default action
+        let $form = $(this),
+            url = '/async/member-contact',
+            formData = $form.serialize(); //Encode form elements for submission
 
+        $form.find('button').text('Envoie en cours...').attr('disabled', true);
 
+        $.post(url, formData, function(response) {
+            $form.html( response );
+        });
+    });
 });
 
 $(document)
