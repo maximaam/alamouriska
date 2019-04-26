@@ -8,37 +8,28 @@
 {% block body %}
 
     <div class="container start-page">
+
         <div class="row mb-3">
-            <div class="my-item d-flex flex-column flex-md-row">
-                <div class="mb-3 mr-md-3 w-50 text-center">
+            <div class="d-flex flex-column flex-md-row">
+                <div class="mr-md-3 w-50 pt-4 text-center">
                     <img src="{{ asset('images/plongeon.jpg') }}" class="rounded-circle img-thumbnail" alt="">
                 </div>
                 <div class="p-3">
-                    <h1>ALAMOURISKAAAAAAAAAA !!!</h1>
-                    <h2>Le cri pour sauvegarder la langue algérienne !</h2>
+                    <h1 class="display-4 font-weight-bold">{{ app_name }}AAAAAAAAA !!!</h1>
+                    <h2 class="text-muted mt-n4">Le cri pour sauvegarder la langue algérienne !</h2>
                     <p class="text-justify">
-                        Alamouriska est une appplication publique créée dans le but de sauvegarder le langage des algériens.
-                        <br>
-                        De simple mots, des locutions, citations ou proverbes, nous voulons préserver
-                        le patrimoine linguistique algérien, tel qu'il s'est naturellement développé à travers les siecles,
-                        et en constituer une base de données pour le savoir ou la recherche. Et même le rire. C'est un
-                        projet sérieux, même s'il se veut leger et bon enfant.
-                        <br><br>
-                        IMPORTANT: même si une page facebook de l'application existe, nous souhaitons les commentaires écris
-                        dans l'objectif d'expliquer ou d'éclairer certains usage de langue soient faits ici, car une page ou
-                        un groupe facebook peut disparaitre ou ếtre fermé à tout moment.
-                        <a href="/kesako" class="light">En savoir plus</a>
+                        {{ page.description | raw }}
+                        <a href="{{ path('index_page', { alias: 'kesako' }) }}" class="light">En savoir plus</a>
                     </p>
                 </div>
             </div>
-
         </div>
 
         <div class="row">
             <div class="col-sm">
                 <div class="card text-dark mb-2">
                     <p class="card-header">
-                        Les plus récentes
+                        Les plus récents
                     </p>
 
                     <div class="card-body">

@@ -10,7 +10,6 @@ parameters:
 
     mailer_user: 'mimoberlino@gmail.com'
     mailer_from: 'no-reply@sparheld.de'
-    mailer_sold_item: 'mimoberlino@gmail.com'
 
 services:
     # default configuration for services in *this* file
@@ -34,10 +33,9 @@ services:
     # please note that last definitions always *replace* previous ones
 
     App\Navigation\MenuBuilder:
-        arguments: ["@knp_menu.factory", "@request_stack", "@translator", "@doctrine.orm.entity_manager"]
+        arguments: ["@knp_menu.factory", "@doctrine.orm.entity_manager"]
         tags:
             - { name: knp_menu.menu_builder, method: createMainMenu, alias: main }
-            - { name: knp_menu.menu_builder, method: createSubCategoryMenu, alias: subCategory }
             - { name: knp_menu.menu_builder, method: createFooterMenu, alias: footer }
 
     #App\EventListener\ConfirmEmailChangeSubscriber:

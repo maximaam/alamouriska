@@ -50,15 +50,9 @@ abstract class AbstractEntity
      *     mimeTypes = {"image/jpeg"},
      *     mimeTypesMessage = "msg.jpeg_only"
      * )
-     * @Vich\UploadableField(mapping="mot_image", fileNameProperty="imageName")
+     * @Vich\UploadableField(mapping="posts_image", fileNameProperty="imageName")
      */
     protected $imageFile;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="mots")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    protected $user;
 
     /**
      * @ORM\Column(type="boolean")
@@ -88,7 +82,7 @@ abstract class AbstractEntity
 
     /**
      * @param string $description
-     * @return Mot
+     * @return $this
      */
     public function setDescription(string $description): self
     {
@@ -107,7 +101,7 @@ abstract class AbstractEntity
 
     /**
      * @param string|null $imageName
-     * @return Mot
+     * @return $this
      */
     public function setImageName(?string $imageName): self
     {
@@ -126,7 +120,7 @@ abstract class AbstractEntity
 
     /**
      * @param File|null $imageFile
-     * @return Mot
+     * @return $this
      * @throws \Exception
      */
     public function setImageFile(?File $imageFile = null): self
@@ -141,25 +135,6 @@ abstract class AbstractEntity
     }
 
     /**
-     * @return User|null
-     */
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
-
-    /**
-     * @param User|null $user
-     * @return Mot
-     */
-    public function setUser(?User $user): self
-    {
-        $this->user = $user;
-
-        return $this;
-    }
-
-    /**
      * @return bool
      */
     public function getQuestion(): bool
@@ -169,7 +144,7 @@ abstract class AbstractEntity
 
     /**
      * @param bool $question
-     * @return Mot
+     * @return $this
      */
     public function setQuestion(bool $question): self
     {
@@ -188,7 +163,7 @@ abstract class AbstractEntity
 
     /**
      * @param string $slug
-     * @return Mot
+     * @return $this
      */
     public function setSlug(string $slug): self
     {

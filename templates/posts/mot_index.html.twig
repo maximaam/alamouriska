@@ -6,16 +6,18 @@
 {% endblock %}
 
 {% block body %}
-    <div class="container">
+    <div class="container almrsk-post">
         <div class="row">
 
             <div class="col-sm-8">
-                <h1 class="mb-3">{{ 'label.almrsk.h1' | trans({'%almrsk%' : 'mots'}) }}</h1>
+                <h1 class="mb-3">{{ 'label.almrsk.h1' | trans({'%almrsk%' : 'mots', '%gender%': 'algériens'}) }}</h1>
+
+                <a href="#post-anchor" class="btn btn-happy w-100 mb-2 d-lg-none">
+                    {{ 'label.almrsk.insert_new' | trans({'%almrsk%' : 'un nouveau mot'}) }}
+                </a>
 
                 {% for mot in mots %}
                     <div class="bg-white rounded text-dark mb-4">
-
-
                             <div class="media p-1 border-bottom">
                                 {%  include 'partials/avatar.html.twig' with {'current_user': mot.user, 'size': 64, 'classes': 'mr-3 rounded' } only %}
                                 <div class="media-body">
@@ -39,7 +41,7 @@
                                 </h3>
 
                                 {% if mot.imageName %}
-                                    <div class="img-container mb-3 bg-light">
+                                    <div class="mb-3 bg-light">
                                         <a href="{{ path('mot_show', {'id': mot.id, 'slug': mot.slug|default('hhh')}) }}">
                                             {%  include 'partials/almrsk_image.html.twig' with {'almrsk': mot } only %}
                                         </a>
@@ -73,7 +75,7 @@
                 </div>
             </div>
 
-            <div class="col-sm-4">
+            <div class="col-sm-4" id="post-anchor">
                 <div class="card text-dark almrsk-submission">
 
                     {% if is_granted("IS_AUTHENTICATED_REMEMBERED") == false %}

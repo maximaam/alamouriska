@@ -81,9 +81,19 @@ class User extends BaseUser
     private $avatarFile;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Mot", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="Mot", mappedBy="user")
      */
     private $mots;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Locution", mappedBy="user")
+     */
+    private $locutions;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Proverbe", mappedBy="user")
+     */
+    private $proverbes;
 
     /**
      * Allow member to write to another member
@@ -108,6 +118,8 @@ class User extends BaseUser
         parent::__construct();
 
         $this->mots = new ArrayCollection();
+        $this->locutions = new ArrayCollection();
+        $this->proverbes = new ArrayCollection();
     }
 
     /**

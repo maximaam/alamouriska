@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PageRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class Page
 {
@@ -33,6 +34,11 @@ class Page
      * @ORM\Column(type="text")
      */
     private $description;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $embedded = false;
 
     /**
      * @return int|null
@@ -95,6 +101,25 @@ class Page
     public function setDescription(string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function getEmbedded(): bool
+    {
+        return $this->embedded;
+    }
+
+    /**
+     * @param bool $embedded
+     * @return Page
+     */
+    public function setEmbedded(bool $embedded): self
+    {
+        $this->embedded = $embedded;
 
         return $this;
     }

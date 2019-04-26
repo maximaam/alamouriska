@@ -66,3 +66,5 @@ easy_admin:
                     - { property: 'avatarName', label: 'Image', type: 'image', base_path: '/images/profiles/' }
         Page:
             class: App\Entity\Page
+            form:
+                fields: ['title', 'alias', 'description', 'embedded']

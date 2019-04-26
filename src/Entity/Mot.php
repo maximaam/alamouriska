@@ -42,6 +42,12 @@ class Mot extends AbstractEntity
     private $inArabic;
 
     /**
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="mots")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    protected $user;
+
+    /**
      * @return string|null
      */
     public function getInLatin(): ?string
@@ -94,6 +100,25 @@ class Mot extends AbstractEntity
     public function setInArabic(?string $inArabic): self
     {
         $this->inArabic = $inArabic;
+
+        return $this;
+    }
+
+    /**
+     * @return User|null
+     */
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param User|null $user
+     * @return $this
+     */
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

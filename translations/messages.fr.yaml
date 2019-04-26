@@ -25,5 +25,5 @@ label:
   # Mots, locutions...etc pages
   almrsk:
       insert_new: 'Insérer %almrsk%'
-      h1: 'Liste des %almrsk% alamouriskés par les alamouriskeurs'
+      h1: 'Liste des %almrsk% %gender% alamouriské(e)s'
       by_user: 'Proposé par %username%'

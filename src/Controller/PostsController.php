@@ -13,9 +13,10 @@ use App\Entity\Locution;
 use App\Entity\Mot;
 use App\Entity\MotDeleted;
 use App\Entity\Proverbe;
+use App\Entity\Thread;
+use App\Form\LocutionType;
 use App\Form\MotType;
 use App\Repository\LocutionRepository;
-use App\Repository\MotRepository;
 use App\Repository\ProverbeRepository;
 use App\Utils\LikingUtils;
 use App\Utils\Linguistic;
@@ -25,8 +26,6 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use FOS\CommentBundle\Model\Thread;
 use FOS\CommentBundle\Model\ThreadManagerInterface;
 use FOS\CommentBundle\Model\CommentManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -38,42 +37,15 @@ use Knp\Component\Pager\PaginatorInterface;
 class PostsController extends AbstractController
 {
     /**
-     * @Route("/mot", name="mot_index", methods={"GET","POST"})
+     * @Route("/mots", name="mots_index", methods={"GET","POST"})
      *
      * @param Request $request
+     * @param PaginatorInterface $paginator
      * @return Response
-     * @throws \Exception
      */
-    public function motIndex(Request $request, \Swift_Mailer $mailer, PaginatorInterface $paginator): Response
+    public function motsIndex(Request $request, PaginatorInterface $paginator): Response
     {
-
-//        $message = (new \Swift_Message('Hello Email'))
-//            //->setFrom('no-reply@sparheld.de')
-//            ->setFrom('alamouriska.app@gmail.com', $this->getParameter('app_name'))
-//            ->setTo('mimoberlino@gmail.com' )
-//            ->setBody('<h1>test</h1>',
-//                /*
-//                $this->renderView(
-//                // templates/emails/registration.html.twig
-//                    'emails/registration.html.twig',
-//                    ['name' => 'mimoberlino@gmail.com']
-//                ),
-//                */
-//                'text/html'
-//            )
-//            /*
-//             * If you also want to include a plaintext version of the message
-//            ->addPart(
-//                $this->renderView(
-//                    'emails/registration.txt.twig',
-//                    ['name' => $name]
-//                ),
-//                'text/plain'
-//            )
-//            */
-//        ;
-//
-//        $mailer->send($message);
+        $entityManager = $this->getDoctrine()->getManager();
 
         $mot = (new Mot())->setUser($this->getUser());
 
@@ -85,7 +57,6 @@ class PostsController extends AbstractController
 
             $mot->setSlug(Linguistic::toSlug($mot->getInLatin()));
 
-            $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($mot);
             $entityManager->flush();
 
@@ -107,6 +78,118 @@ class PostsController extends AbstractController
             'mots'  => $mots,
             'form'  => $form->createView(),
             'likings' => LikingUtils::getLikingsUsersIds($likings)
+        ]);
+    }
+
+    /**
+     * @Route("/locutions", name="locutions_index", methods={"GET","POST"})
+     *
+     * @param Request $request
+     * @param PaginatorInterface $paginator
+     * @return Response
+     */
+    public function locutionsIndex(Request $request, PaginatorInterface $paginator): Response
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $locution = (new Locution())->setUser($this->getUser());
+
+        $form = $this->createForm(LocutionType::class, $locution);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+            $locution->setSlug(Linguistic::toSlug($locution->getLocution()));
+
+            $entityManager->persist($locution);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('mot_index');
+        }
+
+        $likings = $this->getDoctrine()->getRepository(Liking::class)
+            ->findBy(['owner' => 'locution']);
+
+        $motsQuery = $this->getDoctrine()->getRepository(Locution::class)
+            ->createQueryBuilder('m')
+            ->orderBy('m.createdAt', 'DESC')
+            ->getQuery();
+
+        $locutions = $paginator->paginate($motsQuery, $request->query->getInt('page', 1), 3);
+
+        return $this->render('posts/mot_index.html.twig', [
+            'locution'   => $locution,
+            'locutions'  => $locutions,
+            'form'  => $form->createView(),
+            'likings' => LikingUtils::getLikingsUsersIds($likings)
+        ]);
+    }
+
+    /**
+     * @Route("/locutions", name="locutions_index", methods={"GET","POST"})
+     *
+     * @param Request $request
+     * @param PaginatorInterface $paginator
+     * @return Response
+     */
+    public function proverbesIndex(Request $request, PaginatorInterface $paginator): Response
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $locution = (new Locution())->setUser($this->getUser());
+
+        $form = $this->createForm(LocutionType::class, $locution);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+            $locution->setSlug(Linguistic::toSlug($locution->getLocution()));
+
+            $entityManager->persist($locution);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('mot_index');
+        }
+
+        $likings = $this->getDoctrine()->getRepository(Liking::class)
+            ->findBy(['owner' => 'locution']);
+
+        $motsQuery = $this->getDoctrine()->getRepository(Locution::class)
+            ->createQueryBuilder('m')
+            ->orderBy('m.createdAt', 'DESC')
+            ->getQuery();
+
+        $locutions = $paginator->paginate($motsQuery, $request->query->getInt('page', 1), 3);
+
+        return $this->render('posts/mot_index.html.twig', [
+            'locution'   => $locution,
+            'locutions'  => $locutions,
+            'form'  => $form->createView(),
+            'likings' => LikingUtils::getLikingsUsersIds($likings)
+        ]);
+    }
+
+    /**
+     * @Route("/mot/{id}/{slug}", name="mot_show", methods={"GET"})
+     *
+     * @param Mot $mot
+     * @param Request $request
+     * @param ThreadManagerInterface $threadManager
+     * @param CommentManagerInterface $commentManager
+     * @return Response
+     * @throws \ReflectionException
+     */
+    public function motShow(Mot $mot, CommentManagerInterface $commentManager, ThreadManagerInterface $threadManager, Request $request): Response
+    {
+        $thread = $this->createThread($threadManager, $request, $mot);
+        $comments = $commentManager->findCommentTreeByThread($thread);
+
+        return $this->render('posts/mot_show.html.twig', [
+            'mot' => $mot,
+            'comments' => $comments,
+            'thread' => $thread,
         ]);
     }
 
@@ -148,54 +231,6 @@ class PostsController extends AbstractController
     }
 
     /**
-     * @Route("/locution", name="locution_index", methods={"GET","POST"})
-     *
-     * @param LocutionRepository $repository
-     * @param Request $request
-     * @return Response
-     * @throws \Exception
-     */
-    public function locutionIndex(LocutionRepository $repository, Request $request, \Swift_Mailer $mailer): Response
-    {
-
-    }
-
-    /**
-     * @Route("/proverbe", name="proverbe_index", methods={"GET","POST"})
-     *
-     * @param ProverbeRepository $repository
-     * @param Request $request
-     * @return Response
-     * @throws \Exception
-     */
-    public function proverbeIndex(ProverbeRepository $repository, Request $request, \Swift_Mailer $mailer): Response
-    {
-
-    }
-
-    /**
-     * @Route("/mot/{id}/{slug}", name="mot_show", methods={"GET"})
-     *
-     * @param Mot $mot
-     * @param Request $request
-     * @param ThreadManagerInterface $threadManager
-     * @param CommentManagerInterface $commentManager
-     * @return Response
-     * @throws \ReflectionException
-     */
-    public function motShow(Mot $mot, CommentManagerInterface $commentManager, ThreadManagerInterface $threadManager, Request $request): Response
-    {
-        $thread = $this->createThread($threadManager, $request, $mot);
-        $comments = $commentManager->findCommentTreeByThread($thread);
-
-        return $this->render('posts/mot_show.html.twig', [
-            'mot' => $mot,
-            'comments' => $comments,
-            'thread' => $thread,
-        ]);
-    }
-
-    /**
      * @param ThreadManagerInterface $threadManager
      * @param Request $request
      * @param Mot|Locution|Proverbe $post
@@ -213,7 +248,7 @@ class PostsController extends AbstractController
         if (null === $thread) {
             $owner = new \ReflectionClass($post);
 
-            /** @var \App\Entity\Thread $thread */
+            /** @var Thread $thread */
             $thread = $threadManager->createThread();
             $thread->setId($threadIdentifier);
             $thread->setPermalink($request->getUri());
