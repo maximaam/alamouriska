@@ -1,0 +1,23 @@
+<div class="card text-dark almrsk-submission">
+
+    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") == false %}
+        <div class="post-form-layer text-light">
+            <p>
+                Tu veux publier des alamouriskas?
+                <br>
+                <br>
+                <br>
+                <a href="{{ path('fos_user_security_login') }}" title="Se connecter ou S'inscrire" class="user btn btn-primary">
+                    <i class="fa fa-user"></i> Connecte-toi !
+                </a>
+            </p>
+        </div>
+    {% endif %}
+
+    <p class="card-header">
+        <strong>{{ 'label.almrsk.insert_new' | trans({'%almrsk%' : header }) }}</strong>
+    </p>
+    <div class="card-body">
+        {{ include('partials/_form.html.twig') }}
+    </div>
+</div>

@@ -48,9 +48,6 @@ class MotType extends AbstractType
             ->add('question', null, [
                 'label' => 'Ceci est une question pour tous',
                 'help'  => 'Clique si tu veux de l\'aide ici',
-                'attr'  => [
-                    'rows'  => 5
-                ]
             ])
             ->add('imageFile', VichImageType::class, [
                 'label'         => 'Photo (optionnel, jpeg uniquement)',
@@ -61,8 +58,6 @@ class MotType extends AbstractType
                 //'download_uri'  => '',
                 //'download_label' => '...',
             ])
-
-
         ;
     }
 

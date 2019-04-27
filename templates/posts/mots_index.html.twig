@@ -1,0 +1,101 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ 'label.almrsk.h1' | trans({'%almrsk%' : 'mots', '%gender%': 'algériens'}) }} -
+    {{ parent() }}
+{% endblock %}
+
+{% block search %}
+    {{ include('partials/search.html.twig', { domain : 'mot' }) }}
+{% endblock %}
+
+{% block body %}
+    <div class="container almrsk-post">
+        <div class="row">
+
+            <div class="col-sm-8">
+                <h1 class="mb-3">{{ 'label.almrsk.h1' | trans({'%almrsk%' : 'mots', '%gender%': 'algériens'}) }}</h1>
+
+                <a href="#post-anchor" class="btn btn-happy w-100 mb-2 d-lg-none">
+                    {{ 'label.almrsk.insert_new' | trans({'%almrsk%' : 'un nouveau mot'}) }}
+                </a>
+
+                {% if search is defined and search is same as(true) and mots | length < 1 %}
+                    <div class="bg-danger p-2">
+                        Pas de resultat.
+                    </div>
+                {% endif %}
+
+                {% if mots | length > 0 %}
+                    {% for mot in mots %}
+                        <div class="bg-white rounded text-dark mb-4">
+                            <div class="media p-1 border-bottom">
+                                {%  include 'partials/avatar.html.twig' with {'current_user': mot.user, 'size': 64, 'classes': 'mr-3 rounded' } only %}
+                                <div class="media-body">
+                                    <p class="mt-1">
+                                        <strong>Par: {{ mot.user.username }}</strong>
+                                        <br>
+                                        <span class="text-secondary">Le: {{ mot.createdAt | date('d/m/Y') }}</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="center-container p-3 bg-light border-bottom">
+                                    <h2 class="mt-0 mb-1" title="{{ 'label.latin_char' | trans }}">
+                                        <a href="{{ path('mot_show', {'id': mot.id, 'slug': mot.slug|default('hhh')}) }}">
+                                            {{ mot.inLatin }}
+                                        </a>
+                                    </h2>
+                                    <h3 class="mt-0">
+                                        <span title="{{ 'label.tamazight_char' | trans }}">{{ mot.inTamazight }}</span> |
+                                        <span title="{{ 'label.arabic_char' | trans }}">{{ mot.inArabic }}</span>
+                                    </h3>
+
+                                    {% if mot.imageName %}
+                                        <div class="mb-3 bg-light">
+                                            <a href="{{ path('mot_show', {'id': mot.id, 'slug': mot.slug|default('hhh')}) }}">
+                                                {%  include 'partials/almrsk_image.html.twig' with {'almrsk': mot } only %}
+                                            </a>
+                                        </div>
+                                    {% endif %}
+
+                                    <p>{{ mot.description }}</p>
+                                </div>
+
+
+                            <!--
+                            <div class="fb-like" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
+                            -->
+
+                            {% if likings is defined %}
+                                <div class="bottom-container p-2 text-right">
+
+                                    {%  include 'partials/liking.html.twig' with {
+                                        'almrsk': mot,
+                                        'liking_users': likings | length > 0 ? likings[mot.id] is defined ? likings[mot.id] : [] : []
+                                    } only %}
+
+                                    <a href="{{ path('mot_show', {'id': mot.id, 'slug': mot.slug|default('hhh')}) }}" title="{{ 'label.details_reactions' | trans }}" class="ml-3">
+                                        <i class="fa fa-comment"></i>
+                                        {{ 'label.comments' | trans }}
+                                    </a>
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+
+                    <div class="pagination-container">
+                        {{ knp_pagination_render(mots) }}
+                    </div>
+                {% endif %}
+            </div>
+
+            {% if form is defined %}
+                <div class="col-sm-4" id="post-anchor">
+                    {{ include('partials/post_form.html.twig', {'header' : 'un nouveau mot'}) }}
+                </div>
+            {% endif %}
+
+        </div>
+    </div>
+{% endblock %}

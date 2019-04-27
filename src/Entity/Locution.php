@@ -14,7 +14,7 @@ final class Locution extends AbstractEntity
     use Timestampable;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="string", length=128)
      */
     private $locution;
 

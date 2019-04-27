@@ -19,6 +19,12 @@ final class Proverbe extends AbstractEntity
     private $proverbe;
 
     /**
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="proverbes")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    protected $user;
+
+    /**
      * @return string|null
      */
     public function getProverbe(): ?string
@@ -33,6 +39,25 @@ final class Proverbe extends AbstractEntity
     public function setProverbe(string $proverbe): self
     {
         $this->proverbe = $proverbe;
+
+        return $this;
+    }
+
+    /**
+     * @return User|null
+     */
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param User|null $user
+     * @return $this
+     */
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

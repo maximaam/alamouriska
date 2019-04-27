@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ 'label.almrsk.h1' | trans({'%almrsk%' : 'locutions', '%gender%': 'algériennes'}) }} -
+    {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    <div class="container almrsk-post">
+        <div class="row">
+
+            <div class="col-sm-8">
+                <h1 class="mb-3">{{ 'label.almrsk.h1' | trans({'%almrsk%' : 'locutions', '%gender%': 'algériennes'}) }}</h1>
+
+                <a href="#post-anchor" class="btn btn-happy w-100 mb-2 d-lg-none">
+                    {{ 'label.almrsk.insert_new' | trans({'%almrsk%' : 'une nouvelle locution'}) }}
+                </a>
+
+                {% for locution in locutions %}
+                    <div class="bg-white rounded text-dark mb-4">
+
+                        <div class="media p-1 border-bottom">
+                            {%  include 'partials/avatar.html.twig' with {'current_user': locution.user, 'size': 64, 'classes': 'mr-3 rounded' } only %}
+                            <div class="media-body">
+                                <p class="mt-1">
+                                    <strong>Par: {{ locution.user.username }}</strong>
+                                    <br>
+                                    <span class="text-secondary">Le: {{ locution.createdAt | date('d/m/Y') }}</span>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="center-container p-3 bg-light border-bottom">
+                            <p class="p-2 bg-happy border-bottom mb-0" title="Locution">
+                                <i class="fa fa-book"></i>
+                                {{ locution.locution }}
+                            </p>
+                            <p class="p-2 bg-secondary text-light" title="Explication de la locution">
+                                <i class="fa fa-question-circle"></i>
+                                {{ locution.description }}
+                            </p>
+
+                            {% if locution.imageName %}
+                                <div class="mb-3 bg-light">
+                                    <a href="{{ path('locution_show', {'id': locution.id, 'slug': locution.slug|default('hhh')}) }}">
+                                        {%  include 'partials/almrsk_image.html.twig' with {'almrsk': locution } only %}
+                                    </a>
+                                </div>
+                            {% endif %}
+
+                        </div>
+
+                        <!--
+                        <div class="fb-like" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
+                        -->
+
+                        <div class="bottom-container p-2 text-right">
+                            {%  include 'partials/liking.html.twig' with {
+                                'almrsk': locution,
+                                'liking_users': likings | length > 0 ? likings[locution.id] is defined ? likings[locution.id] : [] : []
+                            } only %}
+
+                            <a href="{{ path('locution_show', {'id': locution.id, 'slug': locution.slug|default('hhh')}) }}" title="{{ 'label.details_reactions' | trans }}" class="ml-3">
+                                <i class="fa fa-comment"></i>
+                                {{ 'label.comments' | trans }}
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
+
+                <div class="pagination-container">
+                    {{ knp_pagination_render(locutions) }}
+                </div>
+            </div>
+
+            <div class="col-sm-4" id="post-anchor">
+                {{ include('partials/post_form.html.twig', {'header' : 'une nouvelle locution'}) }}
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

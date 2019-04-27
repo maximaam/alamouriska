@@ -44,22 +44,9 @@
 
                     {{ knp_menu_render('main') }}
 
-                    <!--
-                    <form class="form-inline mt-2 mt-md-0 d-none d-md-inline" method="get" action="{{ path('index_index') }}" onsubmit="">
-                        <div class="input-group">
-                            <input class="form-control py-2 border-right-0 border" type="search" name="query" placeholder="Recherche..." required pattern=".{3,}" title="3 chars minimum" autocomplete="false" value="{{ app.request.get('query') }}">
-
-
-                            <span class="input-group-append">
-                                <button class="btn btn-outline-secondary border-left-0 border" type="button">
-                                    <i class="fa fa-search"></i>
-                                </button>
-                            </span>
-
-
-                        </div>
-                    </form>
-                    -->
+                    {% block search %}
+                        {{ include('partials/search.html.twig', { domain : 'mot' }) }}
+                    {% endblock %}
 
                     <div class="user-cont">
                         {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
