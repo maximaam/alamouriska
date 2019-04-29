@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Mot;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -19,32 +20,26 @@ class MotRepository extends ServiceEntityRepository
         parent::__construct($registry, Mot::class);
     }
 
-    // /**
-    //  * @return Mot[] Returns an array of Mot objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @param string $term
+     * @return QueryBuilder
+     */
+    public function searchQuery(string $term): QueryBuilder
     {
         return $this->createQueryBuilder('m')
-            ->andWhere('m.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('m.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
+            ->where('m.inLatin LIKE :term')
+            ->orWhere('m.inTamazight LIKE :term')
+            ->orWhere('m.inArabic LIKE :term')
+            ->setParameter('term', '%'.$term.'%')
         ;
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Mot
+    /**
+     * @param string $term
+     * @return array
+     */
+    public function search(string $term): array
     {
-        return $this->createQueryBuilder('m')
-            ->andWhere('m.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        return $this->searchQuery($term)->getQuery()->getArrayResult();
     }
-    */
 }

@@ -49,12 +49,12 @@ class MenuBuilder
         $menu = $this->factory->createItem('root');
         $menu->setChildrenAttribute('class', 'navbar-nav mr-auto');
 
-        $items = ['Mots' => 'mots', 'Locutions' => 'locutions' , 'Proverbes' => 'proverbes'];
+        $items = ['Mots' => 'mot', 'Locutions' => 'locution' , 'Proverbes' => 'proverbe', 'Citations' => 'citation'];
         //$items = ['Mot' => 'mot_index',];
 
         foreach ($items as $label => $route) {
             $menu->addChild($label, [
-                'route'     => $route . '_index',
+                'route'     => 'post_' . $route . '_index',
                 'extras'    => [
                     'routes'    =>
                         ['route' => $route . '_show'],

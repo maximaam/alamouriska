@@ -60,6 +60,11 @@ abstract class AbstractEntity
     protected $question = false;
 
     /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $addr;
+
+    /**
      * @ORM\Column(type="string", length=255)
      */
     protected $slug;
@@ -168,6 +173,25 @@ abstract class AbstractEntity
     public function setSlug(string $slug): self
     {
         $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getAddr(): ?string
+    {
+        return $this->addr;
+    }
+
+    /**
+     * @param string|null $addr
+     * @return $this
+     */
+    public function setAddr(?string $addr): self
+    {
+        $this->addr = $addr;
 
         return $this;
     }

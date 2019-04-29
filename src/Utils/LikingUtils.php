@@ -3,6 +3,7 @@
 namespace App\Utils;
 
 use App\Entity\Liking;
+
 /**
  * Class Liking
  * @package App\Utils

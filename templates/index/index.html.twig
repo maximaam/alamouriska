@@ -15,8 +15,10 @@
                     <img src="{{ asset('images/plongeon.jpg') }}" class="rounded-circle img-thumbnail" alt="">
                 </div>
                 <div class="p-3">
-                    <h1 class="display-7 font-weight-bold">{{ app_name }}AAAAAAAAA !!!</h1>
-                    <h2 class="text-muted mt-n4">Le cri pour sauvegarder la langue algérienne !</h2>
+                    <div class="bubbles">
+                        <h1 class="display-7 font-weight-bold">{{ app_name }}AAAAAAAAA !!!</h1>
+                    </div>
+                    <h2 class="text-muted mt-n3">Le cri pour sauvegarder la langue algérienne !</h2>
                     <p class="text-justify">
                         {{ page.description | raw }}
                         <a href="{{ path('index_page', { alias: 'kesako' }) }}" class="light">En savoir plus</a>

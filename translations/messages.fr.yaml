@@ -27,4 +27,5 @@ label:
   almrsk:
       insert_new: 'Insérer %almrsk%'
       h1: 'Liste des %almrsk% %gender% alamouriské(e)s'
+      search_h1: 'Publications trouvées pour "%term%"'
       by_user: 'Proposé par %username%'

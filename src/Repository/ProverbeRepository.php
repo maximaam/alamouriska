@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Proverbe;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -19,32 +20,24 @@ class ProverbeRepository extends ServiceEntityRepository
         parent::__construct($registry, Proverbe::class);
     }
 
-    // /**
-    //  * @return Proverbe[] Returns an array of Proverbe objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @param string $term
+     * @return QueryBuilder
+     */
+    public function searchQuery(string $term): QueryBuilder
     {
         return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('p.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+            ->where('p.proverbe LIKE :term')
+            ->setParameter('term', '%'.$term.'%')
+            ;
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Proverbe
+    /**
+     * @param string $term
+     * @return array
+     */
+    public function search(string $term): array
     {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        return $this->searchQuery($term)->getQuery()->getArrayResult();
     }
-    */
 }

@@ -28,6 +28,7 @@ class Mot extends AbstractEntity
 
     /**
      * @ORM\Column(type="string", length=128, unique=true)
+     * @Assert\Regex("/^[\w-]+$/")
      */
     private $inLatin;
 

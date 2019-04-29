@@ -44,7 +44,7 @@
                         <ul>
                             {% for mot in mots %}
                                 <li>
-                                    <a href="{{ path('mot_show', { 'id': mot.id, 'slug': mot.slug|default('hhh') }) }}">
+                                    <a href="{{ path('post_mot_show', { 'id': mot.id, 'slug': mot.slug }) }}">
                                         {{ mot.inLatin }}
                                     </a>
                                 </li>
