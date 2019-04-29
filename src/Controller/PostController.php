@@ -57,7 +57,9 @@ class PostController extends AbstractController
         $form = $this->createForm(MotType::class, $mot);
         $form->handleRequest($request);
 
-        $this->submitForm($form, $mot, $request->getClientIp());
+        if ($form->isSubmitted() && $form->isValid()) {
+            return $this->submitForm($form, $mot, $request->getClientIp());
+        }
 
         return $this->render('post/mots_index.html.twig', [
             'form'  => $form->createView(),
@@ -81,7 +83,9 @@ class PostController extends AbstractController
         $form = $this->createForm(LocutionType::class, $locution);
         $form->handleRequest($request);
 
-        $this->submitForm($form, $locution, $request->getClientIp());
+        if ($form->isSubmitted() && $form->isValid()) {
+            return $this->submitForm($form, $locution, $request->getClientIp());
+        }
 
         return $this->render('post/locutions_index.html.twig', [
             'form'  => $form->createView(),
@@ -105,7 +109,9 @@ class PostController extends AbstractController
         $form = $this->createForm(ProverbeType::class, $proverbe);
         $form->handleRequest($request);
 
-        $this->submitForm($form, $proverbe, $request->getClientIp());
+        if ($form->isSubmitted() && $form->isValid()) {
+            return $this->submitForm($form, $proverbe, $request->getClientIp());
+        }
 
         return $this->render('post/proverbes_index.html.twig', [
             'form'  => $form->createView(),
@@ -129,7 +135,9 @@ class PostController extends AbstractController
         $form = $this->createForm(CitationType::class, $citation);
         $form->handleRequest($request);
 
-        $this->submitForm($form, $citation, $request->getClientIp());
+        if ($form->isSubmitted() && $form->isValid()) {
+            return $this->submitForm($form, $citation, $request->getClientIp());
+        }
 
         return $this->render('post/proverbes_index.html.twig', [
             'form'  => $form->createView(),
@@ -271,49 +279,46 @@ class PostController extends AbstractController
      * @param FormInterface $form
      * @param Mot|Locution|Proverbe|Citation $post
      * @param string $addr
-     * @return RedirectResponse|null
+     * @return RedirectResponse
      * @throws \ReflectionException
      */
-    private function submitForm(FormInterface $form, $post, string $addr): ?RedirectResponse
+    private function submitForm(FormInterface $form, $post, string $addr): RedirectResponse
     {
-        $entityManager = $this->getDoctrine()->getManager();
-        $class = PhpUtils::getClassName($post);
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        switch (true) {
+            case $post instanceof Mot:
+                $post->setSlug(Linguistic::toSlug($post->getInLatin()));
+                break;
 
-            $post->setAddr($addr);
+            case $post instanceof Locution:
+                $post->setSlug(Linguistic::toSlug($post->getLocution()));
+                break;
 
-            switch (true) {
-                case $post instanceof Mot:
-                    $post->setSlug(Linguistic::toSlug($post->getInLatin()));
-                    break;
+            case $post instanceof Proverbe:
+                $post->setSlug(Linguistic::toSlug($post->getProverbe()));
+                break;
 
-                case $post instanceof Locution:
-                    $post->setSlug(Linguistic::toSlug($post->getLocution()));
-                    break;
+            case $post instanceof Citation:
+                $post->setSlug(Linguistic::toSlug($post->getCitation()));
+                break;
 
-                case $post instanceof Proverbe:
-                    $post->setSlug(Linguistic::toSlug($post->getProverbe()));
-                    break;
-
-                case $post instanceof Citation:
-                    $post->setSlug(Linguistic::toSlug($post->getCitation()));
-                    break;
-
-                default:
-                    throw new \InvalidArgumentException(sprintf('Unknown object of class %s', $class));
-            }
-
-            $entityManager->persist($post);
-            $entityManager->flush();
-
-            $route = 'post_' . \strtolower($class) . '_index';
-
-            return $this->redirectToRoute($route);
+            default:
+                throw new \InvalidArgumentException(\sprintf('Unknown object of class %s', $class));
         }
 
-        return null;
+        $class = PhpUtils::getClassName($post);
+        $post->setAddr($addr);
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($post);
+        $entityManager->flush();
+
+        unset($form, $post);
+
+        $route = 'post_' . \strtolower($class) . '_index';
+
+        return $this->redirectToRoute($route);
     }
 
     /**

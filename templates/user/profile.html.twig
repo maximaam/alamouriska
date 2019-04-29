@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block body %}
-    <div class="container">
+    <div class="container fixed-card">
 
         <div class="row mb-5">
             <div class="col-sm-8">
@@ -14,7 +14,7 @@
                     <div class="media-body">
                         <h1 class="d-inline">Publications de {{ user.username }}</h1>
                         <h2>Membre depuis le {{ user.createdAt | localizeddate('long', 'none', app.request.locale) }}</h2>
-                        <h5>{{ mots | length }} publication(s).</h5>
+                        <h5>{{ (user.mots | length + user.locutions | length + user.proverbes | length + user.citations | length) }} publication(s).</h5>
                     </div>
                 </div>
             </div>
@@ -33,58 +33,11 @@
             </div>
         </div>
 
-        <div class="row">
-
-            <div class="col-sm-4">
-                <div class="card text-dark">
-                    <p class="card-header">
-                        <strong>{{ 'label.user.almrsk.list' | trans({'%almrsk%' : 'mots'}) }}</strong>
-                    </p>
-                    <div class="card-body">
-                        <ul>
-                            {% for mot in mots %}
-                                <li>
-                                    <a href="{{ path('post_mot_show', { 'id': mot.id, 'slug': mot.slug }) }}">
-                                        {{ mot.inLatin }}
-                                    </a>
-                                </li>
-                            {% endfor %}
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-sm-4">
-                <div class="card text-dark">
-                    <p class="card-header">
-                        <strong>{{ 'label.user.almrsk.list' | trans({'%almrsk%' : 'locutions'}) }}</strong>
-                    </p>
-                    <div class="card-body">
-
-                        <ul>
-{#                            {% for locution in locutions %}#}
-{#                                <li><a href="{{ path('locution_show', { 'id': locution.id }) }}">{{ locution }}</a></li>#}
-{#                            {% endfor %}#}
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-sm-4">
-                <div class="card text-dark">
-                    <p class="card-header">
-                        <strong>{{ 'label.user.almrsk.list' | trans({'%almrsk%' : 'proverbes'}) }}</strong>
-                    </p>
-                    <div class="card-body">
-                        <ul>
-{#                            {% for proverbe in proverbes %}#}
-{#                                <li><a href="{{ path('proverbe_show', { 'id': proverbe.id }) }}">{{ proverbe }}</a></li>#}
-{#                            {% endfor %}#}
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
+        <div class="row text-dark">
+            {%  include 'partials/post_list.html.twig' with {'posts': user.mots, 'route': 'post_mot_show', 'header': 'label.words' | trans } only %}
+            {%  include 'partials/post_list.html.twig' with {'posts': user.locutions, 'route': 'post_locution_show', 'header': 'label.locutions' | trans } only %}
+            {%  include 'partials/post_list.html.twig' with {'posts': user.proverbes, 'route': 'post_proverbe_show', 'header': 'label.proverbes' | trans } only %}
+            {%  include 'partials/post_list.html.twig' with {'posts': user.citations, 'route': 'post_citation_show', 'header': 'label.citations' | trans } only %}
         </div>
     </div>
 {% endblock %}

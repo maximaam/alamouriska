@@ -2,7 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Citation;
+use App\Entity\Locution;
 use App\Entity\Mot;
+use App\Entity\Proverbe;
 use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,11 +27,6 @@ class UserController extends AbstractController
      */
     public function show(User $user): Response
     {
-        return $this->render('user/profile.html.twig', [
-            'user' => $user,
-            'mots'  => $this->getDoctrine()->getRepository(Mot::class)->findBy(['user' => $user]),
-            //'lo'  => $this->getDoctrine()->getRepository(Location::class)->findBy(['user' => $user]),
-            //'mots'  => $this->getDoctrine()->getRepository(User::class)->findBy(['user' => $user]),
-        ]);
+        return $this->render('user/profile.html.twig', ['user' => $user]);
     }
 }

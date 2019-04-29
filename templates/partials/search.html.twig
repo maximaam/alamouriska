@@ -2,7 +2,7 @@
     <div class="input-group">
         <label for="terme">
             <input type="hidden" id="domaine" name="domaine" required value="{{ domain }}">
-            <input class="form-control py-2 border-right-0 border" type="search" id="terme" name="terme" placeholder="Recherche..." required pattern=".{3,}" title="3 chars minimum" autocomplete="false" value="{{ app.request.get('terme') }}">
+            <input class="form-control px-4" type="search" id="terme" name="terme" placeholder="Recherche..." required pattern=".{3,}" title="3 chars minimum" autocomplete="false" value="{{ app.request.get('terme') }}">
         </label>
 
         <!--

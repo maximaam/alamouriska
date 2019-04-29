@@ -31,18 +31,18 @@
                         </div>
 
                         <div class="center-container p-3 bg-light border-bottom">
-                            <p class="p-2 bg-happy border-bottom mb-0" title="Locution">
+                            <p class="p-2 border-bottom mb-0" title="Locution">
                                 <i class="fa fa-book"></i>
                                 {{ locution.locution }}
                             </p>
-                            <p class="p-2 bg-secondary text-light" title="Explication de la locution">
+                            <p class="p-2" title="Explication de la locution">
                                 <i class="fa fa-question-circle"></i>
                                 {{ locution.description }}
                             </p>
 
                             {% if locution.imageName %}
                                 <div class="mb-3 bg-light">
-                                    <a href="{{ path('locution_show', {'id': locution.id, 'slug': locution.slug|default('hhh')}) }}">
+                                    <a href="{{ path('post_locution_show', {'id': locution.id, 'slug': locution.slug|default('hhh')}) }}">
                                         {%  include 'partials/almrsk_image.html.twig' with {'almrsk': locution } only %}
                                     </a>
                                 </div>
@@ -60,7 +60,7 @@
                                 'liking_users': likings | length > 0 ? likings[locution.id] is defined ? likings[locution.id] : [] : []
                             } only %}
 
-                            <a href="{{ path('locution_show', {'id': locution.id, 'slug': locution.slug|default('hhh')}) }}" title="{{ 'label.details_reactions' | trans }}" class="ml-3">
+                            <a href="{{ path('post_locution_show', {'id': locution.id, 'slug': locution.slug|default('hhh')}) }}" title="{{ 'label.details_reactions' | trans }}" class="ml-3">
                                 <i class="fa fa-comment"></i>
                                 {{ 'label.comments' | trans }}
                             </a>

@@ -96,6 +96,11 @@ class User extends BaseUser
     private $proverbes;
 
     /**
+     * @ORM\OneToMany(targetEntity="Citation", mappedBy="user")
+     */
+    private $citations;
+
+    /**
      * Allow member to write to another member
      *
      * @ORM\Column(type="boolean")
@@ -120,6 +125,7 @@ class User extends BaseUser
         $this->mots = new ArrayCollection();
         $this->locutions = new ArrayCollection();
         $this->proverbes = new ArrayCollection();
+        $this->citations = new ArrayCollection();
     }
 
     /**
@@ -176,34 +182,27 @@ class User extends BaseUser
     }
 
     /**
-     * @param Mot $mot
-     * @return User
+     * @return Collection|Locution[]
      */
-    public function addMot(Mot $mot): self
+    public function getLocutions(): Collection
     {
-        if (!$this->mots->contains($mot)) {
-            $this->mots[] = $mot;
-            $mot->setUser($this);
-        }
-
-        return $this;
+        return $this->locutions;
     }
 
     /**
-     * @param Mot $mot
-     * @return User
+     * @return Collection|Proverbe[]
      */
-    public function removeMot(Mot $mot): self
+    public function getProverbes(): Collection
     {
-        if ($this->mots->contains($mot)) {
-            $this->mots->removeElement($mot);
-            // set the owning side to null (unless already changed)
-            if ($mot->getUser() === $this) {
-                $mot->setUser(null);
-            }
-        }
+        return $this->proverbes;
+    }
 
-        return $this;
+    /**
+     * @return Collection|Citation[]
+     */
+    public function getCitations(): Collection
+    {
+        return $this->citations;
     }
 
     /**

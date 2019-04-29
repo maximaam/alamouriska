@@ -38,6 +38,6 @@ class LocutionRepository extends ServiceEntityRepository
      */
     public function search(string $term): array
     {
-        return $this->searchQuery($term)->getQuery()->getArrayResult();
+        return $this->searchQuery($term)->getQuery()->getResult();
     }
 }

@@ -22,6 +22,10 @@ label:
   liking_add: "J'aime"
   liking_remove: "J'aime déjà"
   comments: 'Commentaires'
+  words: 'Mots'
+  locutions: 'Locutions'
+  proverbs: 'Proverbes'
+  quotes: 'Citations'
 
   # Mots, locutions...etc pages
   almrsk:

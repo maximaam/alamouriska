@@ -4,9 +4,13 @@ namespace App\Entity;
 
 use App\Entity\Traits\Timestampable;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CitationRepository")
+ * @UniqueEntity(fields={"citation"}, message="msg.duplicate_post")
+ * @ORM\HasLifecycleCallbacks
  */
 class Citation extends AbstractEntity
 {
@@ -14,6 +18,7 @@ class Citation extends AbstractEntity
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank
      */
     private $citation;
 
@@ -59,5 +64,13 @@ class Citation extends AbstractEntity
         $this->user = $user;
 
         return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function __toString()
+    {
+        return $this->getCitation();
     }
 }

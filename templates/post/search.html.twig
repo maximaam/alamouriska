@@ -8,116 +8,20 @@
 {% endblock %}
 
 {% block body %}
+
     <div class="container mb-4">
         <div class="bubbles">
             <h1>{{ 'label.almrsk.search_h1' | trans({'%term%' : term }) }}</h1>
         </div>
     </div>
-    <div class="container">
-        <div class="row">
-            <div class="col-sm">
-                <div class="card text-dark mb-2">
-                    <p class="card-header">
-                        Mots trouvés
-                    </p>
 
-                    <div class="card-body">
-                        {% if mots is defined and mots | length > 0 %}
-                            <ul>
-                                {% for mot in mots %}
-                                    <li><a href="{{ path('post_mot_show', { id: mot.id, slug: mot.slug }) }}" title="Afficher les détails">{{ mot.inLatin }}</a></li>
-                                {% endfor %}
-                            </ul>
-
-                        {% else %}
-                            <p class="alert-warning p-2">
-                                Aucun mot trouvé pour "{{ term }}"
-                            </p>
-                            <p class="text-right">
-                                <a href="{{ path('post_mot_index') }}">Afficher tout</a>
-                            </p>
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-sm">
-                <div class="card text-dark mb-2">
-                    <p class="card-header">
-                        Locutions trouvées
-                    </p>
-
-                    <div class="card-body">
-                        {% if locutions is defined and locutions | length > 0 %}
-                            <ul>
-                                {% for locution in locutions %}
-                                    <li><a href="{{ path('post_locution_show', {id: locution.id, slug: locution.slug}) }}" title="Afficher les détails">{{ locution.locution }}</a></li>
-                                {% endfor %}
-                            </ul>
-
-                        {% else %}
-                            <p class="alert-warning p-2">
-                                Aucune locution trouvée pour "{{ term }}"
-                            </p>
-                            <p class="text-right">
-                                <a href="{{ path('post_locution_index') }}">Afficher tout</a>
-                            </p>
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm">
-                <div class="card text-dark mb-2">
-                    <p class="card-header">
-                        Proverbes trouvés
-                    </p>
-
-                    <div class="card-body">
-                        {% if proverbes is defined and proverbes | length > 0 %}
-                            <ul>
-                                {% for proverbe in proverbes %}
-                                    <li><a href="{{ path('post_proverbe_show', {id: proverbe.id, slug: proverbe.slug}) }}" title="Afficher les détails">{{ proverbe.proverbe }}</a></li>
-                                {% endfor %}
-                            </ul>
-
-                        {% else %}
-                            <p class="alert-warning p-2">
-                                Aucun proverbe trouvé pour "{{ term }}"
-                            </p>
-                            <p class="text-right">
-                                <a href="{{ path('post_proverbe_index') }}">Afficher tout</a>
-                            </p>
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm">
-                <div class="card text-dark mb-2">
-                    <p class="card-header">
-                        Citations trouvées
-                    </p>
-
-                    <div class="card-body">
-                        {% if citations is defined and citations | length > 0 %}
-                            <ul>
-                                {% for citation in citations %}
-                                    <li><a href="{{ path('post_citation_show', {id: citation.id, slug: citation.slug}) }}" title="Afficher les détails">{{ citation.citation }}</a></li>
-                                {% endfor %}
-                            </ul>
-
-                        {% else %}
-                            <p class="alert-warning p-2">
-                                Aucun proverbe trouvé pour "{{ term }}"
-                            </p>
-                            <p class="text-right">
-                                <a href="{{ path('post_citation_index') }}">Afficher tout</a>
-                            </p>
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
+    <div class="container fixed-card">
+        <div class="row text-dark">
+            {%  include 'partials/post_list.html.twig' with {'posts': mots, 'route': 'post_mot_show', 'header': 'label.words' | trans, search: 'post_mot_index' } only %}
+            {%  include 'partials/post_list.html.twig' with {'posts': locutions, 'route': 'post_locution_show', 'header': 'label.locutions' | trans, search: 'post_locution_index' } only %}
+            {%  include 'partials/post_list.html.twig' with {'posts': proverbes, 'route': 'post_proverbe_show', 'header': 'label.proverbs' | trans, search: 'post_proverbe_index' } only %}
+            {%  include 'partials/post_list.html.twig' with {'posts': citations, 'route': 'post_citation_show', 'header': 'label.quotes' | trans, search: 'post_citation_index' } only %}
         </div>
     </div>
-
 
 {% endblock %}

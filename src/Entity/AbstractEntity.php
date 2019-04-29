@@ -34,6 +34,7 @@ abstract class AbstractEntity
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank
      */
     protected $description;
 

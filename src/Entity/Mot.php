@@ -20,7 +20,7 @@ use App\Entity\Traits\Timestampable;
  * })
  * @ORM\Entity(repositoryClass="App\Repository\MotRepository")
  * @ORM\HasLifecycleCallbacks
- * @UniqueEntity(fields={"inLatin"}, message="msg.duplicate_mot")
+ * @UniqueEntity(fields={"inLatin"}, message="msg.duplicate_post")
  */
 class Mot extends AbstractEntity
 {
@@ -28,7 +28,8 @@ class Mot extends AbstractEntity
 
     /**
      * @ORM\Column(type="string", length=128, unique=true)
-     * @Assert\Regex("/^[\w-]+$/")
+     * @Assert\NotBlank
+     * @Assert\Regex(pattern="/^[\w-]+$/", match=true, message="Un mot ne doit pas contenir d'espaces.")
      */
     private $inLatin;
 
@@ -122,5 +123,13 @@ class Mot extends AbstractEntity
         $this->user = $user;
 
         return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function __toString()
+    {
+        return $this->getInLatin();
     }
 }

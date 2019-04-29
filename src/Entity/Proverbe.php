@@ -4,9 +4,12 @@ namespace App\Entity;
 
 use App\Entity\Traits\Timestampable;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ProverbeRepository")
+ * @UniqueEntity(fields={"proverbe"}, message="msg.duplicate_post")
  * @ORM\HasLifecycleCallbacks
  */
 final class Proverbe extends AbstractEntity
@@ -15,6 +18,7 @@ final class Proverbe extends AbstractEntity
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank
      */
     private $proverbe;
 
@@ -60,5 +64,13 @@ final class Proverbe extends AbstractEntity
         $this->user = $user;
 
         return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function __toString()
+    {
+        return $this->getProverbe();
     }
 }
