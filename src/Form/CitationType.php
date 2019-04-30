@@ -3,7 +3,6 @@
 namespace App\Form;
 
 use App\Entity\Citation;
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Vich\UploaderBundle\Form\Type\VichImageType;
@@ -12,7 +11,7 @@ use Vich\UploaderBundle\Form\Type\VichImageType;
  * Class CitationType
  * @package App\Form
  */
-class CitationType extends AbstractType
+class CitationType extends SharedType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -24,23 +23,9 @@ class CitationType extends AbstractType
             ->add('citation', null, [
                 'label' => 'label.citation',
                 'help' => 'label.required',
-            ])
-            ->add('description', null, [
-                'help' => 'label.required',
-                'attr'  => [
-                    'rows'  => 5,
-                ]
-            ])
-            ->add('question', null, [
-                'label' => 'Ceci est une question pour tous',
-                'help'  => 'Clique si tu veux de l\'aide ici',
-            ])
-            ->add('imageFile', VichImageType::class, [
-                'label'         => 'Photo (optionnel, jpeg uniquement)',
-                'required'      => false,
-                'allow_delete'  => true,
-            ])
-        ;
+            ]);
+
+        parent::buildForm($builder, $options);
     }
 
     /**

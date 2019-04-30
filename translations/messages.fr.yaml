@@ -16,8 +16,10 @@ label:
   arabic_char: 'Caractères arabes'
   details_reactions: 'Détails et Réactions'
   required: 'Obligatoire'
+  required_no_spaces: 'Obligatoire et sans espaces'
   optional: 'Optionnel'
   optional_wished: 'Optionnel mais souhaité'
+  optional_jpeg: 'Optionnel. JPEG, JPG seulement'
   log_in: 'Connecte-toi'
   liking_add: "J'aime"
   liking_remove: "J'aime déjà"

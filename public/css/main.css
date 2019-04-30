@@ -1,16 +1,7 @@
 body {
-    font-family: Arial, Helvetica, sans-serif;
-    color: #fff;
+    color: #ffffff;
     background: #003366 url(../images/bg-corail.jpg) no-repeat bottom;
     background-size: contain;
-}
-
-#myVideo {
-    position: fixed;
-    right: 0;
-    bottom: 0;
-    min-width: 100%;
-    min-height: 100%;
 }
 
 main {
@@ -19,36 +10,29 @@ main {
     margin-top: 60px;
 }
 
-
 h1 {
     font-family: 'Chelsea Market', cursive;
 }
 
-
-.almrsk-post h1 {
-    font-size: 1.7rem;
+h1 {
+    font-size: 1.4rem;
 }
-.almrsk-post h2 {
-    font-size: 1.5rem;
+h2 {
+    font-size: 1rem;
 }
-.almrsk-post h3 {
-    font-size: 1.1rem;
+h3 {
+    font-size: .8rem;
 }
 
 .bubbles {
     display: inline-block;
-    font-family: arial, sans-serif;
     position: relative;
 }
-.bubbles h1 {
-    margin: .5em 0 0;
-}
-
 .individual-bubble {
     position: absolute;
     border-radius: 100%;
-    bottom: 10px;
-    background-color: #fff;
+    bottom: 20px;
+    background-color: #ffffff;
     z-index: 1;
 }
 
@@ -64,7 +48,7 @@ a.footer {
 a.footer:hover {
     background: #baac3d;
     padding: 3px 5px;
-    border-radius: 20px;
+    border-radius: .25rem;
     text-decoration: none;
 }
 a.light:hover {
@@ -75,7 +59,23 @@ a, a:hover {
 }
 
 .navbar {
-    background: #87CEEB;
+    background: #87ceeb;
+    /*
+    background: #87CEEB url(../images/bg-sky.jpg) no-repeat;
+    background-size: contain;
+     */
+}
+
+fieldset.form-group {
+     background: #ffffff;
+     padding: 10px;
+    border-radius: .25rem;
+    margin-top: 30px;
+}
+
+fieldset.form-group legend {
+    background: #dee2e6;
+    padding: 5px 10px;
 }
 
 .navbar::before{
@@ -129,6 +129,10 @@ a, a:hover {
     letter-spacing: 1px;
     padding: 0 !important;
     text-transform: capitalize !important;
+}
+
+#terme {
+    border-radius: .25rem 0 0 .25rem;
 }
 
 .user-cont i {
@@ -214,8 +218,20 @@ a, a:hover {
 .custom-file-label { opacity: 0; }
 .custom-file-input { opacity: 1; }
 
-.almrsk-submission {
-    background: #e6d845;
+.almrsk-form-container {
+    background: #75bbd7;
+}
+
+.almrsk-form-container .form-group {
+    border-radius: .25rem;
+    background: #ffffff;
+    padding: 10px;
+}
+
+.almrsk-form-question {
+    background: #dee2e6;
+    padding: 10px;
+    border-radius: .25rem;
 }
 
 .vich-image img {
@@ -223,14 +239,6 @@ a, a:hover {
 }
 .card {
     border: 0;
-}
-
-.almrsk-submission .card-body {
-    z-index: 1;
-}
-.sealife-img {
-    position: absolute;
-    right: -50px;
 }
 .fos_comment_comment_reply {
     display: none;
@@ -253,16 +261,22 @@ a, a:hover {
     top: 0;
 }
 .post-form-layer > p {
-    text-align: center;
-    margin-top: 120px;
-    font-weight: bold;
-    padding: 10px 0 10px;
-    color: #333;
+    margin-top: 130px;
 }
 
 .fixed-card .card {
     height: 400px;
     overflow: auto;
+    margin-bottom: 20px;
+}
+
+#mot_question {
+    width: 25px;
+    height: 25px;
+    margin: 0 10px 10px -20px;
+}
+.almrsk-form-question label {
+    margin-left: 10px;
 }
 
 @media (min-width:1025px) { /* big landscape tablets, laptops, and desktops */
@@ -273,6 +287,14 @@ a, a:hover {
     .main-footer .col-md-4:last-child {
         border: 0
     }
+
+    .start-page h1 {
+        font-size: 40px !important;
+    }
+    .start-page h2 {
+        font-size: 26px !important;
+        margin-top: -20px !important;
+    }
 }
 
 @media only screen and (min-width : 320px) and (max-width : 1024px) {
@@ -282,18 +304,11 @@ a, a:hover {
 /* Smartphones (portrait and landscape) ----------- */
 
 @media only screen and (min-width : 320px) and (max-width : 480px) {
-    .start-page h1 {
-        font-size: 20px !important;
-    }
 
     .start-page .w-50 {
         width: 100% !important;
     }
 
-    .start-page h2 {
-        font-size: 16px !important;
-        margin-top: -10px !important;
-    }
     .nav-item {
         border-right: 0;
         text-align: left;

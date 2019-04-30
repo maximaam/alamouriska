@@ -3,7 +3,6 @@
 namespace App\Form;
 
 use App\Entity\Locution;
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Vich\UploaderBundle\Form\Type\VichImageType;
@@ -12,7 +11,7 @@ use Vich\UploaderBundle\Form\Type\VichImageType;
  * Class LocutionType
  * @package App\Form
  */
-class LocutionType extends AbstractType
+class LocutionType extends SharedType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -24,23 +23,9 @@ class LocutionType extends AbstractType
             ->add('locution', null, [
                 'label' => 'label.locution',
                 'help' => 'label.required',
-            ])
-            ->add('description', null, [
-                'help' => 'label.required',
-                'attr'  => [
-                    'rows'  => 5,
-                ]
-            ])
-            ->add('question', null, [
-                'label' => 'Ceci est une question pour tous',
-                'help'  => 'Clique si tu veux de l\'aide ici',
-            ])
-            ->add('imageFile', VichImageType::class, [
-                'label'         => 'Photo (optionnel, jpeg uniquement)',
-                'required'      => false,
-                'allow_delete'  => true,
-            ])
-        ;
+            ]);
+
+        parent::buildForm($builder, $options);
     }
 
     /**

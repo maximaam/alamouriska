@@ -9,7 +9,6 @@
 namespace App\Form;
 
 use App\Entity\Mot;
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Vich\UploaderBundle\Form\Type\VichImageType;
@@ -18,7 +17,7 @@ use Vich\UploaderBundle\Form\Type\VichImageType;
  * Class MotType
  * @package App\Form
  */
-class MotType extends AbstractType
+class MotType extends SharedType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -29,36 +28,28 @@ class MotType extends AbstractType
         $builder
             ->add('inLatin', null, [
                 'label' => 'label.latin_char',
-                'help' => 'label.required',
+                'help' => 'label.required_no_spaces',
+                'attr'  => [
+                    'autocomplete' => 'off'
+                ]
             ])
             ->add('inTamazight', null, [
                 'label' => 'label.tamazight_char',
-                'help'  => 'label.optional_wished'
+                'help'  => 'label.optional_wished',
+                'attr'  => [
+                    'autocomplete' => 'off'
+                ]
             ])
             ->add('inArabic', null, [
                 'label' => 'label.arabic_char',
-                'help'  => 'label.optional_wished'
-            ])
-            ->add('description', null, [
-                'help'  => 'label.required',
+                'help'  => 'label.optional_wished',
                 'attr'  => [
-                    'rows'  => 5
+                    'autocomplete' => 'off',
+                    'dir'   => 'rtl'
                 ]
-            ])
-            ->add('question', null, [
-                'label' => 'Ceci est une question pour tous',
-                'help'  => 'Clique si tu veux de l\'aide',
-            ])
-            ->add('imageFile', VichImageType::class, [
-                'label'         => 'Photo (optionnel, jpeg uniquement)',
-                'required'      => false,
-                'allow_delete'  => true,
-                //'help'  => 'label.optional',
-                //'download_link' => false,
-                //'download_uri'  => '',
-                //'download_label' => '...',
-            ])
-        ;
+            ]);
+
+        parent::buildForm($builder, $options);
     }
 
     /**

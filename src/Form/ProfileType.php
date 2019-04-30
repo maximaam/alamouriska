@@ -37,11 +37,11 @@ class ProfileType extends AbstractType
                 'label' => 'Envoyez-moi un email à chaque nouvelle publication'
             ])
             ->add('avatarFile', VichImageType::class, [
-                'label'         => 'Photo (jpeg uniquement)',
+                'label'         => 'Photo',
                 'required'      => false,
                 'allow_delete'  => true,
-                'download_link' => false,
-                'download_uri'  => '',
+                //'download_link' => false,
+                //'download_uri'  => '',
                 //'download_label' => '...',
                 ])
 

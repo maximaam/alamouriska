@@ -1,8 +1,8 @@
-<div class="card text-dark almrsk-submission">
+<div class="card text-dark almrsk-form-container">
 
     {% if is_granted("IS_AUTHENTICATED_REMEMBERED") == false %}
         <div class="post-form-layer text-light">
-            <p>
+            <p class="text-dark bg-light py-3 text-center font-weight-bolder shadow">
                 Tu veux publier des alamouriskas?
                 <br>
                 <br>
@@ -17,7 +17,7 @@
     <p class="card-header">
         <strong>{{ 'label.almrsk.insert_new' | trans({'%almrsk%' : header }) }}</strong>
     </p>
-    <div class="card-body">
+    <div class="card-body p-2">
         {{ include('partials/_form.html.twig') }}
     </div>
 </div>

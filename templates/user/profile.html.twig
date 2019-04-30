@@ -7,12 +7,12 @@
 {% block body %}
     <div class="container fixed-card">
 
-        <div class="row mb-5">
+        <div class="row mb-4">
             <div class="col-sm-8">
-                <div class="media">
+                <div class="media mb-2">
                     {%  include 'partials/avatar.html.twig' with {'current_user': user, 'size': 128, 'classes': 'mr-3 rounded' } only %}
                     <div class="media-body">
-                        <h1 class="d-inline">Publications de {{ user.username }}</h1>
+                        <h1>Publications de {{ user.username }}</h1>
                         <h2>Membre depuis le {{ user.createdAt | localizeddate('long', 'none', app.request.locale) }}</h2>
                         <h5>{{ (user.mots | length + user.locutions | length + user.proverbes | length + user.citations | length) }} publication(s).</h5>
                     </div>

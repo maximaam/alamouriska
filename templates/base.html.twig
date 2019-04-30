@@ -44,11 +44,7 @@
 
                     {{ knp_menu_render('main') }}
 
-                    {% block search %}
-                        {{ include('partials/search.html.twig', { domain : 'tout' }) }}
-                    {% endblock %}
-
-                    <div class="user-cont">
+                    <div class="user-cont mr-2">
                         {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                             <a href="{{ path('fos_user_profile_show') }}" class="user btn rounded" title="Paramètres">
                                 <i class="fa fa-cog"></i>
@@ -60,6 +56,11 @@
                             </a>
                         {% endif %}
                     </div>
+
+                    {% block search %}
+                        {{ include('partials/search.html.twig', { domain : 'tout' }) }}
+                    {% endblock %}
+
                 </div>
             </div>
         </nav>
