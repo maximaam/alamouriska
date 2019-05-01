@@ -36,8 +36,8 @@
         <div class="row text-dark">
             {%  include 'partials/post_list.html.twig' with {'posts': user.mots, 'route': 'post_mot_show', 'header': 'label.words' | trans } only %}
             {%  include 'partials/post_list.html.twig' with {'posts': user.locutions, 'route': 'post_locution_show', 'header': 'label.locutions' | trans } only %}
-            {%  include 'partials/post_list.html.twig' with {'posts': user.proverbes, 'route': 'post_proverbe_show', 'header': 'label.proverbes' | trans } only %}
-            {%  include 'partials/post_list.html.twig' with {'posts': user.citations, 'route': 'post_citation_show', 'header': 'label.citations' | trans } only %}
+            {%  include 'partials/post_list.html.twig' with {'posts': user.proverbes, 'route': 'post_proverbe_show', 'header': 'label.proverbs' | trans } only %}
+            {%  include 'partials/post_list.html.twig' with {'posts': user.citations, 'route': 'post_citation_show', 'header': 'label.quotes' | trans } only %}
         </div>
     </div>
 {% endblock %}

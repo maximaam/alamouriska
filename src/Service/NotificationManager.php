@@ -52,7 +52,7 @@ class NotificationManager
 
         $recipients = implode(',', $recipients);
         $recipients = trim($recipients, ',');
-        $route = $comment->getThread()->getOwner() . '_show';
+        $route = 'post_' . $comment->getThread()->getOwner() . '_show';
 
         $postUrl = $this->router->generate($route, ['id' => $post->getId(), 'slug' => $post->getSlug()], UrlGenerator::ABSOLUTE_URL);
 

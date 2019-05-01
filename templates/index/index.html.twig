@@ -1,24 +1,28 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
+    {{ 'welcome_title' | trans }}
     {{ parent() }}
-    {{ 'title.welcome'|trans }}
+{% endblock %}
+
+{% block font %}
+    <link href="https://fonts.googleapis.com/css?family=Concert+One" rel="stylesheet">
 {% endblock %}
 
 {% block body %}
 
     <div class="container start-page">
 
-        <div class="row mb-3">
+        <div class="row mb-5">
             <div class="d-flex flex-column flex-md-row">
                 <div class="mr-md-3 w-50 pt-4 text-center">
                     <img src="{{ asset('images/plongeon.jpg') }}" class="rounded-circle img-thumbnail" alt="">
                 </div>
                 <div class="p-3">
                     <div class="bubbles">
-                        <h1 class="font-weight-bold mt-3">{{ app_name }}AAAAAAAAA !!!</h1>
+                        <h1 class="font-weight-bold mt-3">{{ app_name }}AAAAAAAAA</h1>
                     </div>
-                    <h2 class="text-muted mt-n2">Le cri pour sauvegarder la langue algérienne !</h2>
+                    <h2 class="text-muted mt-n2 text-right font-italic">Le cri de sauvetage de la langue algérienne !</h2>
                     <p class="text-justify">
                         {{ page.description | raw }}
                         <a href="{{ path('index_page', { alias: 'kesako' }) }}" class="light">En savoir plus</a>
@@ -27,9 +31,9 @@
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-sm">
-                <div class="card text-dark mb-2">
+        <div class="row text-dark">
+            <div class="col-sm-4 fixed-card">
+                <div class="card">
                     <p class="card-header">
                         Les plus récents
                     </p>
@@ -38,10 +42,16 @@
                         body
                     </div>
                 </div>
-            </div>
+                <div class="card">
+                    <p class="card-header">
+                        Les plus enigmatiques
+                    </p>
 
-            <div class="col-sm">
-                <div class="card text-dark mb-2">
+                    <div class="card-body">
+                        body
+                    </div>
+                </div>
+                <div class="card">
                     <p class="card-header">
                         Les plus commentés
                     </p>
@@ -51,17 +61,38 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm">
-                <div class="card text-dark mb-2">
+
+            <div class="col-sm-8">
+                <div class="card">
                     <p class="card-header">
-                        Les plus enigmatiques
+                        Journal public
                     </p>
 
                     <div class="card-body">
-                        body
+                        <div class="journal-form mb-3">
+                            <form name="journal-form" id="journal-form">
+                                <div class="form-group">
+                                    <label for="journal-message" class="required">Publier un message public</label>
+                                    <textarea name="journal-message" id="journal-message" class="form-control" required="required" aria-describedby=""></textarea>
+                                </div>
+                                <div class="text-right">
+                                    <button class="btn btn-primary">Envoyer</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="journal-feed border-top mt-2 bg-light">
+                            <div class="feed">
+                                akdjhaksjdhkajsd
+                            </div>
+                            <div class="feed">
+                                akdjhaksjdhkajsd
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+
+
         </div>
     </div>
 
