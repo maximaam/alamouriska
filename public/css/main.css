@@ -86,19 +86,17 @@ fieldset.form-group legend {
 .rating-stars ul {
     list-style-type:none;
     padding:0;
-
     -moz-user-select:none;
     -webkit-user-select:none;
 }
 .rating-stars ul > li.star {
     display:inline-block;
-
 }
 
 /* Idle State of the stars */
 .rating-stars ul > li.star > i.fa {
     font-size:2.5em; /* Change the size of the stars */
-    color:#ccc; /* Color on idle state */
+    color:#666666; /* Color on idle state */
 }
 
 /* Hover state of the stars */
@@ -185,6 +183,9 @@ fieldset.form-group legend {
 }
 .bg-happy {
     background-color: #e6d845;
+}
+.bg-sky {
+    background-color: #87ceeb;
 }
 
 .btn-happy,

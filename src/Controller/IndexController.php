@@ -45,7 +45,7 @@ class IndexController extends AbstractController
         return $this->render('index/index.html.twig', [
             'form' => $form->createView(),
             'journals' => $this->getDoctrine()->getRepository(Journal::class)->findBy([], [], 20),
-            'page'   => $this->getDoctrine()->getRepository(Page::class)->findOneBy(['alias' => 'homepage']),
+            'page' => $this->getDoctrine()->getRepository(Page::class)->findOneBy(['alias' => 'homepage']),
         ]);
     }
 
