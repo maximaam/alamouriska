@@ -1,4 +1,6 @@
 {{ form_start(form) }}
     {{ form_widget(form) }}
-    <button class="btn btn-primary float-right">{{ 'form.submit' | trans }}</button>
+    <div class="text-right">
+        <button class="btn {{ btn.classes|default('btn-primary') }}" type="{{ btn.type|default('submit') }}">{{ btn.label|default('label.submit' | trans) }}</button>
+    </div>
 {{ form_end(form) }}

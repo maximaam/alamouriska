@@ -2,8 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\Journal;
 use App\Entity\Page;
+use App\Form\JournalType;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -15,10 +19,32 @@ class IndexController extends AbstractController
 {
     /**
      * @Route("/", name="index_index")
+     *
+     * @param Request $request
+     * @return Response
      */
-    public function index(): Response
+    public function index(Request $request, PaginatorInterface $paginator): Response
     {
+        $journal = (new Journal())->setUser($this->getUser());
+
+        $form = $this->createForm(JournalType::class, $journal);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+            $journal->setAddr($request->getClientIp());
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($journal);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('index_index');
+        }
+
         return $this->render('index/index.html.twig', [
+            'form' => $form->createView(),
+            'journals' => $this->getDoctrine()->getRepository(Journal::class)->findBy([], [], 20),
             'page'   => $this->getDoctrine()->getRepository(Page::class)->findOneBy(['alias' => 'homepage']),
         ]);
     }

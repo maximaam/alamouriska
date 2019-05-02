@@ -4,9 +4,6 @@ user:
   password:
     difficulty: 'Le mot de passe doit contenir des chiffres et des lettres.'
 
-form:
-  submit: 'Envoyer'
-
 msg:
   jpeg_only: 'Seul le format JPEG/JPG est accepté!'
 
@@ -29,6 +26,12 @@ label:
   locutions: 'Locutions'
   proverbs: 'Proverbes'
   quotes: 'Citations'
+  publish: 'Publier'
+  submit: 'Envoyer'
+  cancel: 'Annuler'
+  profile: 'Profile'
+  login: 'Connexion'
+  login_or_sign: "Se connecter ou s'inscrire"
 
   # Mots, locutions...etc pages
   almrsk:
@@ -36,3 +39,9 @@ label:
       h1: 'Liste des %almrsk% %gender% alamouriské(e)s'
       search_h1: 'Publications trouvées pour "%term%"'
       by_user: 'Proposé par %username%'
+
+email:
+  publisher:
+    subject: 'Un commentaire a été ajouté à ta publication'
+  commenter:
+    subject: 'Nouveau commentaire sur la publication que tu suis.'

@@ -3,13 +3,13 @@
 {% block fos_user_content %}
     <div class="card text-dark">
         <div class="card-header">
-            <h1 class="text-center">Profil</h1>
+            <h1 class="text-center">{{ 'label.profile' | trans }}</h1>
         </div>
         <div class="card-body bg-light">
             {{ form_start(form) }}
             {{ form_widget(form) }}
-            <button type="submit" class="btn btn-happy float-right">{{ 'form.submit' | trans }}</button>
-            <a href="{{ path('fos_user_profile_show') }}" class="btn btn-secondary float-right mr-2">Annuler</a>
+            <button type="submit" class="btn btn-happy float-right">{{ 'label.submit' | trans }}</button>
+            <a href="{{ path('fos_user_profile_show') }}" class="btn btn-secondary float-right mr-2">{{ 'label.cancel' | trans }}</a>
             {{ form_end(form) }}
         </div>
     </div>

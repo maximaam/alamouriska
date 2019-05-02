@@ -10,7 +10,7 @@ main {
     margin-top: 60px;
 }
 
-.start-page h1 {
+.start-page h1, .start-page h2  {
     font-family: 'Concert One', cursive;
 }
 
@@ -76,6 +76,39 @@ fieldset.form-group {
 fieldset.form-group legend {
     background: #dee2e6;
     padding: 5px 10px;
+}
+
+#journal > .form-group {
+    margin-bottom: 0;
+}
+
+/* Rating Star Widgets Style */
+.rating-stars ul {
+    list-style-type:none;
+    padding:0;
+
+    -moz-user-select:none;
+    -webkit-user-select:none;
+}
+.rating-stars ul > li.star {
+    display:inline-block;
+
+}
+
+/* Idle State of the stars */
+.rating-stars ul > li.star > i.fa {
+    font-size:2.5em; /* Change the size of the stars */
+    color:#ccc; /* Color on idle state */
+}
+
+/* Hover state of the stars */
+.rating-stars ul > li.star.hover > i.fa {
+    color:#FFCC36;
+}
+
+/* Selected state of the stars */
+.rating-stars ul > li.star.selected > i.fa {
+    color:#FF912C;
 }
 
 .navbar::before{
@@ -268,6 +301,14 @@ fieldset.form-group legend {
     height: 400px;
     overflow: auto;
     margin-bottom: 20px;
+}
+
+.fixed-card-2 .card {
+    height: 200px;
+}
+
+.card-transparent {
+    background-color: rgba(255, 255, 255, .7);
 }
 
 #mot_question {

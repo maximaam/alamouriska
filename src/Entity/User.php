@@ -115,6 +115,11 @@ class User extends BaseUser
     private $allowPostNotification = false;
 
     /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Journal", mappedBy="User", orphanRemoval=true)
+     */
+    private $journals;
+
+    /**
      * User constructor.
      * @throws \Exception
      */
@@ -126,6 +131,7 @@ class User extends BaseUser
         $this->locutions = new ArrayCollection();
         $this->proverbes = new ArrayCollection();
         $this->citations = new ArrayCollection();
+        $this->journals = new ArrayCollection();
     }
 
     /**
@@ -239,6 +245,37 @@ class User extends BaseUser
     public function setAllowPostNotification(bool $val): self
     {
         $this->allowPostNotification = $val;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Journal[]
+     */
+    public function getJournals(): Collection
+    {
+        return $this->journals;
+    }
+
+    public function addJournal(Journal $journal): self
+    {
+        if (!$this->journals->contains($journal)) {
+            $this->journals[] = $journal;
+            $journal->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeJournal(Journal $journal): self
+    {
+        if ($this->journals->contains($journal)) {
+            $this->journals->removeElement($journal);
+            // set the owning side to null (unless already changed)
+            if ($journal->getUser() === $this) {
+                $journal->setUser(null);
+            }
+        }
 
         return $this;
     }

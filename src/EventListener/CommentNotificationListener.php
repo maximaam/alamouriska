@@ -1,8 +1,8 @@
 <?php
 
-
 namespace App\EventListener;
 
+use App\Entity\Citation;
 use App\Entity\Comment;
 use App\Entity\Locution;
 use App\Entity\Mot;
@@ -14,6 +14,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use FOS\CommentBundle\Events as FOSCommentEvents;
 use FOS\CommentBundle\Model\CommentManagerInterface;
 use App\Service\NotificationManager;
+use Twig;
 
 /**
  * Class CommentNotificationListener
@@ -30,11 +31,18 @@ class CommentNotificationListener implements EventSubscriberInterface
      * @var NotificationManager
      */
     private $notificationManager;
+
     /**
      * @var EntityManagerInterface
      */
     private $em;
 
+    /**
+     * CommentNotificationListener constructor.
+     * @param NotificationManager $notificationManager
+     * @param CommentManagerInterface $commentManager
+     * @param EntityManagerInterface $em
+     */
     public function __construct(NotificationManager $notificationManager, CommentManagerInterface $commentManager, EntityManagerInterface $em)
     {
         $this->notificationManager = $notificationManager;
@@ -52,11 +60,18 @@ class CommentNotificationListener implements EventSubscriberInterface
         ];
     }
 
+    /**
+     * @param CommentEvent $event
+     * @throws Twig\Error\LoaderError
+     * @throws Twig\Error\RuntimeError
+     * @throws Twig\Error\SyntaxError
+     */
     public function onCommentPostPersist(CommentEvent $event)
     {
+        /** @var Comment $comment */
         $comment = $event->getComment();
 
-        //Only add comment shoudl trigger
+        //Only add comment should trigger
         if ($comment->getState() !== Comment::STATE_VISIBLE) {
             return;
         }
@@ -84,7 +99,7 @@ class CommentNotificationListener implements EventSubscriberInterface
             }
         }
 
-        /** @var Mot|Locution|Proverbe $post */
+        /** @var Mot|Locution|Proverbe|Citation $post */
         $post = $this->em->getRepository($this->getPostClass($thread->getOwner()))->find($thread->getOwnerId());
 
         //Remove post owner from recipients as they get an extra email
@@ -126,7 +141,6 @@ class CommentNotificationListener implements EventSubscriberInterface
         // Send the notifications
         $this->notificationManager->send($comment, $recipients, $post);
     }
-
 
     /**
      * @param string $owner

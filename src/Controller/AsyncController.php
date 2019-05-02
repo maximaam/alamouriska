@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Rating;
 use App\Entity\User;
+use App\Repository\RatingRepository;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Entity\Liking;
@@ -79,7 +81,49 @@ class AsyncController extends AbstractController
         }
 
         return new JsonResponse(['status' => self::STATUS_ERROR], 410);
+    }
 
+    /**
+     * @Route("/rating", name="async_rating")
+     *
+     * @param Request $request
+     * @param RatingRepository $repository
+     * @return Response
+     * @throws \Exception
+     */
+    public function rating(Request $request, RatingRepository $repository)
+    {
+        if (false === $request->isXmlHttpRequest()) {
+            return new JsonResponse([], 403);
+        }
+
+        $entityManager = $this->getDoctrine()->getManager();
+
+        /*
+        $rating = $repository->findOneBy([
+            'addr'     => $request->getClientIp(),
+            //'createdAt' => $request->get('ownerId')
+        ]);
+        */
+
+        $rating = null;
+
+        if (null === $rating) {
+            $newRating = (new Rating())
+                ->setRating($request->get('rating'))
+                ->setAddr($request->getClientIp())
+            ;
+
+            $entityManager->persist($newRating);
+
+            $entityManager->flush();
+
+            return new JsonResponse([
+                'status' => self::STATUS_SUCCESS,
+            ], 200);
+        }
+
+        return new JsonResponse(['status' => self::STATUS_ERROR], 410);
     }
 
     /**

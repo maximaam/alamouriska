@@ -16,13 +16,13 @@
         <div class="row mb-5">
             <div class="d-flex flex-column flex-md-row">
                 <div class="mr-md-3 w-50 pt-4 text-center">
-                    <img src="{{ asset('images/plongeon.jpg') }}" class="rounded-circle img-thumbnail" alt="">
+                    <img src="{{ asset('images/plongeon.jpg') }}" class="rounded-circle img-thumbnail" alt="Plongeon">
                 </div>
                 <div class="p-3">
                     <div class="bubbles">
-                        <h1 class="font-weight-bold mt-3">{{ app_name }}AAAAAAAAA</h1>
+                        <h1 class="font-weight-bold mt-2">{{ app_name }}AAAAAAAAA</h1>
                     </div>
-                    <h2 class="text-muted mt-n2 text-right font-italic">Le cri de sauvetage de la langue algérienne !</h2>
+                    <h2 class="d-block text-muted font-italic mt-n3">Le cri de sauvetage de la langue algérienne !</h2>
                     <p class="text-justify">
                         {{ page.description | raw }}
                         <a href="{{ path('index_page', { alias: 'kesako' }) }}" class="light">En savoir plus</a>
@@ -32,62 +32,100 @@
         </div>
 
         <div class="row text-dark">
-            <div class="col-sm-4 fixed-card">
-                <div class="card">
-                    <p class="card-header">
+            <div class="col-sm-4 fixed-card fixed-card-2">
+                <div class="card bg-transparent">
+                    <p class="card-header bg-light font-weight-bold">
                         Les plus récents
                     </p>
 
-                    <div class="card-body">
+                    <div class="card-body card-transparent ">
                         body
                     </div>
                 </div>
-                <div class="card">
-                    <p class="card-header">
+                <div class="card bg-transparent">
+                    <p class="card-header bg-light font-weight-bold">
                         Les plus enigmatiques
                     </p>
 
-                    <div class="card-body">
+                    <div class="card-body card-transparent">
                         body
                     </div>
                 </div>
-                <div class="card">
-                    <p class="card-header">
+                <div class="card bg-transparent">
+                    <p class="card-header bg-light font-weight-bold">
                         Les plus commentés
                     </p>
 
-                    <div class="card-body">
+                    <div class="card-body card-transparent">
                         body
+                    </div>
+                </div>
+                <div class="card bg-happy">
+                    <p class="card-header font-weight-bold">Noter {{ app_name }}</p>
+
+                    <div class="card-body">
+                        <!-- Rating Stars Box -->
+                        <div class="rating-stars text-center">
+                            <ul id="stars">
+                                <li class="star" title="Oh ! Pas bien du tout !" data-value="1" data-message="Pas bien du tout!">
+                                    <i class="fa fa-star fa-fw"></i>
+                                </li>
+                                <li class="star" title="Peut mieux faire." data-value="2">
+                                    <i class="fa fa-star fa-fw"></i>
+                                </li>
+                                <li class="star" title="Intik. Pas mauvais ce truc." data-value="3">
+                                    <i class="fa fa-star fa-fw"></i>
+                                </li>
+                                <li class="star" title="Super ! Bien fait !" data-value="4">
+                                    <i class="fa fa-star fa-fw"></i>
+                                </li>
+                                <li class="star" title="Excellent ! J'adore !" data-value="5">
+                                    <i class="fa fa-star fa-fw"></i>
+                                </li>
+                            </ul>
+
+                            <div class="message font-weight-bold"></div>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <div class="col-sm-8">
                 <div class="card">
-                    <p class="card-header">
-                        Journal public
-                    </p>
-
+                    <p class="card-header font-weight-bold">Journal public</p>
                     <div class="card-body">
-                        <div class="journal-form mb-3">
-                            <form name="journal-form" id="journal-form">
+
+                        <div class="journal-form mb-4 border-bottom pb-2">
+                            {% if app.user %}
+                                {{ include('partials/_form.html.twig', {'btn' : {label: 'label.publish' | trans} }) }}
+                            {% else %}
                                 <div class="form-group">
-                                    <label for="journal-message" class="required">Publier un message public</label>
-                                    <textarea name="journal-message" id="journal-message" class="form-control" required="required" aria-describedby=""></textarea>
+                                    <label for="op">Publier un message</label>
+                                    <textarea id="op" name="op" disabled="disabled" class="form-control"></textarea>
                                 </div>
-                                <div class="text-right">
-                                    <button class="btn btn-primary">Envoyer</button>
-                                </div>
-                            </form>
+                                {{ include('partials/_btn-login.html.twig') }}
+                            {% endif %}
                         </div>
-                        <div class="journal-feed border-top mt-2 bg-light">
-                            <div class="feed">
-                                akdjhaksjdhkajsd
-                            </div>
-                            <div class="feed">
-                                akdjhaksjdhkajsd
-                            </div>
+
+                        <div class="journal-feed mt-2">
+                            {% if journals | length > 0 %}
+                                <ul class="list-unstyled">
+                                    {% for journal in journals %}
+                                        <li class="media mb-3 bg-light p-1">
+                                            {%  include 'partials/avatar.html.twig' with {'current_user': journal.user, 'size': 64, 'classes': 'mr-3 rounded' } only %}
+                                            <div class="media-body">
+                                                <p class="mt-0 mb-1">
+                                                    <strong>Par: {{ journal.user.username }}</strong> |
+                                                    <span class="text-secondary">Le: {{ journal.createdAt | date }}</span>
+                                                </p>
+                                                <p>{{ journal.message | nl2br }}</p>
+                                            </div>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
                         </div>
+
                     </div>
                 </div>
             </div>

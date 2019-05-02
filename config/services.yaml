@@ -7,6 +7,7 @@ parameters:
     locale: 'fr'
     app_name: 'ALAMOURISKA'
     app_secret: '%env(APP_SECRET)%'
+    app_notifier_email: 'alamouriska.app@gmail.com'
 
     mailer_user: 'mimoberlino@gmail.com'
     mailer_from: 'no-reply@sparheld.de'
