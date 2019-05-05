@@ -27,6 +27,7 @@ use App\Utils\LikingUtils;
 use App\Utils\Linguistic;
 use App\Utils\PhpUtils;
 use Knp\Component\Pager\Pagination\PaginationInterface;
+use phpDocumentor\Reflection\Types\This;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\{ RedirectResponse, Request, Response };
@@ -42,15 +43,34 @@ use Knp\Component\Pager\PaginatorInterface;
  */
 class PostController extends AbstractController
 {
+
+
+
+    public function __construct()
+    {
+
+    }
+
+
     /**
-     * @Route("/mots", name="post_mot_index", methods={"GET","POST"})
+     * @Route(
+     *     "/{almrsk}",
+     *     name="post_index",
+     *     methods={"GET","POST"},
+     *     requirements={"almrsk=mots|locutions|proverbes|citations"}
+     *     )
      *
      * @param Request $request
-     * @param PaginatorInterface $paginator
      * @return Response
-     * @throws \ReflectionException
      */
-    public function motsIndex(Request $request, PaginatorInterface $paginator): Response
+    public function index(Request $request): Response
+    {
+        $almrsk = $request->get('almrsk');
+
+        return call_user_func_array([$this, $almrsk], [Request $request, PaginatorInterface $paginator])
+    }
+
+    private function mots(Request $request, PaginatorInterface $paginator)
     {
         $mot = (new Mot())->setUser($this->getUser());
 
@@ -286,48 +306,25 @@ class PostController extends AbstractController
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
-        switch (true) {
-            case $post instanceof Mot:
-                $post->setSlug(Linguistic::toSlug($post->getInLatin()));
-                break;
-
-            case $post instanceof Locution:
-                $post->setSlug(Linguistic::toSlug($post->getLocution()));
-                break;
-
-            case $post instanceof Proverbe:
-                $post->setSlug(Linguistic::toSlug($post->getProverbe()));
-                break;
-
-            case $post instanceof Citation:
-                $post->setSlug(Linguistic::toSlug($post->getCitation()));
-                break;
-
-            default:
-                throw new \InvalidArgumentException(\sprintf('Unknown object of class %s', $class));
-        }
-
-        $class = PhpUtils::getClassName($post);
+        $post->setSlug(Linguistic::toSlug($post));
         $post->setAddr($addr);
+        $route = 'post_' . \strtolower(PhpUtils::getClassName($post)) . '_index';
 
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($post);
         $entityManager->flush();
-
         unset($form, $post);
-
-        $route = 'post_' . \strtolower($class) . '_index';
 
         return $this->redirectToRoute($route);
     }
 
     /**
      * @param PaginatorInterface $paginator
-     * @param $class
+     * @param string $class
      * @param int $page
      * @return PaginationInterface
      */
-    private function getPaginator(PaginatorInterface $paginator, $class, int $page): PaginationInterface
+    private function getPaginator(PaginatorInterface $paginator, string $class, int $page): PaginationInterface
     {
         $query = $this->getDoctrine()->getRepository($class)
             ->createQueryBuilder('q')

@@ -1,4 +1,3 @@
-
 {% for commentinfo in comments %}
     {% if commentinfo.comment is fos_comment_in_state(constant('FOS\\CommentBundle\\Model\\CommentInterface::STATE_VISIBLE')) %}
         {% include 'partials/comment.html.twig' with { 'children': commentinfo.children, 'comment': commentinfo.comment, 'depth': 0, 'view': 'flat' } %}

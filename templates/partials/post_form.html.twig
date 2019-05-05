@@ -1,4 +1,4 @@
-<div class="card text-dark almrsk-form-container">
+<div class="card text-dark bg-happy">
 
     {% if is_granted("IS_AUTHENTICATED_REMEMBERED") == false %}
         <div class="post-form-layer text-light">
@@ -14,7 +14,9 @@
         </div>
     {% endif %}
 
-    <p class="card-header font-weight-bold">{{ 'label.almrsk.insert_new' | trans({'%almrsk%' : header }) }}</p>
+    <div class="card-header font-weight-bold">
+        {{ 'label.almrsk.insert_new' | trans({'%almrsk%' : header }) }}
+    </div>
 
     <div class="card-body p-2">
         {{ include('partials/_form.html.twig') }}

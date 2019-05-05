@@ -5,6 +5,10 @@
     {{ parent() }}
 {% endblock %}
 
+{% block search %}
+    {{ include('partials/search.html.twig', { domain : 'locution' }) }}
+{% endblock %}
+
 {% block body %}
     <div class="container almrsk-post">
         <div class="row">
