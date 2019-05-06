@@ -20,6 +20,15 @@ $(document).ready(function() {
         });
     });
 
+
+    $('.fos_comment_comment_remove').on('click', function () {
+        let target = $(this).parents('.fos_comment_comment_show').attr('id');
+        setTimeout(function () {
+            $('#' + target).fadeOut();
+
+        }, 500);
+    });
+
     $('.js_ask-log-in').on('click', function(e) {
         e.preventDefault();
 

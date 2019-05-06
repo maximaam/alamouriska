@@ -13,7 +13,7 @@ class PhpUtils
      * @return string
      * @throws \ReflectionException
      */
-    public static function getClassName($class)
+    public static function getClassName($class): string
     {
         return (new \ReflectionClass($class))->getShortName();
     }

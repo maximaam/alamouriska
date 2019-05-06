@@ -27,7 +27,6 @@ use App\Utils\LikingUtils;
 use App\Utils\Linguistic;
 use App\Utils\PhpUtils;
 use Knp\Component\Pager\Pagination\PaginationInterface;
-use phpDocumentor\Reflection\Types\This;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\{ RedirectResponse, Request, Response };
@@ -43,202 +42,119 @@ use Knp\Component\Pager\PaginatorInterface;
  */
 class PostController extends AbstractController
 {
-
-
-
-    public function __construct()
+    /**
+     * @Route(
+     *     "/{domain}",
+     *     name="post_index",
+     *     methods={"GET","POST"},
+     *     requirements={"domain"="mots|locutions|proverbes|citations"}
+     *     )
+     *
+     * @param Request $request
+     * @param PaginatorInterface $paginator
+     * @return Response
+     */
+    public function index(Request $request, PaginatorInterface $paginator): Response
     {
+        $domain = $request->get('domain');
+        $entity = \substr(\ucfirst($domain), 0, -1);
+        $class = 'App\\Entity\\' . $entity;
 
+        /** @var  Mot|Locution|Proverbe|Citation $model */
+        $model = (new $class())->setUser($this->getUser());
+
+        $form = $this->createForm('App\\Form\\' . $entity . 'Type', $model);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            return $this->submitForm($form, $model, $domain, $request->getClientIp());
+        }
+
+        return $this->render('post/index.html.twig', [
+            'domain' => $domain,
+            'entity' => $entity,
+            'form'  => $form->createView(),
+            'posts'  => $this->getPaginator($paginator, \get_class($model), $request->query->getInt('page', 1)),
+            'likings' => $this->getLikings($entity)
+        ]);
     }
+
+
 
 
     /**
      * @Route(
-     *     "/{almrsk}",
-     *     name="post_index",
-     *     methods={"GET","POST"},
-     *     requirements={"almrsk=mots|locutions|proverbes|citations"}
+     *     "/{domain}/{id}/{slug}",
+     *     name="post_show",
+     *     methods={"GET"},
+     *     requirements={"domain"="mots|locutions|proverbes|citations"}
      *     )
      *
      * @param Request $request
-     * @return Response
-     */
-    public function index(Request $request): Response
-    {
-        $almrsk = $request->get('almrsk');
-
-        return call_user_func_array([$this, $almrsk], [Request $request, PaginatorInterface $paginator])
-    }
-
-    private function mots(Request $request, PaginatorInterface $paginator)
-    {
-        $mot = (new Mot())->setUser($this->getUser());
-
-        $form = $this->createForm(MotType::class, $mot);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            return $this->submitForm($form, $mot, $request->getClientIp());
-        }
-
-        return $this->render('post/mots_index.html.twig', [
-            'form'  => $form->createView(),
-            'mots'  => $this->getPaginator($paginator, Mot::class, $request->query->getInt('page', 1)),
-            'likings' => $this->getLikings('mot')
-        ]);
-    }
-
-    /**
-     * @Route("/locutions", name="post_locution_index", methods={"GET","POST"})
-     *
-     * @param Request $request
-     * @param PaginatorInterface $paginator
-     * @return Response
-     * @throws \ReflectionException
-     */
-    public function locutionsIndex(Request $request, PaginatorInterface $paginator): Response
-    {
-        $locution = (new Locution())->setUser($this->getUser());
-
-        $form = $this->createForm(LocutionType::class, $locution);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            return $this->submitForm($form, $locution, $request->getClientIp());
-        }
-
-        return $this->render('post/locutions_index.html.twig', [
-            'form'  => $form->createView(),
-            'locutions'  => $this->getPaginator($paginator, Locution::class, $request->query->getInt('page', 1)),
-            'likings' => $this->getLikings('locution')
-        ]);
-    }
-
-    /**
-     * @Route("/proverbes", name="post_proverbe_index", methods={"GET","POST"})
-     *
-     * @param Request $request
-     * @param PaginatorInterface $paginator
-     * @return Response
-     * @throws \ReflectionException
-     */
-    public function proverbesIndex(Request $request, PaginatorInterface $paginator): Response
-    {
-        $proverbe = (new Proverbe())->setUser($this->getUser());
-
-        $form = $this->createForm(ProverbeType::class, $proverbe);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            return $this->submitForm($form, $proverbe, $request->getClientIp());
-        }
-
-        return $this->render('post/proverbes_index.html.twig', [
-            'form'  => $form->createView(),
-            'proverbes'  => $this->getPaginator($paginator, Proverbe::class, $request->query->getInt('page', 1)),
-            'likings' => $this->getLikings('proverbe')
-        ]);
-    }
-
-    /**
-     * @Route("/citations", name="post_citation_index", methods={"GET","POST"})
-     *
-     * @param Request $request
-     * @param PaginatorInterface $paginator
-     * @return Response
-     * @throws \ReflectionException
-     */
-    public function citationsIndex(Request $request, PaginatorInterface $paginator): Response
-    {
-        $citation = (new Citation())->setUser($this->getUser());
-
-        $form = $this->createForm(CitationType::class, $citation);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            return $this->submitForm($form, $citation, $request->getClientIp());
-        }
-
-        return $this->render('post/proverbes_index.html.twig', [
-            'form'  => $form->createView(),
-            'citations'  => $this->getPaginator($paginator, Citation::class, $request->query->getInt('page', 1)),
-            'likings' => $this->getLikings('citation')
-        ]);
-    }
-
-    /**
-     * @Route("/mots/{id}/{slug}", name="post_mot_show", methods={"GET"})
-     *
-     * @param Mot $mot
-     * @param Request $request
      * @param ThreadManagerInterface $threadManager
      * @param CommentManagerInterface $commentManager
      * @return Response
      * @throws \ReflectionException
      */
-    public function motShow(Mot $mot, CommentManagerInterface $commentManager, ThreadManagerInterface $threadManager, Request $request): Response
+    public function show(CommentManagerInterface $commentManager, ThreadManagerInterface $threadManager, Request $request): Response
     {
-        $thread = $this->createThread($threadManager, $request, $mot);
+        $domain = $request->get('domain');
+        $entity = \substr(\ucfirst($domain), 0, -1);
+
+        /** @var  Mot|Locution|Proverbe|Citation $model */
+        $model = $this->getDoctrine()->getManager()->find('App\\Entity\\' . $entity, $request->get('id'));
+
+        $thread = $this->createThread($threadManager, $request, $model);
         $comments = $commentManager->findCommentTreeByThread($thread);
 
-        return $this->render('post/mot_show.html.twig', [
-            'mot' => $mot,
-            'comments' => $comments,
-            'thread' => $thread,
+        return $this->render('post/show.html.twig', [
+            'domain'    => $domain,
+            'entity'    => $entity,
+            'post'      => $model,
+            'comments'  => $comments,
+            'thread'    => $thread,
         ]);
     }
 
     /**
-     * @Route("/locution/{id}/{slug}", name="post_locution_show", methods={"GET"})
+     * @Route("/supprimer/{domain}/{id}", name="post_delete", methods={"GET"})
      *
-     * @param Locution $locution
-     * @param Request $request
-     * @param ThreadManagerInterface $threadManager
-     * @param CommentManagerInterface $commentManager
-     * @return Response
-     * @throws \ReflectionException
-     */
-    public function locutionShow(Locution $locution, CommentManagerInterface $commentManager, ThreadManagerInterface $threadManager, Request $request): Response
-    {
-        $thread = $this->createThread($threadManager, $request, $locution);
-        $comments = $commentManager->findCommentTreeByThread($thread);
-
-        return $this->render('post/locution_show.html.twig', [
-            'locution' => $locution,
-            'comments' => $comments,
-            'thread' => $thread,
-        ]);
-    }
-
-    /**
-     * @Route("/mot/supprimer/{id}", name="post_mot_delete", methods={"GET"})
-     *
-     * @param Mot $mot
+     * @param string $domain
+     * @param string $id
      * @return RedirectResponse
      * @throws \Exception
      */
-    public function motDelete(Mot $mot): RedirectResponse
+    public function delete(string $domain, string $id): RedirectResponse
     {
+        $entity = \substr(\ucfirst($domain), 0, -1);
+
+        /** @var  Mot|Locution|Proverbe|Citation $model */
+        $model = $this->getDoctrine()->getManager()->find('App\\Entity\\' . $entity, $id);
+
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
-        if ($mot) {
+        if (null !== $model) {
 
-            if ($mot->getUser() !== $this->getUser()) {
+            if ($model->getUser() !== $this->getUser()) {
                 throw new \Exception('Error.');
             }
 
-            $motDeleted = (new MotDeleted())
-                ->setInLatin($mot->getInLatin())
-                ->setInArabic($mot->getInArabic())
-                ->setInTamazight($mot->getInTamazight())
-                ->setDescription($mot->getDescription())
-                ->setUserId($mot->getUser()->getId())
-                ->setCreatedAt($mot->getCreatedAt())
-            ;
-
             $manager = $this->getDoctrine()->getManager();
-            $manager->persist($motDeleted);
-            $manager->remove($mot);
+
+            if ($model instanceof Mot) {
+                $motDeleted = (new MotDeleted())
+                    ->setInLatin($model->getInLatin())
+                    ->setInArabic($model->getInArabic())
+                    ->setInTamazight($model->getInTamazight())
+                    ->setDescription($model->getDescription())
+                    ->setUserId($model->getUser()->getId())
+                    ->setCreatedAt($model->getCreatedAt())
+                ;
+
+                $manager->persist($motDeleted);
+            }
+
+            $manager->remove($model);
             $manager->flush();
 
             return $this->redirectToRoute('user_show', ['username' => $this->getUser()->getUsername()]);
@@ -265,19 +181,19 @@ class PostController extends AbstractController
 
         if (\strlen($domain) >= 3 && \strlen($term) >= 3) {
             switch ($domain) {
-                case 'mot':
+                case 'mots':
                     return $this->render('post/search.html.twig', ['mots' => $motRepository->search($term)]);
                     break;
 
-                case 'locution':
+                case 'locutions':
                     return $this->render('post/search.html.twig', ['locutions' => $locutionRepository->search($term)]);
                     break;
 
-                case 'proverbe':
+                case 'proverbes':
                     return $this->render('post/search.html.twig', ['proverbes' => $proverbeRepository->search($term)]);
                     break;
 
-                case 'citation':
+                case 'citations':
                     return $this->render('post/search.html.twig', ['citations' => $citationRepository->search($term)]);
                     break;
 
@@ -297,25 +213,24 @@ class PostController extends AbstractController
 
     /**
      * @param FormInterface $form
-     * @param Mot|Locution|Proverbe|Citation $post
+     * @param Mot|Locution|Proverbe|Citation $model
+     * @param string $domain
      * @param string $addr
      * @return RedirectResponse
-     * @throws \ReflectionException
      */
-    private function submitForm(FormInterface $form, $post, string $addr): RedirectResponse
+    private function submitForm(FormInterface $form, $model, string $domain, string $addr): RedirectResponse
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
-        $post->setSlug(Linguistic::toSlug($post));
-        $post->setAddr($addr);
-        $route = 'post_' . \strtolower(PhpUtils::getClassName($post)) . '_index';
+        $model->setSlug(Linguistic::toSlug($model));
+        $model->setAddr($addr);
 
         $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->persist($post);
+        $entityManager->persist($model);
         $entityManager->flush();
-        unset($form, $post);
+        unset($form, $model);
 
-        return $this->redirectToRoute($route);
+        return $this->redirectToRoute('post_index', ['domain' => $domain]);
     }
 
     /**
@@ -368,7 +283,7 @@ class PostController extends AbstractController
             $thread = $threadManager->createThread();
             $thread->setId($threadIdentifier);
             $thread->setPermalink($request->getUri());
-            $thread->setOwner(\strtolower($owner->getShortName()));
+            $thread->setOwner($owner->getShortName());
             $thread->setOwnerId($post->getId());
 
             // Add the thread

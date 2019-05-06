@@ -8,7 +8,7 @@
                 <ul class="pl-3">
                     {% for post in posts %}
                         <li title="{{ post }}">
-                            <a href="{{ path(route, { 'id': post.id, 'slug': post.slug }) }}">
+                            <a href="{{ path('post_show', { 'domain': domain, 'id': post.id, 'slug': post.slug }) }}">
                                 {{ post | truncate(25) }}
                             </a>
                         </li>

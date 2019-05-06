@@ -10,6 +10,7 @@ use App\Entity\Proverbe;
 use App\Entity\Thread;
 use Doctrine\ORM\EntityManagerInterface;
 use FOS\CommentBundle\Event\CommentEvent;
+use FOS\CommentBundle\Events;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use FOS\CommentBundle\Events as FOSCommentEvents;
 use FOS\CommentBundle\Model\CommentManagerInterface;
@@ -56,7 +57,8 @@ class CommentNotificationListener implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            FOSCommentEvents::COMMENT_POST_PERSIST => 'onCommentPostPersist',
+            //FOSCommentEvents::COMMENT_POST_PERSIST => 'onCommentPostPersist',
+            Events::COMMENT_PRE_PERSIST => 'onCommentPersist'
         ];
     }
 
@@ -66,25 +68,28 @@ class CommentNotificationListener implements EventSubscriberInterface
      * @throws Twig\Error\RuntimeError
      * @throws Twig\Error\SyntaxError
      */
-    public function onCommentPostPersist(CommentEvent $event)
+    public function onCommentPersist(CommentEvent $event)
     {
         /** @var Comment $comment */
         $comment = $event->getComment();
+
+        return;
 
         //Only add comment should trigger
         if ($comment->getState() !== Comment::STATE_VISIBLE) {
             return;
         }
 
+        //Only new comments should trigger
+        if (!$this->commentManager->isNewComment($comment)) {
+            return;
+        }
+
         //file_put_contents(__FILE__ . '.html', serialize($comment));
-
-        //if (!$this->commentManager->isNewComment($comment)) {
-            //return;
-        //}
-
 
         /** @var Thread $thread */
         $thread = $comment->getThread();
+        $owner = $thread->getOwner();
 
         /** @var  Comment[] $comment */
         $comments = $this->commentManager->findCommentsByThread($thread);
@@ -100,7 +105,7 @@ class CommentNotificationListener implements EventSubscriberInterface
         }
 
         /** @var Mot|Locution|Proverbe|Citation $post */
-        $post = $this->em->getRepository($this->getPostClass($thread->getOwner()))->find($thread->getOwnerId());
+        $post = $this->em->getRepository('App\\Entity\\' . $owner)->find($thread->getOwnerId());
 
         //Remove post owner from recipients as they get an extra email
         //$recipients = array_diff($recipients, [$post->getUser()->getEmail()]);
@@ -139,25 +144,7 @@ class CommentNotificationListener implements EventSubscriberInterface
         */
 
         // Send the notifications
-        $this->notificationManager->send($comment, $recipients, $post);
-    }
-
-    /**
-     * @param string $owner
-     * @return string
-     */
-    private function getPostClass(string $owner): string
-    {
-        switch ($owner) {
-            case 'mot':
-                return Mot::class;
-            case 'locution':
-                return Locution::class;
-            case 'proverbe':
-                return Proverbe::class;
-            default:
-                throw new \InvalidArgumentException(sprintf('Unknown owner %s', $owner));
-        }
+        $this->notificationManager->send($recipients, $post, $thread->getPermalink());
     }
 
 }

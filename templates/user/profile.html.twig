@@ -18,6 +18,8 @@
                     </div>
                 </div>
             </div>
+
+            {% if app.user %}
             <div class="col-sm-4 text-dark">
                 {% if user.allowMemberContact is same as(true) %}
                 <form method="post" name="member-contact" id="member-contact" class="bg-happy p-2 rounded">
@@ -31,13 +33,15 @@
                 </form>
                 {% endif %}
             </div>
+            {% endif %}
+
         </div>
 
         <div class="row text-dark">
-            {%  include 'partials/post_list.html.twig' with {'posts': user.mots, 'route': 'post_mot_show', 'header': 'label.words' | trans } only %}
-            {%  include 'partials/post_list.html.twig' with {'posts': user.locutions, 'route': 'post_locution_show', 'header': 'label.locutions' | trans } only %}
-            {%  include 'partials/post_list.html.twig' with {'posts': user.proverbes, 'route': 'post_proverbe_show', 'header': 'label.proverbs' | trans } only %}
-            {%  include 'partials/post_list.html.twig' with {'posts': user.citations, 'route': 'post_citation_show', 'header': 'label.quotes' | trans } only %}
+            {%  include 'partials/post_list.html.twig' with {'posts': user.mots, 'domain': 'mots', 'header': 'label.words' | trans } only %}
+            {%  include 'partials/post_list.html.twig' with {'posts': user.locutions, 'domain': 'locutions', 'header': 'label.locutions' | trans } only %}
+            {%  include 'partials/post_list.html.twig' with {'posts': user.proverbes, 'domain': 'proverbes', 'header': 'label.proverbs' | trans } only %}
+            {%  include 'partials/post_list.html.twig' with {'posts': user.citations, 'domain': 'citations', 'header': 'label.quotes' | trans } only %}
         </div>
     </div>
 {% endblock %}

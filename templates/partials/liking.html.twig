@@ -1,8 +1,6 @@
-{% set owner = almrsk | split('\\') | last | lower %}
-
 {% if app.user %}
     {% set liking_user = app.user.id in liking_users ? true : false %}
-    <a href="#" class="js_almrsk-liking" data-id="{{ almrsk.id }}" data-owner="{{ owner }}" data-opposite-action="">
+    <a href="#" class="js_almrsk-liking" data-owner="{{ owner }}-{{ owner_id }}" data-opposite-action="">
         <span class="likings-container {{ liking_user ? 'text-danger' }}">
             <i class="fa fa-thumbs-up"></i>
             <span class="likings-label" title="{{ liking_user ? 'label.liking_remove'|trans : 'label.liking_add'|trans }}">

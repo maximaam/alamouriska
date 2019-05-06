@@ -54,7 +54,10 @@ class MenuBuilder
 
         foreach ($items as $label => $route) {
             $menu->addChild($label, [
-                'route'     => 'post_' . $route . '_index',
+                'route'     => 'post_index',
+                'routeParameters'   => [
+                    'domain'    => strtolower($label)
+                ],
                 'extras'    => [
                     'routes'    =>
                         ['route' => $route . '_show'],
