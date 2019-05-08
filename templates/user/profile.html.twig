@@ -5,9 +5,10 @@
 {% endblock %}
 
 {% block body %}
-    <div class="container fixed-card">
+    <div class="container">
 
         <div class="row mb-4">
+
             <div class="col-sm-8">
                 <div class="media mb-2">
                     {%  include 'partials/avatar.html.twig' with {'current_user': user, 'size': 128, 'classes': 'mr-3 rounded' } only %}

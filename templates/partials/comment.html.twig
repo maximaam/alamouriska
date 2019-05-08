@@ -15,13 +15,20 @@
             {% block fos_comment_comment_metas %}
 
                 {% block fos_comment_comment_metas_authorline %}
-                    {% trans from 'FOSCommentBundle' %}fos_comment_comment_show_by{% endtrans %}
-                    <span class="fos_comment_comment_authorname">{{ comment.authorName }}</span> - {{ comment.createdAt|date }}
+                    <p class="font-weight-bold">
+                        Par:
+                        <span class="fos_comment_comment_authorname">
+                            <a href="{{ path('user_show', { 'username' : comment.authorName }) }}">{{ comment.authorName }}</a>
+                        </span>
+                        - Ajouté le: {{ comment.createdAt | date }}
+                    </p>
                 {% endblock fos_comment_comment_metas_authorline %}
 
+
+                <div class="float-right">
                 {% block fos_comment_comment_metas_edit %}
                     {% if app.user and comment.author.id == app.user.id %}
-                        <button data-container="#fos_comment_comment_body_{{ comment.id }}" data-url="{{ url("fos_comment_edit_thread_comment", {"id": comment.thread.id, "commentId": comment.id}) }}" class="fos_comment_comment_edit_show_form">
+                        <button data-container="#fos_comment_comment_body_{{ comment.id }}" data-url="{{ url("fos_comment_edit_thread_comment", {"id": comment.thread.id, "commentId": comment.id}) }}" class="fos_comment_comment_edit_show_form btn btn-primary ">
                             <i class="fa fa-edit" title="{% trans from 'FOSCommentBundle' %}fos_comment_comment_edit{% endtrans %}"></i>
                         </button>
                     {% endif %}
@@ -29,11 +36,14 @@
 
                 {% block fos_comment_comment_metas_delete %}
                     {% if app.user and comment.author.id == app.user.id %}
-                        <button data-url="{{ url("fos_comment_remove_thread_comment", {"id": comment.thread.id, "commentId": comment.id, "value":  constant('FOS\\CommentBundle\\Model\\CommentInterface::STATE_DELETED')}) }}" class="fos_comment_comment_remove">
+                        <button data-url="{{ url("fos_comment_remove_thread_comment", {"id": comment.thread.id, "commentId": comment.id, "value":  constant('FOS\\CommentBundle\\Model\\CommentInterface::STATE_DELETED')}) }}" class="fos_comment_comment_remove btn btn-danger">
                             <i class="fa fa-trash" title="{% trans from 'FOSCommentBundle' %}fos_comment_comment_delete{% endtrans %}"></i>
                         </button>
                     {% endif %}
                 {% endblock fos_comment_comment_metas_delete %}
+                </div>
+
+
             {% endblock fos_comment_comment_metas %}
         </div>
 

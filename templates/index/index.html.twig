@@ -12,28 +12,28 @@
 {% block body %}
 
     <div class="container start-page">
-
-        <div class="row mb-5">
-            <div class="d-flex flex-column flex-md-row">
-                <div class="mr-md-3 w-50 pt-4 text-center">
-                    <img src="{{ asset('images/plongeon.jpg') }}" class="rounded-circle img-thumbnail" alt="Plongeon">
-                </div>
-                <div class="p-3">
-                    <div class="bubbles">
-                        <h1 class="font-weight-bold mt-2">{{ app_name }}AAAAAAAAA</h1>
-                    </div>
-                    <h2 class="d-block text-muted font-italic mt-n3">Le cri de sauvetage de la langue algérienne !</h2>
-                    <p class="text-justify">
-                        {{ page.description | raw }}
-                        <a href="{{ path('index_page', { alias: 'kesako' }) }}" class="light">En savoir plus</a>
-                    </p>
-                </div>
-            </div>
+        <div class="bubbles">
+            <h1 class="font-weight-bold">{{ app_name }}<span class="text-sky">AAA</span>AAAA<span class="text-sky">A</span>A !</h1>
         </div>
+        <h2 class="text-sky font-italic">
+            Le cri de sauvetage de la langue algérienne !
+        </h2>
 
-        <div class="row text-dark">
-            <div class="col-sm-4 fixed-card fixed-card-2">
-                <div class="card">
+        <div class="row text-dark mt-5">
+            <div class="col-sm-4">
+
+                {% if app.user is same as(null) %} {# For non users only #}
+                <div class="card bg-happy mb-3">
+                    <div class="card-header font-weight-bold">{{ app_name }}, keskissik?</div>
+
+                    <div class="card-body">
+                        <p>{{ page.description | raw }}</p>
+                        <a href="{{ path('index_page', { alias: 'keskissik' }) }}" class="btn btn-primary">En savoir plus</a>
+                    </div>
+                </div>
+                {% endif %}
+
+                <div class="card fixed-card fixed-card-200">
                     <p class="card-header bg-light font-weight-bold">
                         Les plus récents
                     </p>
@@ -42,7 +42,7 @@
                         body
                     </div>
                 </div>
-                <div class="card">
+                <div class="card fixed-card fixed-card-200">
                     <p class="card-header bg-light font-weight-bold">
                         Les plus enigmatiques
                     </p>
@@ -51,7 +51,7 @@
                         body
                     </div>
                 </div>
-                <div class="card">
+                <div class="card fixed-card fixed-card-200">
                     <p class="card-header bg-light font-weight-bold">
                         Les plus commentés
                     </p>
@@ -60,8 +60,8 @@
                         body
                     </div>
                 </div>
-                <div class="card bg-sky">
-                    <p class="card-header font-weight-bold">Noter {{ app_name }}</p>
+                <div class="card bg-sky fixed-card fixed-card-200">
+                    <div class="card-header font-weight-bold">Noter {{ app_name }}</div>
 
                     <div class="card-body">
                         <!-- Rating Stars Box -->
@@ -95,18 +95,18 @@
 
             <div class="col-sm-8">
                 <div class="card">
-                    <p class="card-header font-weight-bold">Journal public</p>
+                    <p class="card-header font-weight-bold" id="journal-public">Journal public</p>
                     <div class="card-body">
 
                         <div class="journal-form mb-4 border-bottom pb-2">
                             {% if app.user %}
-                                {{ include('partials/_form.html.twig', {'btn' : {label: 'label.publish' | trans} }) }}
+                                {{ include('partials/_form.html.twig', {'btn' : {'label': 'label.publish' | trans, 'classes' : 'btn-happy'} }) }}
                             {% else %}
                                 <div class="form-group">
                                     <label for="op">Publier un message</label>
                                     <textarea id="op" name="op" disabled="disabled" class="form-control"></textarea>
                                 </div>
-                                {{ include('partials/_btn-login.html.twig') }}
+                                {{ include('partials/_btn-login.html.twig', { 'class' : 'btn-happy' }) }}
                             {% endif %}
                         </div>
 

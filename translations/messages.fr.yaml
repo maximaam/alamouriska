@@ -35,7 +35,7 @@ label:
 
   # Mots, locutions...etc pages
   almrsk:
-      insert_new: 'Insérer %almrsk%'
+      insert_new: 'Ajouter une publication'
       h1: 'Liste des %almrsk% %gender% alamouriské(e)s'
       search_h1: 'Publications trouvées pour "%term%"'
       by_user: 'Proposé par %username%'

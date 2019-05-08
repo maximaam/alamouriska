@@ -2,9 +2,8 @@
 
     {% if is_granted("IS_AUTHENTICATED_REMEMBERED") == false %}
         <div class="post-form-layer text-light">
-            <p class="text-dark bg-light py-3 text-center font-weight-bolder shadow">
+            <p class="text-dark bg-happy py-3 text-center font-weight-bolder shadow">
                 Tu veux publier des alamouriskas?
-                <br>
                 <br>
                 <br>
                 <a href="{{ path('fos_user_security_login') }}" title="Se connecter ou S'inscrire" class="user btn btn-primary">
@@ -15,7 +14,7 @@
     {% endif %}
 
     <div class="card-header font-weight-bold">
-        {{ 'label.almrsk.insert_new' | trans({'%almrsk%' : header }) }}
+        {{ 'label.almrsk.insert_new' | trans }}
     </div>
 
     <div class="card-body p-2">

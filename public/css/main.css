@@ -1,9 +1,8 @@
 body {
     color: #ffffff;
-    background: #003366 url(../images/bg-corail.jpg) no-repeat bottom;
-    background-size: contain;
+    background: #001a33 url(../images/deep-sea.jpg) no-repeat fixed;
+    background-size: cover;
 }
-
 main {
     min-height: 80rem;
     padding: 20px 0;
@@ -14,14 +13,23 @@ main {
     font-family: 'Concert One', cursive;
 }
 
+.start-page h1 {
+    font-size: 1.5rem!important;
+    letter-spacing: 3px;
+}
+.start-page h2 {
+    font-size: 1.1rem !important;
+    margin-top: -10px !important;
+}
+
 h1 {
-    font-size: 1.6rem;
+    font-size: 1.2rem;
 }
 h2 {
     font-size: 1rem;
 }
 h3 {
-    font-size: .8rem;
+    font-size: 0.8rem;
 }
 
 .bubbles {
@@ -55,7 +63,7 @@ a.light:hover {
     color: #baac3d;
 }
 a, a:hover {
-    color: #003366;
+    color: #00669e;
 }
 
 .navbar {
@@ -118,7 +126,7 @@ fieldset.form-group legend {
     background-repeat: repeat;
     height: 10px;
     background-size: 20px 20px;
-    background-image: radial-gradient(circle at 10px -5px, transparent 12px, #003366 13px);
+    background-image: radial-gradient(circle at 10px -5px, transparent 12px, #001a33 13px);
     animation: animate 25s linear infinite;
 }
 .navbar::after{
@@ -130,7 +138,7 @@ fieldset.form-group legend {
     background-repeat: repeat;
     height: 7px;
     background-size: 20px 10px;
-    background-image: radial-gradient(circle at 10px 15px, #003366 12px, transparent 13px);
+    background-image: radial-gradient(circle at 10px 15px, #001a33 12px, transparent 13px);
     animation: animate 25s linear infinite;
 }
 
@@ -156,7 +164,7 @@ fieldset.form-group legend {
 }
 
 .navbar-nav a.nav-link {
-    color: #003366 !important;
+    color: #001a33 !important;
     letter-spacing: 1px;
     padding: 0 !important;
     text-transform: capitalize !important;
@@ -171,11 +179,11 @@ fieldset.form-group legend {
 }
 
 .btn-primary {
-    background: #003366;
+    background: #00669e;
     border: none;
 }
 .btn-primary:hover {
-    background: #003366;
+    background: #87ceeb;
 }
 
 .text-happy {
@@ -187,11 +195,12 @@ fieldset.form-group legend {
 .bg-sky {
     background-color: #87ceeb;
 }
+.text-sky {
+    color: #87ceeb;
+}
 
 .btn-happy,
 .fos_comment_submit input,
-.fos_comment_comment_remove,
-.fos_comment_comment_edit_show_form,
 .fos_comment_comment_edit_cancel,
 .pagination a {
     color: #333;
@@ -202,8 +211,6 @@ fieldset.form-group legend {
 
 .btn-happy:hover,
 .fos_comment_submit input:hover,
-.fos_comment_comment_remove:hover,
-.fos_comment_comment_edit_show_form:hover,
 .fos_comment_comment_edit_cancel:hover,
 .pagination a:hover {
     background-color: #e6d845;
@@ -222,8 +229,6 @@ fieldset.form-group legend {
 }
 
 .fos_comment_submit input,
-.fos_comment_comment_remove,
-.fos_comment_comment_edit_show_form,
 .fos_comment_comment_edit_cancel,
 .pagination a,
 .pagination .current,
@@ -274,12 +279,15 @@ fieldset.form-group legend {
     display: none;
 }
 .fos_comment_comment_show {
-    border-bottom: 1px solid #666666;
-    margin: 10px 0 10px 0;
+    border-bottom: 1px solid #dee2e6;
+    margin: 10px 0;
     padding-bottom: 10px;
+    overflow: hidden;
+}
+#fos_comment_comment_body {
+    height: 100px;
 }
 .fos_comment_comment_form_holder {
-    margin-bottom: 40px;
 }
 .post-form-layer {
     position: absolute;
@@ -294,14 +302,14 @@ fieldset.form-group legend {
     margin-top: 130px;
 }
 
-.fixed-card .card {
+.fixed-card {
     height: 400px;
     overflow: auto;
-    margin-bottom: 20px;
+    margin-bottom: 1rem;
 }
 
-.fixed-card-2 .card {
-    height: 200px;
+.fixed-card-200 {
+    height: 200px !important;
 }
 
 .card-transparent {
@@ -318,6 +326,15 @@ fieldset.form-group legend {
 }
 
 @media (min-width:1025px) { /* big landscape tablets, laptops, and desktops */
+    h1 {
+        font-size: 1.8rem;
+    }
+    h2 {
+        font-size: 1.3rem;
+    }
+    h3 {
+        font-size: 1rem;
+    }
 
     .main-footer .col-md-4 {
         border-right: 1px solid #ffffff;
@@ -343,11 +360,6 @@ fieldset.form-group legend {
 /* Smartphones (portrait and landscape) ----------- */
 
 @media only screen and (min-width : 320px) and (max-width : 480px) {
-
-    .start-page .w-50 {
-        width: 100% !important;
-    }
-
     .nav-item {
         border-right: 0;
         text-align: left;
@@ -356,6 +368,28 @@ fieldset.form-group legend {
         border-top: 1px solid #fff;
         padding: 10px 0;
         text-align: center;
+    }
+
+
+    body:before {
+        content: "";
+        display: block;
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -10;
+        background: #001a33 url(../images/deep-sea.jpg) no-repeat center center;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+    }
+
+    body.cp:before {
+        background-position-x: -240px;
+        background-position-y: -160px;
     }
 }
 

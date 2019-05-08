@@ -24,18 +24,20 @@
         <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
     </head>
 
-    <body>
+    <body{{ app.request.get('_route') == 'index_index' ? ' class="cp"'}}>
 
     <div id="fb-root"></div>
     <script async defer crossorigin="anonymous" src="https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v3.2"></script>
 
     <header class="main-header">
-        <nav class="navbar fixed-top navbar-expand-lg navbar-dark">
+        <nav class="navbar fixed-top navbar-expand-lg navbar-light text-dark">
             <div class="container">
 
                 <a class="navbar-brand" href="/">
                     <img src="{{ asset('images/alamouriska-logo.jpg') }}" alt="{{ app_name }} Logo" title="{{ app_name }} Logo" class="rounded">
+
                     <!--
+                    <span class="d-lg-none">{{ app_name }}</span>
                     <span class="d-none d-md-inline">{{ app_name }}</span>
                     -->
                 </a>
@@ -49,6 +51,8 @@
                     {{ knp_menu_render('main') }}
 
                     <div class="user-cont mr-2">
+                        <a href="/#journal-public" class="d-lg-none btn btn-primary">Journal</a>
+
                         {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                             <a href="{{ path('fos_user_profile_show') }}" class="user btn rounded" title="Paramètres">
                                 <i class="fa fa-cog"></i>

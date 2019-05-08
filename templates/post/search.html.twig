@@ -15,12 +15,12 @@
         </div>
     </div>
 
-    <div class="container fixed-card">
+    <div class="container">
         <div class="row text-dark">
-            {%  include 'partials/post_list.html.twig' with {'posts': mots | default(null), 'route': 'post_mot_show', 'header': 'label.words' | trans, search: 'post_mot_index' } only %}
-            {%  include 'partials/post_list.html.twig' with {'posts': locutions | default(null), 'route': 'post_locution_show', 'header': 'label.locutions' | trans, search: 'post_locution_index' } only %}
-            {%  include 'partials/post_list.html.twig' with {'posts': proverbes | default(null), 'route': 'post_proverbe_show', 'header': 'label.proverbs' | trans, search: 'post_proverbe_index' } only %}
-            {%  include 'partials/post_list.html.twig' with {'posts': citations | default(null), 'route': 'post_citation_show', 'header': 'label.quotes' | trans, search: 'post_citation_index' } only %}
+            {%  include 'partials/post_list.html.twig' with {'posts': mots | default(null), 'header': 'label.words' | trans, search: 'mots' } only %}
+            {%  include 'partials/post_list.html.twig' with {'posts': locutions | default(null), 'header': 'label.locutions' | trans, search: 'locutions' } only %}
+            {%  include 'partials/post_list.html.twig' with {'posts': proverbes | default(null), 'header': 'label.proverbs' | trans, search: 'proverbes' } only %}
+            {%  include 'partials/post_list.html.twig' with {'posts': citations | default(null), 'header': 'label.quotes' | trans, search: 'locutions' } only %}
         </div>
     </div>
 

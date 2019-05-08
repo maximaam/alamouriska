@@ -8,8 +8,10 @@
         <div class="card-body bg-light">
             {{ form_start(form) }}
             {{ form_widget(form) }}
-            <button type="submit" class="btn btn-happy float-right">{{ 'label.submit' | trans }}</button>
-            <a href="{{ path('fos_user_profile_show') }}" class="btn btn-secondary float-right mr-2">{{ 'label.cancel' | trans }}</a>
+            <div class="text-right">
+                <a href="{{ path('fos_user_profile_show') }}" class="btn btn-secondary mr-2">{{ 'label.cancel' | trans }}</a>
+                <button type="submit" class="btn btn-happy">{{ 'label.submit' | trans }}</button>
+            </div>
             {{ form_end(form) }}
         </div>
     </div>

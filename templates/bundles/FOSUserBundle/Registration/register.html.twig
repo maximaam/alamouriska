@@ -8,18 +8,27 @@
 
 {% block fos_user_content %}
 
-    <div class="card text-dark">
-        <div class="card-header">
-            <h1 class="text-center">{{ 'layout.register' | trans }}</h1>
-        </div>
-        <div class="card-body">
-            <p>Inscris-toi pour pouvoir ajouter des publications ou interagir avec celles des autres.</p>
+    {% if app.user is same as(null) %}
+        <div class="card text-dark">
+            <div class="card-header">
+                <h1 class="text-center">{{ 'layout.register' | trans }}</h1>
+            </div>
+            <div class="card-body">
+                <p>Inscris-toi pour pouvoir ajouter des publications ou interagir avec celles des autres.</p>
 
-            {{ form_start(form) }}
-            {{ form_widget(form) }}
-            <button class="btn btn-happy float-right">{{ 'form.submit' | trans }}</button>
-            {{ form_end(form) }}
+                {{ form_start(form) }}
+                {{ form_widget(form) }}
+                <div class="text-right">
+                    <button class="btn btn-happy">{{ 'label.submit' | trans({}, 'messages') }}</button>
+                </div>
+                {{ form_end(form) }}
+            </div>
         </div>
-    </div>
+    {% else %}
+        <script>(function () {window.location.href = '/';})();</script>
+        <div class="alert alert-warning">
+            Tu es déjà inscris ;-)
+        </div>
+    {% endif %}
 
 {% endblock %}

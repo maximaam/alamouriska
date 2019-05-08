@@ -21,6 +21,7 @@ class IndexController extends AbstractController
      * @Route("/", name="index_index")
      *
      * @param Request $request
+     * @param PaginatorInterface $paginator
      * @return Response
      */
     public function index(Request $request, PaginatorInterface $paginator): Response
@@ -44,7 +45,7 @@ class IndexController extends AbstractController
 
         return $this->render('index/index.html.twig', [
             'form' => $form->createView(),
-            'journals' => $this->getDoctrine()->getRepository(Journal::class)->findBy([], [], 20),
+            'journals' => $this->getDoctrine()->getRepository(Journal::class)->findBy([], ['id' => 'DESC'], 20),
             'page' => $this->getDoctrine()->getRepository(Page::class)->findOneBy(['alias' => 'homepage']),
         ]);
     }
