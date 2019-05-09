@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Rating;
 use App\Entity\User;
+use App\Repository\JournalRepository;
 use App\Repository\RatingRepository;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -32,10 +33,10 @@ class AsyncController extends AbstractController
      *
      * @param Request $request
      * @param LikingRepository $repository
-     * @return Response
-     * @throws \Exception
+     * @param TranslatorInterface $translator
+     * @return JsonResponse
      */
-    public function liking(Request $request, LikingRepository $repository, TranslatorInterface $translator)
+    public function liking(Request $request, LikingRepository $repository, TranslatorInterface $translator): JsonResponse
     {
         //$this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
@@ -88,10 +89,10 @@ class AsyncController extends AbstractController
      *
      * @param Request $request
      * @param RatingRepository $repository
-     * @return Response
+     * @return JsonResponse
      * @throws \Exception
      */
-    public function rating(Request $request, RatingRepository $repository)
+    public function rating(Request $request, RatingRepository $repository): JsonResponse
     {
         if (false === $request->isXmlHttpRequest()) {
             return new JsonResponse([], 403);
@@ -99,14 +100,10 @@ class AsyncController extends AbstractController
 
         $entityManager = $this->getDoctrine()->getManager();
 
-        /*
         $rating = $repository->findOneBy([
             'addr'     => $request->getClientIp(),
             //'createdAt' => $request->get('ownerId')
         ]);
-        */
-
-        $rating = null;
 
         if (null === $rating) {
             $newRating = (new Rating())
@@ -121,6 +118,39 @@ class AsyncController extends AbstractController
             return new JsonResponse([
                 'status' => self::STATUS_SUCCESS,
             ], 200);
+        }
+
+        return new JsonResponse(['status' => self::STATUS_ERROR], 410);
+    }
+
+
+    /**
+     * @Route("/del-journal", name="async_del_journal")
+     *
+     * @param Request $request
+     * @param JournalRepository $repository
+     * @return JsonResponse
+     */
+    public function delJournal(Request $request, JournalRepository $repository): JsonResponse
+    {
+        if (false === $request->isXmlHttpRequest()) {
+            return new JsonResponse([], 403);
+        }
+
+        $user = $this->getUser();
+
+        if ($user) {
+            $journal = $repository->findOneBy(['user' => $user, 'id' => $request->get('id')]);
+
+            if (null !== $journal) {
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->remove($journal);
+                $entityManager->flush();
+
+                return new JsonResponse([
+                    'status' => self::STATUS_SUCCESS,
+                ], 200);
+            }
         }
 
         return new JsonResponse(['status' => self::STATUS_ERROR], 410);
@@ -146,8 +176,8 @@ class AsyncController extends AbstractController
      * @Route("/member-contact", name="async_member_contact")
      *
      * @param Request $request
+     * @param \Swift_Mailer $mailer
      * @return Response
-     * @throws \Exception
      */
     public function memberContact(Request $request, \Swift_Mailer $mailer): Response
     {
@@ -176,11 +206,6 @@ class AsyncController extends AbstractController
         }
 
         return new Response('Erreur inconnue.');
-
-
     }
-
-
-
 
 }

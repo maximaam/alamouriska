@@ -60,16 +60,21 @@
                         body
                     </div>
                 </div>
-                <div class="card bg-sky fixed-card fixed-card-200">
-                    <div class="card-header font-weight-bold">Noter {{ app_name }}</div>
+                <div class="card bg-sky fixed-card fixed-card-200 font-weight-bold">
+                    <div class="card-header">Noter {{ app_name }}</div>
 
                     <div class="card-body">
                         <!-- Rating Stars Box -->
                         <div class="rating-stars text-center">
-                            <div>
+                            <div class="mb-2">
+                                {% set sum = 0 %}
+                                {% for rating in ratings %}
+                                    {% set sum = sum + rating.rating %}
+                                {% endfor %}
 
+                                Note de la communauté: {{ (sum / ratings | length) | round(1) }} / 5
                             </div>
-                            <ul id="stars">
+                            <ul id="stars" class="mb-2 {{ has_rated is same as(true) ? 'mb-done' }}">
                                 <li class="star" title="Oh ! Pas bien du tout !" data-value="1">
                                     <i class="fa fa-star fa-fw"></i>
                                 </li>
@@ -87,7 +92,9 @@
                                 </li>
                             </ul>
 
-                            <div class="rating-feedback font-weight-bold"></div>
+                            <div class="rating-feedback text-success">
+                                {{ has_rated is same as(true) ? 'Déjà noté. Awts Merci.' }}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -114,7 +121,7 @@
                             {% if journals | length > 0 %}
                                 <ul class="list-unstyled">
                                     {% for journal in journals %}
-                                        <li class="media mb-3 bg-light p-1">
+                                        <li class="media mb-3 p-1 border-bottom">
                                             {%  include 'partials/avatar.html.twig' with {'current_user': journal.user, 'size': 64, 'classes': 'mr-3 rounded' } only %}
                                             <div class="media-body">
                                                 <p class="mt-0 mb-1">
@@ -123,6 +130,10 @@
                                                 </p>
                                                 <p>{{ journal.message | nl2br }}</p>
                                             </div>
+
+                                            {% if app.user %}
+                                                <button class="js_del-journal btn btn-danger float-right" data-uid="{{ journal.id }}"><i class="fa fa-trash"></i></button>
+                                            {% endif %}
                                         </li>
                                     {% endfor %}
                                 </ul>

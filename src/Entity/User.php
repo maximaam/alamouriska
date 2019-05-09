@@ -115,7 +115,7 @@ class User extends BaseUser
     private $allowPostNotification = false;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Journal", mappedBy="User", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="Journal", mappedBy="user", orphanRemoval=true)
      */
     private $journals;
 

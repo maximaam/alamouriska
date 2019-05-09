@@ -269,6 +269,10 @@ fieldset.form-group legend {
     border-radius: .25rem;
 }
 
+.journal-feed li button:hover {
+    background-color: lightpink;
+}
+
 .vich-image img {
     width: 128px;
 }

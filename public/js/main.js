@@ -137,21 +137,23 @@ $(document).ready(function() {
             thisStarVal = parseInt($thisStar.data('value'), 10),
             $stars = $thisStar.parent().children('li.star');
 
-        for (let i = 0; i < $stars.length; i++) {
-            $($stars[i]).removeClass('selected');
-        }
+        if (!$thisStar.parent().hasClass('mb-done')) {
 
-        for (let i = 0; i < thisStarVal; i++) {
-            $($stars[i]).addClass('selected');
-        }
-
-        $.get('/async/rating?rating=' + thisStarVal, function (data) {
-            $('#stars li').off('click');
-            if (+data.status === 1) {
-                $('.rating-feedback').html($thisStar.attr('title'));
+            for (let i = 0; i < $stars.length; i++) {
+                $($stars[i]).removeClass('selected');
             }
-        });
 
+            for (let i = 0; i < thisStarVal; i++) {
+                $($stars[i]).addClass('selected');
+            }
+
+            $.get('/async/rating?rating=' + thisStarVal, function (data) {
+                $('#stars li').off('click');
+                if (+data.status === 1) {
+                    $('.rating-feedback').html($thisStar.attr('title'));
+                }
+            });
+        }
 
         // JUST RESPONSE (Not needed)
 
@@ -170,6 +172,17 @@ $(document).ready(function() {
         */
 
 
+    });
+
+    $('.js_del-journal').on('click', function () {
+
+        let $btn = $(this);
+
+        $.get('/async/del-journal?id=' + $btn.attr('data-uid'), function (data) {
+            if (+data.status === 1) {
+                $btn.parents('li').fadeOut();
+            }
+        });
     });
 
 

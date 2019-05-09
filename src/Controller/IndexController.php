@@ -48,6 +48,7 @@ class IndexController extends AbstractController
             'form' => $form->createView(),
             'journals' => $this->getDoctrine()->getRepository(Journal::class)->findBy([], ['id' => 'DESC'], 20),
             'ratings' => $this->getDoctrine()->getRepository(Rating::class)->findAll(),
+            'has_rated' => null !== $this->getDoctrine()->getRepository(Rating::class)->findOneBy(['addr' => $request->getClientIp()]),
             'page' => $this->getDoctrine()->getRepository(Page::class)->findOneBy(['alias' => 'homepage']),
         ]);
     }
