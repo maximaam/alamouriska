@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Journal;
 use App\Entity\Page;
+use App\Entity\Rating;
 use App\Form\JournalType;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -46,6 +47,7 @@ class IndexController extends AbstractController
         return $this->render('index/index.html.twig', [
             'form' => $form->createView(),
             'journals' => $this->getDoctrine()->getRepository(Journal::class)->findBy([], ['id' => 'DESC'], 20),
+            'ratings' => $this->getDoctrine()->getRepository(Rating::class)->findAll(),
             'page' => $this->getDoctrine()->getRepository(Page::class)->findOneBy(['alias' => 'homepage']),
         ]);
     }
