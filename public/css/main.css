@@ -268,8 +268,13 @@ fieldset.form-group legend {
     padding: 10px;
     border-radius: .25rem;
 }
-
-.journal-feed li button:hover {
+.journal-feed li {
+    pointer-events: none;
+}
+.journal-feed li button {
+    pointer-events: auto;
+}
+.journal-feed li:hover {
     background-color: lightpink;
 }
 
@@ -312,8 +317,8 @@ fieldset.form-group legend {
     margin-bottom: 1rem;
 }
 
-.fixed-card-200 {
-    height: 200px !important;
+.fixed-card-2 {
+    height: 210px !important;
 }
 
 .card-transparent {

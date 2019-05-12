@@ -21,7 +21,7 @@ class CitationType extends SharedType
     {
         $builder
             ->add('citation', null, [
-                'label' => 'label.citation',
+                'label' => 'Citation',
                 'help' => 'label.required',
             ]);
 

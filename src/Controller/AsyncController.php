@@ -48,20 +48,15 @@ class AsyncController extends AbstractController
 
         if ($user) {
             $entityManager = $this->getDoctrine()->getManager();
+            list($owner, $ownerId) = \explode('-', $request->get('owner'));
 
-            $liking = $repository->findOneBy([
-                'user'      => $user,
-                'owner'     => $request->get('owner'),
-                'ownerId'   => $request->get('ownerId')
-                ]);
-
-            //var_dump($liking); die;
+            $liking = $repository->findOneBy(['user' => $user, 'owner' => $owner, 'ownerId' => $ownerId]);
 
             if (null === $liking) {
                 $newLiking = (new Liking())
                     ->setUser($user)
-                    ->setOwner($request->get('owner'))
-                    ->setOwnerId($request->get('ownerId'));
+                    ->setOwner($owner)
+                    ->setOwnerId($ownerId);
 
                 $entityManager->persist($newLiking);
                 $action = 1;

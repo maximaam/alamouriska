@@ -17,6 +17,13 @@
             <div class="col-sm-8">
                 <h1 class="mb-3">{{ 'label.almrsk.h1' | trans({'%almrsk%' : domain, '%gender%': 'algériens'}) }}</h1>
 
+                {% if app.request.get('enigmatique') %}
+                    <p>
+                        Des membres se posent des questions sur l'origine de certaines
+                        tournures de langage ; aidez-les.
+                    </p>
+                {% endif %}
+
                 <a href="#post-anchor" class="btn btn-happy w-100 mb-2 d-lg-none">
                     {{ 'label.almrsk.insert_new' | trans({'%almrsk%' : 'un nouveau mot'}) }}
                 </a>
@@ -78,8 +85,8 @@
                             <div class="fb-like" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
                             -->
 
-                            {% if likings is defined %}
-                                <div class="bottom-container p-2 text-right">
+                            <div class="bottom-container p-2 text-right">
+                                {% if likings is defined %}
 
                                     {%  include 'partials/liking.html.twig' with {
                                         'owner': entity,
@@ -87,19 +94,30 @@
                                         'liking_users': likings | length > 0 ? likings[post.id] is defined ? likings[post.id] : [] : []
                                     } only %}
 
-                                    <a href="{{ path('post_show', {'domain': domain, 'id': post.id, 'slug': post.slug }) }}" title="{{ 'label.details_reactions' | trans }}" class="ml-3">
-                                        <i class="fa fa-comment"></i>
-                                        {{ 'label.comments' | trans }}
-                                    </a>
-                                </div>
-                            {% endif %}
+                                {% endif %}
+
+                                <a href="{{ path('post_show', {'domain': domain, 'id': post.id, 'slug': post.slug }) }}" title="{{ 'label.details_reactions' | trans }}" class="ml-3">
+                                    <i class="fa fa-comment"></i>
+                                    {{ 'label.comments' | trans }}
+                                </a>
+                            </div>
+
                         </div>
                     {% endfor %}
 
                     <div class="pagination-container mb-3">
                         {{ knp_pagination_render(posts) }}
                     </div>
+
+
+                 {% else %}
+                    <div class="alert alert-warning">
+                        <i class="fa fa-info-circle"></i>
+                        Aucun resultat trouvé
+                    </div>
                 {% endif %}
+
+
             </div>
 
             {% if form is defined %}

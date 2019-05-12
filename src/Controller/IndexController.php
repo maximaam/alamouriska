@@ -3,9 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Journal;
+use App\Entity\Locution;
+use App\Entity\Mot;
 use App\Entity\Page;
 use App\Entity\Rating;
 use App\Form\JournalType;
+use App\Form\LocutionType;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -44,9 +47,11 @@ class IndexController extends AbstractController
             return $this->redirectToRoute('index_index');
         }
 
+        $journals = $this->getDoctrine()->getRepository(Journal::class)->findBy([], ['id' => 'DESC'], 20);
+
         return $this->render('index/index.html.twig', [
             'form' => $form->createView(),
-            'journals' => $this->getDoctrine()->getRepository(Journal::class)->findBy([], ['id' => 'DESC'], 20),
+            'journals' => $journals,
             'ratings' => $this->getDoctrine()->getRepository(Rating::class)->findAll(),
             'has_rated' => null !== $this->getDoctrine()->getRepository(Rating::class)->findOneBy(['addr' => $request->getClientIp()]),
             'page' => $this->getDoctrine()->getRepository(Page::class)->findOneBy(['alias' => 'homepage']),

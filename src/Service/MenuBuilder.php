@@ -6,9 +6,10 @@
  * Time: 16:13
  */
 
-namespace App\Navigation;
+namespace App\Service;
 
 use App\Entity\Page;
+use App\Utils\ModelUtils;
 use Knp\Menu\FactoryInterface;
 use Doctrine\ORM\EntityManager;
 
@@ -49,24 +50,23 @@ class MenuBuilder
         $menu = $this->factory->createItem('root');
         $menu->setChildrenAttribute('class', 'navbar-nav mr-auto');
 
-        $items = ['Mots' => 'mot', 'Locutions' => 'locution' , 'Proverbes' => 'proverbe', 'Citations' => 'citation'];
-        //$items = ['Mot' => 'mot_index',];
-
-        foreach ($items as $label => $route) {
-            $menu->addChild($label, [
+        foreach (ModelUtils::DOMAINS as $domain) {
+            $menu->addChild(\ucfirst($domain), [
                 'route'     => 'post_index',
                 'routeParameters'   => [
-                    'domain'    => strtolower($label)
+                    'domain'    => $domain
                 ],
+                /*
                 'extras'    => [
                     'routes'    =>
                         ['route' => $route . '_show'],
                         ['route' => $route . '_new'],
                         ['route' => $route . '_edit'],
                 ],
+                */
                 'attributes' => [
                     'class' => 'nav-item rounded',
-                    'title' => \sprintf('Ajouter des %ss', $label)
+                    'title' => \sprintf('Ajouter des %s', $domain)
                 ],
                 'linkAttributes' => [
                     'class' => 'nav-link'

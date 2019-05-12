@@ -9,7 +9,6 @@ msg:
 
 label:
   latin_char: 'Caractères latins'
-  locution: 'Locution, groupe de mots'
   tamazight_char: 'Caractères amazighs'
   arabic_char: 'Caractères arabes'
   details_reactions: 'Détails et Réactions'

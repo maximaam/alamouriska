@@ -15,17 +15,14 @@ use App\Entity\Mot;
 use App\Entity\MotDeleted;
 use App\Entity\Proverbe;
 use App\Entity\Thread;
-use App\Form\CitationType;
-use App\Form\LocutionType;
-use App\Form\MotType;
-use App\Form\ProverbeType;
 use App\Repository\CitationRepository;
 use App\Repository\LocutionRepository;
 use App\Repository\MotRepository;
 use App\Repository\ProverbeRepository;
 use App\Utils\LikingUtils;
 use App\Utils\Linguistic;
-use App\Utils\PhpUtils;
+use App\Utils\ModelUtils;
+use Doctrine\DBAL\Query\QueryBuilder;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
@@ -57,7 +54,7 @@ class PostController extends AbstractController
     public function index(Request $request, PaginatorInterface $paginator): Response
     {
         $domain = $request->get('domain');
-        $entity = \substr(\ucfirst($domain), 0, -1);
+        $entity = ModelUtils::getEntityByDomain($domain);
         $class = 'App\\Entity\\' . $entity;
 
         /** @var  Mot|Locution|Proverbe|Citation $model */
@@ -74,7 +71,7 @@ class PostController extends AbstractController
             'domain' => $domain,
             'entity' => $entity,
             'form'  => $form->createView(),
-            'posts'  => $this->getPaginator($paginator, \get_class($model), $request->query->getInt('page', 1)),
+            'posts'  => $this->getPaginator($paginator, \get_class($model), $request->query->getInt('page', 1), $request->query->getBoolean('enigmatique', false)),
             'likings' => $this->getLikings($entity)
         ]);
     }
@@ -99,7 +96,7 @@ class PostController extends AbstractController
     public function show(CommentManagerInterface $commentManager, ThreadManagerInterface $threadManager, Request $request): Response
     {
         $domain = $request->get('domain');
-        $entity = \substr(\ucfirst($domain), 0, -1);
+        $entity = ModelUtils::getEntityByDomain($domain);
 
         /** @var  Mot|Locution|Proverbe|Citation $model */
         $model = $this->getDoctrine()->getManager()->find('App\\Entity\\' . $entity, $request->get('id'));
@@ -113,6 +110,7 @@ class PostController extends AbstractController
             'post'      => $model,
             'comments'  => $comments,
             'thread'    => $thread,
+            'likings' => $this->getLikings($entity)
         ]);
     }
 
@@ -126,7 +124,7 @@ class PostController extends AbstractController
      */
     public function delete(string $domain, string $id): RedirectResponse
     {
-        $entity = \substr(\ucfirst($domain), 0, -1);
+        $entity = ModelUtils::getEntityByDomain($domain);
 
         /** @var  Mot|Locution|Proverbe|Citation $model */
         $model = $this->getDoctrine()->getManager()->find('App\\Entity\\' . $entity, $id);
@@ -239,10 +237,20 @@ class PostController extends AbstractController
      * @param int $page
      * @return PaginationInterface
      */
-    private function getPaginator(PaginatorInterface $paginator, string $class, int $page): PaginationInterface
+    private function getPaginator(PaginatorInterface $paginator, string $class, int $page, bool $question = null): PaginationInterface
     {
+        /** @var QueryBuilder $query */
         $query = $this->getDoctrine()->getRepository($class)
-            ->createQueryBuilder('q')
+            ->createQueryBuilder('q');
+
+        if ($question) {
+            $query
+                ->andWhere('q.question = :question')
+                ->setParameter('question', $question)
+            ;
+        }
+
+        $query
             ->orderBy('q.createdAt', 'DESC')
             ->getQuery();
 

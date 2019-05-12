@@ -21,7 +21,7 @@ class LocutionType extends SharedType
     {
         $builder
             ->add('locution', null, [
-                'label' => 'label.locution',
+                'label' => 'Locution, groupe de mots',
                 'help' => 'label.required',
             ]);
 

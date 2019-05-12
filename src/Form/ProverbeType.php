@@ -17,7 +17,7 @@ class ProverbeType extends SharedType
     {
         $builder
             ->add('proverbe', null, [
-                'label' => 'label.locution',
+                'label' => 'Proverbe',
                 'help' => 'label.required',
             ]);
 

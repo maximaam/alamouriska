@@ -39,10 +39,10 @@
         </div>
 
         <div class="row text-dark">
-            {%  include 'partials/post_list.html.twig' with {'posts': user.mots, 'domain': 'mots', 'header': 'label.words' | trans } only %}
-            {%  include 'partials/post_list.html.twig' with {'posts': user.locutions, 'domain': 'locutions', 'header': 'label.locutions' | trans } only %}
-            {%  include 'partials/post_list.html.twig' with {'posts': user.proverbes, 'domain': 'proverbes', 'header': 'label.proverbs' | trans } only %}
-            {%  include 'partials/post_list.html.twig' with {'posts': user.citations, 'domain': 'citations', 'header': 'label.quotes' | trans } only %}
+            <div class="col-sm">{% include 'partials/post_list.html.twig' with {'posts': user.mots, 'domain': 'mots', 'header': 'label.words' | trans } only %}</div>
+            <div class="col-sm">{% include 'partials/post_list.html.twig' with {'posts': user.locutions, 'domain': 'locutions', 'header': 'label.locutions' | trans } only %}</div>
+            <div class="col-sm">{% include 'partials/post_list.html.twig' with {'posts': user.proverbes, 'domain': 'proverbes', 'header': 'label.proverbs' | trans } only %}</div>
+            <div class="col-sm">{% include 'partials/post_list.html.twig' with {'posts': user.citations, 'domain': 'citations', 'header': 'label.quotes' | trans } only %}</div>
         </div>
     </div>
 {% endblock %}

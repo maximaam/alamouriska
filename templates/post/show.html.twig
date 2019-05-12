@@ -30,9 +30,7 @@
 
                     {% if post.imageName %}
                         <div class="mb-3 bg-secondary">
-                            <a href="{{ path('post_show', { 'domain': domain, 'id': post.id, 'slug': post.slug }) }}">
-                                {%  include 'partials/post_image.html.twig' with {'type': post } only %}
-                            </a>
+                            {%  include 'partials/post_image.html.twig' with {'type': post } only %}
                         </div>
                     {% endif %}
 
@@ -54,6 +52,16 @@
                                 <i class="fa fa-question-circle"></i>
                                 {{ post.description }}
                             </p>
+                        {% endif %}
+                    </div>
+
+                    <div class="bottom-container p-2 text-right">
+                        {% if likings is defined %}
+                            {%  include 'partials/liking.html.twig' with {
+                                'owner': entity,
+                                'owner_id': post.id,
+                                'liking_users': likings | length > 0 ? likings[post.id] is defined ? likings[post.id] : [] : []
+                            } only %}
                         {% endif %}
                     </div>
                 </div>

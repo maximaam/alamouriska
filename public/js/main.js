@@ -20,13 +20,11 @@ $(document).ready(function() {
         });
     });
 
-
-    $('.fos_comment_comment_remove').on('click', function () {
+    $('.fos_comment_comment_remove').on('click', function() {
         let target = $(this).parents('.fos_comment_comment_show').attr('id');
-        setTimeout(function () {
+        setTimeout(function() {
             $('#' + target).fadeOut();
-
-        }, 500);
+        }, 2000);
     });
 
     $('.js_ask-log-in').on('click', function(e) {
@@ -184,6 +182,18 @@ $(document).ready(function() {
             }
         });
     });
+
+
+    /*
+    setTimeout(function () {
+        $('.start-page > .row').fadeIn('slow', function () {
+            $(this).removeClass('d-none');
+        });
+
+    }, 3000);
+     */
+
+
 
 
 });

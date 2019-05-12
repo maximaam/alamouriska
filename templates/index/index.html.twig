@@ -33,34 +33,33 @@
                 </div>
                 {% endif %}
 
-                <div class="card fixed-card fixed-card-200">
-                    <p class="card-header font-weight-bold">
-                        Les plus récents
-                    </p>
+                <div class="card mb-2">
+                    <div class="card-header font-weight-bold">Les plus enigmatiques</div>
+                    <div class="card-body">
+                        <ul class="pl-3 mb-2">
+                            {% for domain in constant('App\\Utils\\ModelUtils::DOMAINS') %}
+                            <li>
+                                <a href="{{ path('post_index', { 'domain': domain, 'enigmatique': true }) }}">
+                                    Les {{ domain | capitalize }}
+                                </a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                        <p>
+                            Des membres se posent des questions sur l'origine de certaines
+                            tournures de langage ; aidez-les.
+                        </p>
+                    </div>
+                </div>
 
+                <div class="card mb-2">
+                    <div class="card-header font-weight-bold">Les plus commentés</div>
                     <div class="card-body">
                         body
                     </div>
                 </div>
-                <div class="card fixed-card fixed-card-200">
-                    <p class="card-header font-weight-bold">
-                        Les plus enigmatiques
-                    </p>
 
-                    <div class="card-body">
-                        body
-                    </div>
-                </div>
-                <div class="card fixed-card fixed-card-200">
-                    <p class="card-header font-weight-bold">
-                        Les plus commentés
-                    </p>
-
-                    <div class="card-body">
-                        body
-                    </div>
-                </div>
-                <div class="card bg-sky fixed-card fixed-card-200 font-weight-bold">
+                <div class="card bg-sky font-weight-bold mb-2">
                     <div class="card-header">Noter {{ app_name }}</div>
 
                     <div class="card-body">
