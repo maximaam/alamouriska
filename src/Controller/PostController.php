@@ -22,6 +22,7 @@ use App\Repository\ProverbeRepository;
 use App\Utils\LikingUtils;
 use App\Utils\Linguistic;
 use App\Utils\ModelUtils;
+use App\Utils\PhpUtils;
 use Doctrine\DBAL\Query\QueryBuilder;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -152,6 +153,21 @@ class PostController extends AbstractController
                 $manager->persist($motDeleted);
             }
 
+            $thread = $manager
+                ->getRepository(Thread::class)
+                ->findOneBy(['owner' => PhpUtils::getClassName($model), 'ownerId' => $model->getId()]);
+
+            /*
+            if (null !== $thread) {
+                $comments = $manager
+                    ->getRepository(Thread::class)
+                    ->findBy(['owner' => PhpUtils::getClassName($model), 'ownerId' => $model->getId()]);
+            }
+            */
+
+            //dd($thread);
+
+            $manager->remove($thread);
             $manager->remove($model);
             $manager->flush();
 

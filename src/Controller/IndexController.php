@@ -7,6 +7,7 @@ use App\Entity\Locution;
 use App\Entity\Mot;
 use App\Entity\Page;
 use App\Entity\Rating;
+use App\Entity\Thread;
 use App\Form\JournalType;
 use App\Form\LocutionType;
 use Knp\Component\Pager\PaginatorInterface;
@@ -52,6 +53,7 @@ class IndexController extends AbstractController
         return $this->render('index/index.html.twig', [
             'form' => $form->createView(),
             'journals' => $journals,
+            'mostCommented'  => $this->getDoctrine()->getRepository(Thread::class)->findBy([], ['numComments' => 'DESC'], 10),
             'ratings' => $this->getDoctrine()->getRepository(Rating::class)->findAll(),
             'has_rated' => null !== $this->getDoctrine()->getRepository(Rating::class)->findOneBy(['addr' => $request->getClientIp()]),
             'page' => $this->getDoctrine()->getRepository(Page::class)->findOneBy(['alias' => 'homepage']),

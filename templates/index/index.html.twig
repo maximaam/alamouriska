@@ -36,7 +36,7 @@
                 <div class="card mb-2">
                     <div class="card-header font-weight-bold">Les plus enigmatiques</div>
                     <div class="card-body">
-                        <ul class="pl-3 mb-2">
+                        <ul class="pl-4 mb-2">
                             {% for domain in constant('App\\Utils\\ModelUtils::DOMAINS') %}
                             <li>
                                 <a href="{{ path('post_index', { 'domain': domain, 'enigmatique': true }) }}">
@@ -55,7 +55,17 @@
                 <div class="card mb-2">
                     <div class="card-header font-weight-bold">Les plus commentés</div>
                     <div class="card-body">
-                        body
+                        {% if mostCommented | length > 0 %}
+                            <ul class="pl-4 mb-2">
+                                {% for post in mostCommented %}
+                                    <li>
+                                        <a href="{{ post.permalink }}">{{ post.permalink | split('/') | last }} ({{ post.numComments }})</a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+
+
+                        {% endif %}
                     </div>
                 </div>
 
