@@ -76,12 +76,14 @@
                         <!-- Rating Stars Box -->
                         <div class="rating-stars text-center">
                             <div class="mb-2">
-                                {% set sum = 0 %}
-                                {% for rating in ratings %}
-                                    {% set sum = sum + rating.rating %}
-                                {% endfor %}
+                                {% if ratings | length > 0 %}
+                                    {% set sum = 0 %}
+                                    {% for rating in ratings %}
+                                        {% set sum = sum + rating.rating %}
+                                    {% endfor %}
 
-                                Note de la communauté: {{ (sum / ratings | length) | round(1) }} / 5
+                                    Note de la communauté: {{ (sum / ratings | length) | round(1) }} / 5
+                                {% endif %}
                             </div>
                             <ul id="stars" class="mb-2 {{ has_rated is same as(true) ? 'mb-done' }}">
                                 <li class="star" title="Oh ! Pas bien du tout !" data-value="1">

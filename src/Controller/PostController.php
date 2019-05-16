@@ -77,9 +77,6 @@ class PostController extends AbstractController
         ]);
     }
 
-
-
-
     /**
      * @Route(
      *     "/{domain}/{id}/{slug}",
@@ -153,21 +150,15 @@ class PostController extends AbstractController
                 $manager->persist($motDeleted);
             }
 
+            /** @var Thread $thread */
             $thread = $manager
                 ->getRepository(Thread::class)
                 ->findOneBy(['owner' => PhpUtils::getClassName($model), 'ownerId' => $model->getId()]);
 
-            /*
             if (null !== $thread) {
-                $comments = $manager
-                    ->getRepository(Thread::class)
-                    ->findBy(['owner' => PhpUtils::getClassName($model), 'ownerId' => $model->getId()]);
+                $manager->remove($thread);
             }
-            */
 
-            //dd($thread);
-
-            $manager->remove($thread);
             $manager->remove($model);
             $manager->flush();
 

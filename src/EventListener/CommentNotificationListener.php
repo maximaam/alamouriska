@@ -8,6 +8,7 @@ use App\Entity\Locution;
 use App\Entity\Mot;
 use App\Entity\Proverbe;
 use App\Entity\Thread;
+use Doctrine\DBAL\Exception\InvalidArgumentException;
 use Doctrine\ORM\EntityManagerInterface;
 use FOS\CommentBundle\Event\CommentEvent;
 use FOS\CommentBundle\Events;
@@ -73,23 +74,34 @@ class CommentNotificationListener implements EventSubscriberInterface
         /** @var Comment $comment */
         $comment = $event->getComment();
 
-        return;
+        /** @var Thread $thread */
+        $thread = $comment->getThread();
+        $owner = $thread->getOwner();
+
+
 
         //Only add comment should trigger
+        /*
         if ($comment->getState() !== Comment::STATE_VISIBLE) {
             return;
         }
+        */
 
         //Only new comments should trigger
         if (!$this->commentManager->isNewComment($comment)) {
-            return;
+
+            //If deleted, decrement comments number
+            if ((int)$comment->getState() === Comment::STATE_DELETED) {
+                $thread->decrementNumComments(1);
+            } else {
+                return;
+            }
         }
 
         //file_put_contents(__FILE__ . '.html', serialize($comment));
 
-        /** @var Thread $thread */
-        $thread = $comment->getThread();
-        $owner = $thread->getOwner();
+        return;
+
 
         /** @var  Comment[] $comment */
         $comments = $this->commentManager->findCommentsByThread($thread);

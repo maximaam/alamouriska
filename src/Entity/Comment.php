@@ -22,7 +22,8 @@ class Comment extends BaseComment implements SignedCommentInterface
 
     /**
      * @var Thread
-     * @ORM\ManyToOne(targetEntity="App\Entity\Thread")
+     * @ORM\ManyToOne(targetEntity="Thread")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $thread;
 

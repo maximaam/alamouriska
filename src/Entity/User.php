@@ -127,6 +127,8 @@ class User extends BaseUser
     {
         parent::__construct();
 
+        $this->createdAt = new \DateTime();
+
         $this->mots = new ArrayCollection();
         $this->locutions = new ArrayCollection();
         $this->proverbes = new ArrayCollection();

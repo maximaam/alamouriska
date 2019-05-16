@@ -66,5 +66,14 @@ class Thread extends BaseThread
         return $this;
     }
 
+    /**
+     * @param int $by
+     * @return int
+     */
+    public function decrementNumComments($by = 1)
+    {
+        return $this->numComments -= intval($by);
+    }
+
 
 }
