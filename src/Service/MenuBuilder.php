@@ -9,6 +9,7 @@
 namespace App\Service;
 
 use App\Entity\Page;
+use App\Entity\Post;
 use App\Utils\ModelUtils;
 use Knp\Menu\FactoryInterface;
 use Doctrine\ORM\EntityManager;
@@ -31,7 +32,6 @@ class MenuBuilder
 
     /**
      * MenuBuilder constructor.
-     *
      * @param FactoryInterface $factory
      * @param EntityManager $em
      */
@@ -54,7 +54,7 @@ class MenuBuilder
             $menu->addChild(\ucfirst($domain), [
                 'route'     => 'post_index',
                 'routeParameters'   => [
-                    'domain'    => $domain
+                    'domain'    => $domain //Use plural for routes
                 ],
                 /*
                 'extras'    => [

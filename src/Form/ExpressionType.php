@@ -2,16 +2,16 @@
 
 namespace App\Form;
 
-use App\Entity\Citation;
+use App\Entity\Expression;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 
 /**
- * Class CitationType
+ * Class ExpressionType
  * @package App\Form
  */
-class CitationType extends SharedType
+class ExpressionType extends SharedType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -20,8 +20,8 @@ class CitationType extends SharedType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('citation', null, [
-                'label' => 'Citation',
+            ->add('expression', null, [
+                'label' => 'label.expression',
                 'help' => 'label.required',
             ]);
 
@@ -34,7 +34,7 @@ class CitationType extends SharedType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Citation::class,
+            'data_class' => Expression::class,
         ]);
     }
 }

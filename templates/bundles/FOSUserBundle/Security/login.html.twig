@@ -9,6 +9,13 @@
 {% block fos_user_content %}
     {# include('@FOSUser/Security/login_content.html.twig') #} {# Default layout #}
 
+    {% if app.user %}
+        <script>(function () {window.location.href = '/';})();</script>
+        <div class="alert alert-warning">
+            Tu es déjà connecté ;-)
+        </div>
+    {% endif %}
+
     {% if error %}
         <div class="alert alert-danger">
             {{ error.messageKey|trans(error.messageData, 'security') }}

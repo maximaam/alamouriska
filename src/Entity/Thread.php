@@ -19,52 +19,19 @@ class Thread extends BaseThread
     protected $id;
 
     /**
-     * @ORM\Column(type="string")
-     */
-    private $owner;
-
-    /**
      * @ORM\Column(type="integer")
      */
-    private $ownerId;
+    private $postId;
 
     /**
-     * @return string
+     * @ORM\Column(type="string", length=255)
      */
-    public function getOwner(): string
-    {
-        return $this->owner;
-    }
+    private $post;
 
     /**
-     * @param $owner
-     * @return Thread
+     * @ORM\Column(type="text")
      */
-    public function setOwner($owner): self
-    {
-        $this->owner = $owner;
-
-        return $this;
-    }
-
-    /**
-     * @return int
-     */
-    public function getOwnerId(): int
-    {
-        return $this->ownerId;
-    }
-
-    /**
-     * @param $ownerId
-     * @return Thread
-     */
-    public function setOwnerId($ownerId): self
-    {
-        $this->ownerId = $ownerId;
-
-        return $this;
-    }
+    private $postMainEntry;
 
     /**
      * @param int $by
@@ -73,6 +40,42 @@ class Thread extends BaseThread
     public function decrementNumComments($by = 1)
     {
         return $this->numComments -= intval($by);
+    }
+
+    public function getPostId(): ?int
+    {
+        return $this->postId;
+    }
+
+    public function setPostId(int $postId): self
+    {
+        $this->postId = $postId;
+
+        return $this;
+    }
+
+    public function getPost(): ?string
+    {
+        return $this->post;
+    }
+
+    public function setPost(string $post): self
+    {
+        $this->post = $post;
+
+        return $this;
+    }
+
+    public function getPostMainEntry(): ?string
+    {
+        return $this->postMainEntry;
+    }
+
+    public function setPostMainEntry(string $postMainEntry): self
+    {
+        $this->postMainEntry = $postMainEntry;
+
+        return $this;
     }
 
 

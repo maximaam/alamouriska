@@ -1,13 +1,17 @@
 <?php
 
+declare(strict_types=1);
 
 namespace App\Utils;
 
-
+/**
+ * Class ModelUtils
+ * @package App\Utils
+ */
 class ModelUtils
 {
-
-    const DOMAINS = ['mots', 'locutions', 'proverbes', 'citations'];
+    const DOMAINS = ['mots', 'expressions', 'proverbes', 'blagues'];
+    const ENTITIES = ['mot' => 'word', 'expression' => 'expression', 'proverbe' => 'proverb', 'blague' => 'joke'];
 
     /**
      * @param string $domain
@@ -15,7 +19,9 @@ class ModelUtils
      */
     public static function getEntityByDomain(string $domain): string
     {
-        return \substr(\ucfirst($domain), 0, -1);
-    }
+        $domain = \substr($domain, 0, -1);
+        $entity = self::ENTITIES[$domain];
 
+        return \ucfirst($entity);
+    }
 }

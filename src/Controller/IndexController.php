@@ -3,13 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Journal;
-use App\Entity\Locution;
-use App\Entity\Mot;
 use App\Entity\Page;
 use App\Entity\Rating;
 use App\Entity\Thread;
 use App\Form\JournalType;
-use App\Form\LocutionType;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;

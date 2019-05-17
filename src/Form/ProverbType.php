@@ -2,26 +2,22 @@
 
 namespace App\Form;
 
-use App\Entity\Locution;
+use App\Entity\Proverb;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 
 /**
- * Class LocutionType
+ * Class ProverbeType
  * @package App\Form
  */
-class LocutionType extends SharedType
+class ProverbType extends SharedType
 {
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('locution', null, [
-                'label' => 'Locution, groupe de mots',
+            ->add('proverb', null, [
+                'label' => 'label.proverb',
                 'help' => 'label.required',
             ]);
 
@@ -34,7 +30,7 @@ class LocutionType extends SharedType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Locution::class,
+            'data_class' => Proverb::class,
         ]);
     }
 }

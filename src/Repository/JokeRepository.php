@@ -2,22 +2,22 @@
 
 namespace App\Repository;
 
-use App\Entity\Proverbe;
+use App\Entity\Joke;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
- * @method Proverbe|null find($id, $lockMode = null, $lockVersion = null)
- * @method Proverbe|null findOneBy(array $criteria, array $orderBy = null)
- * @method Proverbe[]    findAll()
- * @method Proverbe[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Joke|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Joke|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Joke[]    findAll()
+ * @method Joke[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ProverbeRepository extends ServiceEntityRepository
+class JokeRepository extends ServiceEntityRepository
 {
     public function __construct(RegistryInterface $registry)
     {
-        parent::__construct($registry, Proverbe::class);
+        parent::__construct($registry, Joke::class);
     }
 
     /**
@@ -27,7 +27,7 @@ class ProverbeRepository extends ServiceEntityRepository
     public function searchQuery(string $term): QueryBuilder
     {
         return $this->createQueryBuilder('p')
-            ->where('p.proverbe LIKE :term')
+            ->where('p.joke LIKE :term')
             ->setParameter('term', '%'.$term.'%')
             ;
     }

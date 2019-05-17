@@ -8,22 +8,26 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\LocutionRepository")
- * @UniqueEntity(fields={"locution"}, message="msg.duplicate_post")
+ * @ORM\Table(name="joke", indexes={
+ *     @ORM\Index(name="created_at_idx", columns={"created_at"}),
+ *     @ORM\Index(name="status_idx", columns={"status"})
+ * })
+ * @ORM\Entity(repositoryClass="App\Repository\JokeRepository")
+ * @UniqueEntity(fields={"joke"}, message="msg.duplicate_post")
  * @ORM\HasLifecycleCallbacks
  */
-final class Locution extends AbstractEntity
+class Joke extends AbstractPost
 {
     use Timestampable;
 
     /**
-     * @ORM\Column(type="string", length=128)
+     * @ORM\Column(type="text")
      * @Assert\NotBlank
      */
-    private $locution;
+    private $joke;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="locutions")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="jokes")
      * @ORM\JoinColumn(nullable=false)
      */
     protected $user;
@@ -31,18 +35,18 @@ final class Locution extends AbstractEntity
     /**
      * @return string|null
      */
-    public function getLocution(): ?string
+    public function getJoke(): ?string
     {
-        return $this->locution;
+        return $this->joke;
     }
 
     /**
-     * @param string $locution
-     * @return Locution
+     * @param string $joke
+     * @return Joke
      */
-    public function setLocution(string $locution): self
+    public function setJoke(string $joke): self
     {
-        $this->locution = $locution;
+        $this->joke = $joke;
 
         return $this;
     }
@@ -64,13 +68,5 @@ final class Locution extends AbstractEntity
         $this->user = $user;
 
         return $this;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function __toString()
-    {
-        return $this->getLocution();
     }
 }

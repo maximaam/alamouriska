@@ -2,22 +2,26 @@
 
 namespace App\Form;
 
-use App\Entity\Proverbe;
+use App\Entity\Joke;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 
 /**
- * Class ProverbeType
+ * Class JokeType
  * @package App\Form
  */
-class ProverbeType extends SharedType
+class JokeType extends SharedType
 {
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('proverbe', null, [
-                'label' => 'Proverbe',
+            ->add('joke', null, [
+                'label' => 'label.joke',
                 'help' => 'label.required',
             ]);
 
@@ -30,7 +34,7 @@ class ProverbeType extends SharedType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Proverbe::class,
+            'data_class' => Joke::class,
         ]);
     }
 }

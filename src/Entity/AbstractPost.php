@@ -9,6 +9,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use phpDocumentor\Reflection\Types\This;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -23,14 +24,25 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @package App\Entity
  */
-abstract class AbstractEntity
+abstract class AbstractPost
 {
+    const STATUS_DELETED = 0;
+    const STATUS_ACTIVE = 1;
+
+    const PAGINATOR_MAX = 3;
+
     /**
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
+
+    /**
+     * @ORM\Column(type="boolean")
+     * @Assert\NotBlank
+     */
+    protected $status = self::STATUS_ACTIVE;
 
     /**
      * @ORM\Column(type="text")
@@ -76,6 +88,26 @@ abstract class AbstractEntity
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getStatus(): ?int
+    {
+        return $this->status;
+    }
+
+    /**
+     * @param int $status
+     * @return AbstractPost
+     */
+    public function setStatus(int $status): self
+    {
+        $this->status = $status;
+
+        return $this;
+
     }
 
     /**
@@ -195,6 +227,30 @@ abstract class AbstractEntity
         $this->addr = $addr;
 
         return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getPostMainEntry(): ?string
+    {
+        switch (true) {
+            case $this instanceof Word:
+                return $this->getInLatin();
+                break;
+
+            case $this instanceof Expression:
+                return $this->getExpression();
+                break;
+
+            case $this instanceof Proverb:
+                return $this->getProverb();
+                break;
+
+            case $this instanceof Joke:
+                return $this->getJoke();
+                break;
+        }
     }
 
     /**

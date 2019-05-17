@@ -27,8 +27,10 @@
                     <div class="card-header font-weight-bold">{{ app_name }}, keskissik?</div>
 
                     <div class="card-body">
-                        <p>{{ page.description | raw }}</p>
-                        <a href="{{ path('index_page', { alias: 'keskissik' }) }}" class="btn btn-primary">En savoir plus</a>
+                        {% if page | length %}
+                            <p>{{ page.description | raw }}</p>
+                            <a href="{{ path('index_page', { alias: 'keskissik' }) }}" class="btn btn-primary">En savoir plus</a>
+                        {% endif %}
                     </div>
                 </div>
                 {% endif %}

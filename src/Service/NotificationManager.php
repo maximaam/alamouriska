@@ -2,11 +2,11 @@
 
 namespace App\Service;
 
-use App\Entity\Citation;
+use App\Entity\Joke;
 use App\Entity\Comment;
-use App\Entity\Locution;
-use App\Entity\Mot;
-use App\Entity\Proverbe;
+use App\Entity\Expression;
+use App\Entity\Word;
+use App\Entity\Proverb;
 use App\Utils\PhpUtils;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Routing\Generator\UrlGenerator;
@@ -60,7 +60,7 @@ class NotificationManager
 
     /**
      * @param array $recipients
-     * @param Mot|Locution|Proverbe|Citation $post
+     * @param Word|Expression|Proverb|Joke $post
      * @param string $permalink
      * @throws Twig\Error\LoaderError
      * @throws Twig\Error\RuntimeError

@@ -8,22 +8,26 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\ProverbeRepository")
- * @UniqueEntity(fields={"proverbe"}, message="msg.duplicate_post")
+ * @ORM\Table(name="expression", indexes={
+ *     @ORM\Index(name="created_at_idx", columns={"created_at"}),
+ *     @ORM\Index(name="status_idx", columns={"status"})
+ * })
+ * @ORM\Entity(repositoryClass="App\Repository\ExpressionRepository")
+ * @UniqueEntity(fields={"expression"}, message="msg.duplicate_post")
  * @ORM\HasLifecycleCallbacks
  */
-final class Proverbe extends AbstractEntity
+final class Expression extends AbstractPost
 {
     use Timestampable;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="string", length=128)
      * @Assert\NotBlank
      */
-    private $proverbe;
+    private $expression;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="proverbes")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="expressions")
      * @ORM\JoinColumn(nullable=false)
      */
     protected $user;
@@ -31,18 +35,18 @@ final class Proverbe extends AbstractEntity
     /**
      * @return string|null
      */
-    public function getProverbe(): ?string
+    public function getExpression(): ?string
     {
-        return $this->proverbe;
+        return $this->expression;
     }
 
     /**
-     * @param string $proverbe
-     * @return Proverbe
+     * @param string $expression
+     * @return Expression
      */
-    public function setProverbe(string $proverbe): self
+    public function setExpression(string $expression): self
     {
-        $this->proverbe = $proverbe;
+        $this->expression = $expression;
 
         return $this;
     }
@@ -64,13 +68,5 @@ final class Proverbe extends AbstractEntity
         $this->user = $user;
 
         return $this;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function __toString()
-    {
-        return $this->getProverbe();
     }
 }

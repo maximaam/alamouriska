@@ -8,22 +8,26 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\CitationRepository")
- * @UniqueEntity(fields={"citation"}, message="msg.duplicate_post")
+ * @ORM\Table(name="proverb", indexes={
+ *     @ORM\Index(name="created_at_idx", columns={"created_at"}),
+ *     @ORM\Index(name="status_idx", columns={"status"})
+ * })
+ * @ORM\Entity(repositoryClass="App\Repository\ProverbRepository")
+ * @UniqueEntity(fields={"proverb"}, message="msg.duplicate_post")
  * @ORM\HasLifecycleCallbacks
  */
-class Citation extends AbstractEntity
+final class Proverb extends AbstractPost
 {
     use Timestampable;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="text")
      * @Assert\NotBlank
      */
-    private $citation;
+    private $proverb;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="citations")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="proverbs")
      * @ORM\JoinColumn(nullable=false)
      */
     protected $user;
@@ -31,18 +35,18 @@ class Citation extends AbstractEntity
     /**
      * @return string|null
      */
-    public function getCitation(): ?string
+    public function getProverb(): ?string
     {
-        return $this->citation;
+        return $this->proverb;
     }
 
     /**
-     * @param string $citation
-     * @return Citation
+     * @param string $proverb
+     * @return Proverb
      */
-    public function setCitation(string $citation): self
+    public function setProverb(string $proverb): self
     {
-        $this->citation = $citation;
+        $this->proverb = $proverb;
 
         return $this;
     }
@@ -64,13 +68,5 @@ class Citation extends AbstractEntity
         $this->user = $user;
 
         return $this;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function __toString()
-    {
-        return $this->getCitation();
     }
 }

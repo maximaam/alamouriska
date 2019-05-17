@@ -36,7 +36,7 @@
 
                     <div class="p-3">
                         {% if domain == 'mots' %}
-                            <h1 class="mb-1" title="Mot">{{ post }}</h1>
+                            <h1 class="mb-1" title="Mot">{{ post.postMainEntry }}</h1>
                             <h2 class="mt-0 pb-2 text-muted border-bottom">
                                 <span>{{ 'label.tamazight_char' | trans }}: {{ post.inTamazight | default('...') }}</span>
                                 <br>
@@ -46,7 +46,7 @@
                         {% else %}
                             <p class="p-2 border-bottom mb-0" title="{{ entity }}">
                                 <i class="fa fa-book"></i>
-                                {{ post }}
+                                {{ post.postMainEntry }}
                             </p>
                             <p class="p-2 mb-0" title="Explication">
                                 <i class="fa fa-question-circle"></i>

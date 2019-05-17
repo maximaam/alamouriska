@@ -2,11 +2,11 @@
 
 namespace App\EventListener;
 
-use App\Entity\Citation;
+use App\Entity\Joke;
 use App\Entity\Comment;
-use App\Entity\Locution;
-use App\Entity\Mot;
-use App\Entity\Proverbe;
+use App\Entity\Expression;
+use App\Entity\Word;
+use App\Entity\Proverb;
 use App\Entity\Thread;
 use Doctrine\DBAL\Exception\InvalidArgumentException;
 use Doctrine\ORM\EntityManagerInterface;
@@ -76,7 +76,7 @@ class CommentNotificationListener implements EventSubscriberInterface
 
         /** @var Thread $thread */
         $thread = $comment->getThread();
-        $owner = $thread->getOwner();
+        $postOwner = $thread->getPost();
 
 
 
@@ -116,8 +116,8 @@ class CommentNotificationListener implements EventSubscriberInterface
             }
         }
 
-        /** @var Mot|Locution|Proverbe|Citation $post */
-        $post = $this->em->getRepository('App\\Entity\\' . $owner)->find($thread->getOwnerId());
+        /** @var Word|Expression|Proverb|Joke $post */
+        $post = $this->em->getRepository('App\\Entity\\' . $owner)->find($thread->getPostId());
 
         //Remove post owner from recipients as they get an extra email
         //$recipients = array_diff($recipients, [$post->getUser()->getEmail()]);

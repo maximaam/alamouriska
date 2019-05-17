@@ -8,21 +8,23 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 use App\Entity\Traits\Timestampable;
 
 /**
- * @ORM\Table(name="mot",indexes={
+ * @ORM\Table(name="word", indexes={
  *     @ORM\Index(name="created_at_idx", columns={"created_at"}),
+ *     @ORM\Index(name="status_idx", columns={"status"}),
  *     @ORM\Index(name="in_latin_idx", columns={"in_latin"})
  * })
- * @ORM\Entity(repositoryClass="App\Repository\MotRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\WordRepository")
  * @ORM\HasLifecycleCallbacks
  * @UniqueEntity(fields={"inLatin"}, message="msg.duplicate_post")
  */
-class Mot extends AbstractEntity
+class Word extends AbstractPost
 {
     use Timestampable;
 
@@ -44,7 +46,7 @@ class Mot extends AbstractEntity
     private $inArabic;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="mots")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="words")
      * @ORM\JoinColumn(nullable=false)
      */
     protected $user;
@@ -59,7 +61,7 @@ class Mot extends AbstractEntity
 
     /**
      * @param string $inLatin
-     * @return Mot
+     * @return Word
      */
     public function setInLatin(string $inLatin): self
     {
@@ -78,7 +80,7 @@ class Mot extends AbstractEntity
 
     /**
      * @param string|null $inTamazight
-     * @return Mot
+     * @return Word
      */
     public function setInTamazight(?string $inTamazight): self
     {
@@ -97,7 +99,7 @@ class Mot extends AbstractEntity
 
     /**
      * @param string|null $inArabic
-     * @return Mot
+     * @return Word
      */
     public function setInArabic(?string $inArabic): self
     {
@@ -123,13 +125,5 @@ class Mot extends AbstractEntity
         $this->user = $user;
 
         return $this;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function __toString()
-    {
-        return $this->getInLatin();
     }
 }

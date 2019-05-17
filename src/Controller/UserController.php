@@ -2,10 +2,10 @@
 
 namespace App\Controller;
 
-use App\Entity\Citation;
-use App\Entity\Locution;
-use App\Entity\Mot;
-use App\Entity\Proverbe;
+use App\Entity\Joke;
+use App\Entity\Expression;
+use App\Entity\Word;
+use App\Entity\Proverb;
 use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;

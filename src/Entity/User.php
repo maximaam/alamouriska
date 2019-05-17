@@ -9,6 +9,8 @@
 namespace App\Entity;
 
 use App\Entity\Traits\Timestampable;
+use App\Repository\UserRepository;
+use Doctrine\Common\Collections\Criteria;
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -81,24 +83,24 @@ class User extends BaseUser
     private $avatarFile;
 
     /**
-     * @ORM\OneToMany(targetEntity="Mot", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="Word", mappedBy="user")
      */
-    private $mots;
+    private $words;
 
     /**
-     * @ORM\OneToMany(targetEntity="Locution", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="Expression", mappedBy="user")
      */
-    private $locutions;
+    private $expressions;
 
     /**
-     * @ORM\OneToMany(targetEntity="Proverbe", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="Proverb", mappedBy="user")
      */
-    private $proverbes;
+    private $proverbs;
 
     /**
-     * @ORM\OneToMany(targetEntity="Citation", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="Joke", mappedBy="user")
      */
-    private $citations;
+    private $jokes;
 
     /**
      * Allow member to write to another member
@@ -129,10 +131,10 @@ class User extends BaseUser
 
         $this->createdAt = new \DateTime();
 
-        $this->mots = new ArrayCollection();
-        $this->locutions = new ArrayCollection();
-        $this->proverbes = new ArrayCollection();
-        $this->citations = new ArrayCollection();
+        $this->words = new ArrayCollection();
+        $this->expressions = new ArrayCollection();
+        $this->proverbs = new ArrayCollection();
+        $this->jokes = new ArrayCollection();
         $this->journals = new ArrayCollection();
     }
 
@@ -182,35 +184,35 @@ class User extends BaseUser
     }
 
     /**
-     * @return Collection|Mot[]
+     * @return Collection|Word[]
      */
-    public function getMots(): Collection
+    public function getWords(): Collection
     {
-        return $this->mots;
+        return $this->words;
     }
 
     /**
-     * @return Collection|Locution[]
+     * @return Collection|Expression[]
      */
-    public function getLocutions(): Collection
+    public function getExpressions(): Collection
     {
-        return $this->locutions;
+        return $this->expressions;
     }
 
     /**
-     * @return Collection|Proverbe[]
+     * @return Collection|Proverb[]
      */
-    public function getProverbes(): Collection
+    public function getProverbs(): Collection
     {
-        return $this->proverbes;
+        return $this->proverbs;
     }
 
     /**
-     * @return Collection|Citation[]
+     * @return Collection|Joke[]
      */
-    public function getCitations(): Collection
+    public function getJokes(): Collection
     {
-        return $this->citations;
+        return $this->jokes;
     }
 
     /**
@@ -280,5 +282,14 @@ class User extends BaseUser
         }
 
         return $this;
+    }
+
+    /**
+     * @param string $entity
+     * @return Collection
+     */
+    public function activePosts(string $entity): Collection
+    {
+        return $this->{$entity}->matching(UserRepository::createActivePostsCriteria());
     }
 }

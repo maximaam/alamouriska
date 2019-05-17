@@ -2,8 +2,8 @@ easy_admin:
     site_name: '%app_name%'
     #disabled_actions: ['new']
     entities:
-        Mot:
-            class: App\Entity\Mot
+        Word:
+            class: App\Entity\Word
             list:
                 fields:
                     - id
@@ -19,37 +19,37 @@ easy_admin:
                 fields:
                     - inLatin
                     - description
-        Locution:
-            class: App\Entity\Locution
+        Expression:
+            class: App\Entity\Expression
             list:
                 fields:
                     - id
                     - createdAt
-                    - locution
+                    - expression
                     - description
                     - { property: 'imageName', label: 'Image', type: 'image', base_path: '/images/posts/' }
                     - question
-        Proverbe:
-            class: App\Entity\Proverbe
+        Proverb:
+            class: App\Entity\Proverb
             list:
                 fields:
                     - id
                     - createdAt
-                    - proverbe
+                    - proverb
                     - description
                     - { property: 'imageName', label: 'Image', type: 'image', base_path: '/images/posts/' }
                     - question
-        MotDeleted:
-            class: App\Entity\MotDeleted
-            list:
-                fields:
-                    - id
-                    - createdAt
-                    - inLatin
-                    - inTamazight
-                    - inArabic
-                    - description
-                    - userId
+#        MotDeleted:
+#            class: App\Entity\MotDeleted
+#            list:
+#                fields:
+#                    - id
+#                    - createdAt
+#                    - inLatin
+#                    - inTamazight
+#                    - inArabic
+#                    - description
+#                    - userId
         Comment:
             class: App\Entity\Comment
             list:

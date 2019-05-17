@@ -21,10 +21,6 @@ label:
   liking_add: "J'aime"
   liking_remove: "J'aime déjà"
   comments: 'Commentaires'
-  words: 'Mots'
-  locutions: 'Locutions'
-  proverbs: 'Proverbes'
-  quotes: 'Citations'
   publish: 'Publier'
   submit: 'Envoyer'
   cancel: 'Annuler'
@@ -32,7 +28,16 @@ label:
   login: 'Connexion'
   login_or_sign: "Se connecter ou s'inscrire"
 
-  # Mots, locutions...etc pages
+  word: 'Mot'
+  expression: 'Expression'
+  proverb: 'Proverbe'
+  joke: 'Blague'
+  words: 'Mots'
+  expressions: 'Expressions'
+  proverbs: 'Proverbes'
+  jokes: 'Blagues'
+
+  # Mots, Expressions...etc pages
   almrsk:
       insert_new: 'Ajouter une publication'
       h1: 'Liste des %almrsk% %gender% alamouriské(e)s'

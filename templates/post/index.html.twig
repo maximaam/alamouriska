@@ -58,7 +58,7 @@
                                     {% if domain == 'mots' %}
                                         <h2 class="mt-0 mb-1" title="{{ 'label.latin_char' | trans }}">
                                             <a href="{{ path('post_show', {'domain': domain, 'id': post.id, 'slug': post.slug }) }}">
-                                                {{ post }}
+                                                {{ post.postMainEntry }}
                                             </a>
                                         </h2>
                                         <h3 class="text-muted border-bottom pb-2">
@@ -70,7 +70,7 @@
                                     {% else %}
                                         <p class="border-bottom mb-0 pb-2" title="{{ entity }}">
                                             <i class="fa fa-book"></i>
-                                            {{ post }}
+                                            {{ post.postMainEntry }}
                                         </p>
                                         <p class="mb-0 pt-2" title="Explication">
                                             <i class="fa fa-question-circle"></i>
