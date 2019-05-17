@@ -65,14 +65,6 @@ class PostController extends AbstractController
         $form = $this->createForm('App\\Form\\' . $entity . 'Type', $model);
         $form->handleRequest($request);
 
-        /*
-        if ($form->getName() === 'joke') {
-            $options = $form->get('description')->getConfig()->getOptions();
-            $options['required'] = false;
-            $form->add('description', HiddenType::class, $options);
-        }
-        */
-
         if ($form->isSubmitted() && $form->isValid()) {
             return $this->submitForm($form, $model, $domain, $request->getClientIp());
         }
@@ -233,6 +225,15 @@ class PostController extends AbstractController
     private function submitForm(FormInterface $form, $model, string $domain, string $addr): RedirectResponse
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        /*
+        dd($form);
+
+        /*
+        if ($form->getName() === 'joke') {
+            $model->setDescription('blabla');
+        }
+        */
 
         $model->setSlug(Linguistic::toSlug($model->getPostMainEntry()));
         $model->setAddr($addr);

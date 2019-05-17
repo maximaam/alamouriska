@@ -26,6 +26,10 @@ class JokeType extends SharedType
             ]);
 
         parent::buildForm($builder, $options);
+
+        $builder
+            ->remove('description')
+            ->remove('question');
     }
 
     /**

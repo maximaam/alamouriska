@@ -14,7 +14,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * })
  * @ORM\Entity(repositoryClass="App\Repository\JokeRepository")
  * @UniqueEntity(fields={"joke"}, message="msg.duplicate_post")
- * @ORM\HasLifecycleCallbacks
+ * @ORM\HasLifecycleCallbacks()
  */
 class Joke extends AbstractPost
 {
@@ -24,7 +24,7 @@ class Joke extends AbstractPost
      * @ORM\Column(type="text")
      * @Assert\NotBlank
      */
-    private $joke;
+    protected $joke;
 
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="jokes")
@@ -66,6 +66,19 @@ class Joke extends AbstractPost
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     *
+     * @return $this
+     */
+    public function setDescriptionEmpty(): self
+    {
+        $this->description = 'Not required';
 
         return $this;
     }

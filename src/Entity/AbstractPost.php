@@ -75,7 +75,7 @@ abstract class AbstractPost
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $addr;
+    protected $addr;
 
     /**
      * @ORM\Column(type="string", length=255)
