@@ -9,7 +9,6 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use phpDocumentor\Reflection\Types\This;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -46,7 +45,6 @@ abstract class AbstractPost
 
     /**
      * @ORM\Column(type="text")
-     * @Assert\NotBlank
      */
     protected $description;
 

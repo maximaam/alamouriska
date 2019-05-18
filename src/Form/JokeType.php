@@ -23,6 +23,9 @@ class JokeType extends SharedType
             ->add('joke', null, [
                 'label' => 'label.joke',
                 'help' => 'label.required',
+                'attr'  => [
+                    'rows'  => 5
+                ]
             ]);
 
         parent::buildForm($builder, $options);

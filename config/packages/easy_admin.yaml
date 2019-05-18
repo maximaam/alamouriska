@@ -29,6 +29,7 @@ easy_admin:
                     - description
                     - { property: 'imageName', label: 'Image', type: 'image', base_path: '/images/posts/' }
                     - question
+                    - user
         Proverb:
             class: App\Entity\Proverb
             list:
@@ -39,17 +40,15 @@ easy_admin:
                     - description
                     - { property: 'imageName', label: 'Image', type: 'image', base_path: '/images/posts/' }
                     - question
-#        MotDeleted:
-#            class: App\Entity\MotDeleted
-#            list:
-#                fields:
-#                    - id
-#                    - createdAt
-#                    - inLatin
-#                    - inTamazight
-#                    - inArabic
-#                    - description
-#                    - userId
+                    - user
+        Joke:
+            class: App\Entity\Joke
+            list:
+                fields:
+                    - id
+                    - createdAt
+                    - joke
+                    - user
         Comment:
             class: App\Entity\Comment
             list:

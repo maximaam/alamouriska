@@ -78,7 +78,7 @@ class Joke extends AbstractPost
      */
     public function setDescriptionEmpty(): self
     {
-        $this->description = 'Not required';
+        $this->description = 'Ce champs est optionnel dans ce cas.';
 
         return $this;
     }

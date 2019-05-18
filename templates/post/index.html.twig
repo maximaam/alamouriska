@@ -67,8 +67,12 @@
                                         </h3>
                                         <p>{{ post.description }}</p>
 
+                                    {% elseif domain == 'blagues' %}
+                                        <p class="mb-0 pb-2">
+                                            {{ post.postMainEntry }}
+                                        </p>
                                     {% else %}
-                                        <p class="border-bottom mb-0 pb-2" title="{{ entity }}">
+                                        <p class="border-bottom mb-0 pb-2">
                                             <i class="fa fa-book"></i>
                                             {{ post.postMainEntry }}
                                         </p>
