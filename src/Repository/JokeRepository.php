@@ -27,7 +27,7 @@ class JokeRepository extends ServiceEntityRepository
     public function searchQuery(string $term): QueryBuilder
     {
         return $this->createQueryBuilder('p')
-            ->where('p.joke LIKE :term')
+            ->where('p.post LIKE :term')
             ->setParameter('term', '%'.$term.'%')
             ;
     }

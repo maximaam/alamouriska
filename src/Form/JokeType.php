@@ -20,7 +20,7 @@ class JokeType extends SharedType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('joke', null, [
+            ->add('post', null, [
                 'label' => 'label.joke',
                 'help' => 'label.required',
                 'attr'  => [

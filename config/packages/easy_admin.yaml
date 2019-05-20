@@ -67,3 +67,8 @@ easy_admin:
             class: App\Entity\Page
             form:
                 fields: ['title', 'alias', 'description', 'embedded']
+
+        Deleted:
+            class: App\Entity\Deleted
+            list:
+                fields: ['createdAt', 'updatedAt', 'post', 'description', 'userId', 'username']

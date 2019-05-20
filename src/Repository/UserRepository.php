@@ -24,12 +24,14 @@ class UserRepository extends ServiceEntityRepository
     /**
      * @return Criteria
      */
+    /*
     public static function createActivePostsCriteria(): Criteria
     {
         return Criteria::create()
             ->andWhere(Criteria::expr()->eq('status', AbstractPost::STATUS_ACTIVE))
             ;
     }
+    */
 
 
 }

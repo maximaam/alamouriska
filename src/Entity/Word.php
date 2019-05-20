@@ -12,31 +12,26 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
-use App\Entity\Traits\Timestampable;
 
 /**
  * @ORM\Table(
  *     name="word",
- *     uniqueConstraints={@ORM\UniqueConstraint(name="unique_latin_status_idx", columns={"in_latin", "status"})},
  *     indexes={
  *      @ORM\Index(name="created_at_idx", columns={"created_at"}),
- *      @ORM\Index(name="status_idx", columns={"status"}),
- *      @ORM\Index(name="in_latin_idx", columns={"in_latin"})
+ *      @ORM\Index(name="post_idx", columns={"post"})
  * })
  * @ORM\Entity(repositoryClass="App\Repository\WordRepository")
  * @ORM\HasLifecycleCallbacks
- * @UniqueEntity(fields={"inLatin", "status"}, message="msg.duplicate_post")
+ * @UniqueEntity(fields={"inLatin"}, message="msg.duplicate_post")
  */
-class Word extends AbstractPost
+final class Word extends AbstractPost
 {
-    use Timestampable;
-
     /**
      * @ORM\Column(type="string", length=128)
      * @Assert\NotBlank
      * @Assert\Regex(pattern="/^[\w-]+$/", match=true, message="Un mot ne doit pas contenir d'espaces.")
      */
-    private $inLatin;
+    protected $post;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -53,25 +48,6 @@ class Word extends AbstractPost
      * @ORM\JoinColumn(nullable=false)
      */
     protected $user;
-
-    /**
-     * @return string|null
-     */
-    public function getInLatin(): ?string
-    {
-        return $this->inLatin;
-    }
-
-    /**
-     * @param string $inLatin
-     * @return Word
-     */
-    public function setInLatin(string $inLatin): self
-    {
-        $this->inLatin = $inLatin;
-
-        return $this;
-    }
 
     /**
      * @return string|null

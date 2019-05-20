@@ -288,8 +288,10 @@ class User extends BaseUser
      * @param string $entity
      * @return Collection
      */
+    /*
     public function activePosts(string $entity): Collection
     {
         return $this->{$entity}->matching(UserRepository::createActivePostsCriteria());
     }
+    */
 }

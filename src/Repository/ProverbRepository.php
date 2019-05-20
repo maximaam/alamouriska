@@ -27,7 +27,7 @@ class ProverbRepository extends ServiceEntityRepository
     public function searchQuery(string $term): QueryBuilder
     {
         return $this->createQueryBuilder('p')
-            ->where('p.proverbe LIKE :term')
+            ->where('p.post LIKE :term')
             ->setParameter('term', '%'.$term.'%')
             ;
     }

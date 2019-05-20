@@ -20,7 +20,7 @@ class ExpressionType extends SharedType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('expression', null, [
+            ->add('post', null, [
                 'label' => 'label.expression',
                 'help' => 'label.required',
             ]);

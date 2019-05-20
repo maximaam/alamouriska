@@ -26,8 +26,8 @@ class ExpressionRepository extends ServiceEntityRepository
      */
     public function searchQuery(string $term): QueryBuilder
     {
-        return $this->createQueryBuilder('l')
-            ->where('l.locution LIKE :term')
+        return $this->createQueryBuilder('p')
+            ->where('p.post LIKE :term')
             ->setParameter('term', '%'.$term.'%')
             ;
     }

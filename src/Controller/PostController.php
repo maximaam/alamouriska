@@ -9,6 +9,7 @@
 namespace App\Controller;
 
 use App\Entity\AbstractPost;
+use App\Entity\Deleted;
 use App\Entity\Joke;
 use App\Entity\Liking;
 use App\Entity\Expression;
@@ -22,6 +23,7 @@ use App\Repository\ProverbRepository;
 use App\Utils\LikingUtils;
 use App\Utils\Linguistic;
 use App\Utils\ModelUtils;
+use App\Utils\PhpUtils;
 use Doctrine\DBAL\Query\QueryBuilder;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -100,7 +102,7 @@ class PostController extends AbstractController
         /** @var  Word|Expression|Proverb|Joke $model */
         $model = $this->getDoctrine()->getManager()->find('App\\Entity\\' . $entity, $request->get('id'));
 
-        if (null == $model || $model->getStatus() === AbstractPost::STATUS_DELETED) {
+        if (null === $model) {
             throw new NotFoundHttpException('Post introuvable');
         }
 
@@ -140,25 +142,32 @@ class PostController extends AbstractController
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
         if (null !== $model) {
-
             if ($model->getUser() !== $this->getUser()) {
                 throw new \Exception('Error.');
             }
 
             $manager = $this->getDoctrine()->getManager();
 
+            $deleted = (new Deleted())
+                ->setCreatedAt($model->getCreatedAt())
+                ->setUpdatedAt(new \DateTimeImmutable())
+                ->setPost($model->getPost())
+                ->setDescription($model->getDescription())
+                ->setUserId($model->getUser()->getId())
+                ->setUsername($model->getUser()->getUsername())
+                ;
+
             /** @var Thread $thread */
-            /*
             $thread = $manager
                 ->getRepository(Thread::class)
-                ->findOneBy(['owner' => PhpUtils::getClassName($model), 'ownerId' => $model->getId()]);
+                ->findOneBy(['postType' => PhpUtils::getClassName($model), 'postId' => $model->getId()]);
 
             if (null !== $thread) {
                 $manager->remove($thread);
             }
-            */
 
-            $model->setStatus(AbstractPost::STATUS_DELETED);
+            $manager->persist($deleted);
+            $manager->remove($model);
             $manager->flush();
 
             return $this->redirectToRoute('user_show', ['username' => $this->getUser()->getUsername()]);
@@ -235,7 +244,7 @@ class PostController extends AbstractController
         }
         */
 
-        $model->setSlug(Linguistic::toSlug($model->getPostMainEntry()));
+        $model->setSlug(Linguistic::toSlug($model->getPost()));
         $model->setAddr($addr);
 
         $entityManager = $this->getDoctrine()->getManager();
@@ -258,8 +267,6 @@ class PostController extends AbstractController
         /** @var QueryBuilder $query */
         $query = $this->getDoctrine()->getRepository($class)
             ->createQueryBuilder('q')
-            ->andWhere('q.status = :status')
-            ->setParameter('status', AbstractPost::STATUS_ACTIVE)
         ;
 
         if ($question) {
@@ -312,7 +319,7 @@ class PostController extends AbstractController
             $thread->setPermalink($request->getUri());
             $thread->setPost($postOwner->getShortName());
             $thread->setPostId($post->getId());
-            $thread->setPostMainEntry($post->getPostMainEntry());
+            $thread->setPostMainEntry($post->getPost());
 
             // Add the thread
             $threadManager->saveThread($thread);

@@ -26,10 +26,10 @@ class WordRepository extends ServiceEntityRepository
      */
     public function searchQuery(string $term): QueryBuilder
     {
-        return $this->createQueryBuilder('m')
-            ->where('m.inLatin LIKE :term')
-            ->orWhere('m.inTamazight LIKE :term')
-            ->orWhere('m.inArabic LIKE :term')
+        return $this->createQueryBuilder('p')
+            ->where('p.post LIKE :term')
+            ->orWhere('p.inTamazight LIKE :term')
+            ->orWhere('p.inArabic LIKE :term')
             ->setParameter('term', '%'.$term.'%')
         ;
     }

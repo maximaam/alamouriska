@@ -15,7 +15,7 @@
                     <div class="media-body">
                         <h1>Publications de {{ user.username }}</h1>
                         <h2>Membre depuis le {{ user.createdAt | localizeddate('long', 'none', app.request.locale) }}</h2>
-                        <h5>{{ (user.activePosts('words') | length + user.activePosts('expressions') | length + user.activePosts('proverbs') | length + user.activePosts('jokes') | length) }} publication(s).</h5>
+                        <h5>{{ (user.words | length + user.expressions | length + user.proverbs | length + user.jokes | length) }} publication(s).</h5>
                     </div>
                 </div>
             </div>
@@ -39,10 +39,10 @@
         </div>
 
         <div class="row text-dark">
-            <div class="col-sm">{% include 'partials/post_list.html.twig' with {'posts': user.activePosts('words'), 'domain': 'mots', 'header': 'label.words' | trans } only %}</div>
-            <div class="col-sm">{% include 'partials/post_list.html.twig' with {'posts': user.activePosts('expressions'), 'domain': 'expressions', 'header': 'label.expressions' | trans } only %}</div>
-            <div class="col-sm">{% include 'partials/post_list.html.twig' with {'posts': user.activePosts('proverbs'), 'domain': 'proverbes', 'header': 'label.proverbs' | trans } only %}</div>
-            <div class="col-sm">{% include 'partials/post_list.html.twig' with {'posts': user.activePosts('jokes'), 'domain': 'blagues', 'header': 'label.jokes' | trans } only %}</div>
+            <div class="col-sm">{% include 'partials/post_list.html.twig' with {'posts': user.words, 'domain': 'mots', 'header': 'label.words' | trans } only %}</div>
+            <div class="col-sm">{% include 'partials/post_list.html.twig' with {'posts': user.expressions, 'domain': 'expressions', 'header': 'label.expressions' | trans } only %}</div>
+            <div class="col-sm">{% include 'partials/post_list.html.twig' with {'posts': user.proverbs, 'domain': 'proverbes', 'header': 'label.proverbs' | trans } only %}</div>
+            <div class="col-sm">{% include 'partials/post_list.html.twig' with {'posts': user.jokes, 'domain': 'blagues', 'header': 'label.jokes' | trans } only %}</div>
         </div>
     </div>
 {% endblock %}

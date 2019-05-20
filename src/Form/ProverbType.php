@@ -16,7 +16,7 @@ class ProverbType extends SharedType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('proverb', null, [
+            ->add('post', null, [
                 'label' => 'label.proverb',
                 'help' => 'label.required',
             ]);

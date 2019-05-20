@@ -60,8 +60,8 @@
                         {% if mostCommented | length > 0 %}
                             <ul class="pl-4 mb-2">
                                 {% for post in mostCommented %}
-                                    <li>
-                                        <a href="{{ post.permalink }}">{{ post.permalink | split('/') | last }} ({{ post.numComments }})</a>
+                                    <li title="{{ post.postPost }}">
+                                        <a href="{{ post.permalink }}">{{ post.postPost | truncate(20) }} ({{ post.numComments }})</a>
                                     </li>
                                 {% endfor %}
                             </ul>
@@ -127,6 +127,8 @@
                                     <textarea id="op" name="op" disabled="disabled" class="form-control"></textarea>
                                 </div>
                                 {{ include('partials/_btn-login.html.twig', { 'class' : 'btn-happy' }) }}
+                                <div class="fb-login-button" data-width="" data-size="large" data-button-type="continue_with" data-auto-logout-link="false" data-use-continue-as="false"></div>
+
                             {% endif %}
                         </div>
 

@@ -4,9 +4,9 @@
         {% if posts is defined and posts | length > 0 %}
             <ul class="pl-3 mb-0">
                 {% for post in posts %}
-                    <li title="{{ post.postMainEntry }}">
+                    <li title="{{ post.post }}">
                         <a href="{{ path('post_show', { 'domain': domain, 'id': post.id, 'slug': post.slug }) }}">
-                            {{ post.postMainEntry | truncate(25) }}
+                            {{ post.post | truncate(25) }}
                         </a>
                     </li>
                 {% endfor %}

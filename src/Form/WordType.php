@@ -26,7 +26,7 @@ class WordType extends SharedType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('inLatin', null, [
+            ->add('post', null, [
                 'label' => 'label.latin_char',
                 'help' => 'label.required_no_spaces',
                 'attr'  => [

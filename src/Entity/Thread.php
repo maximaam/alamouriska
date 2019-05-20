@@ -26,12 +26,12 @@ class Thread extends BaseThread
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $post;
+    private $postType;
 
     /**
      * @ORM\Column(type="text")
      */
-    private $postMainEntry;
+    private $postPost;
 
     /**
      * @param int $by
@@ -54,29 +54,27 @@ class Thread extends BaseThread
         return $this;
     }
 
-    public function getPost(): ?string
+    public function getPostType(): ?string
     {
-        return $this->post;
+        return $this->postType;
     }
 
-    public function setPost(string $post): self
+    public function setPostType(string $value): self
     {
-        $this->post = $post;
+        $this->postType = $value;
 
         return $this;
     }
 
-    public function getPostMainEntry(): ?string
+    public function getPostPost(): ?string
     {
-        return $this->postMainEntry;
+        return $this->postPost;
     }
 
-    public function setPostMainEntry(string $postMainEntry): self
+    public function setPostPost(string $value): self
     {
-        $this->postMainEntry = $postMainEntry;
+        $this->postPost = $value;
 
         return $this;
     }
-
-
 }

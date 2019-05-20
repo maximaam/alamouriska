@@ -8,6 +8,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\Timestampable;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
@@ -25,8 +26,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 abstract class AbstractPost
 {
-    const STATUS_DELETED = 0;
-    const STATUS_ACTIVE = 1;
+    use Timestampable;
 
     const PAGINATOR_MAX = 3;
 
@@ -38,10 +38,10 @@ abstract class AbstractPost
     protected $id;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="text")
      * @Assert\NotBlank
      */
-    protected $status = self::STATUS_ACTIVE;
+    protected $post;
 
     /**
      * @ORM\Column(type="text")
@@ -89,24 +89,25 @@ abstract class AbstractPost
     }
 
     /**
-     * @return int|null
+     * @return string|null
      */
-    public function getStatus(): ?int
+    public function getPost(): ?string
     {
-        return $this->status;
+        return $this->post;
     }
 
     /**
-     * @param int $status
+     * @param string $post
      * @return AbstractPost
      */
-    public function setStatus(int $status): self
+    public function setPost(string $post): self
     {
-        $this->status = $status;
+        $this->post = $post;
 
         return $this;
-
     }
+
+
 
     /**
      * @return string|null
@@ -225,30 +226,6 @@ abstract class AbstractPost
         $this->addr = $addr;
 
         return $this;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getPostMainEntry(): ?string
-    {
-        switch (true) {
-            case $this instanceof Word:
-                return $this->getInLatin();
-                break;
-
-            case $this instanceof Expression:
-                return $this->getExpression();
-                break;
-
-            case $this instanceof Proverb:
-                return $this->getProverb();
-                break;
-
-            case $this instanceof Joke:
-                return $this->getJoke();
-                break;
-        }
     }
 
     /**
