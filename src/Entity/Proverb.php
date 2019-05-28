@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Entity\Traits\Timestampable;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -15,13 +17,23 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @UniqueEntity(fields={"proverb"}, message="msg.duplicate_post")
  * @ORM\HasLifecycleCallbacks
  */
-final class Proverb extends AbstractPost
+class Proverb extends AbstractPost
 {
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="proverbs")
      * @ORM\JoinColumn(nullable=false)
      */
     protected $user;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="proverb")
+     */
+    private $comments;
+
+    public function __construct()
+    {
+        $this->comments = new ArrayCollection();
+    }
 
     /**
      * @return User|null
@@ -40,5 +52,13 @@ final class Proverb extends AbstractPost
         $this->user = $user;
 
         return $this;
+    }
+
+    /**
+     * @return Collection|Comment[]
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
     }
 }

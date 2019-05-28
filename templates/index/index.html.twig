@@ -57,11 +57,11 @@
                 <div class="card mb-2">
                     <div class="card-header font-weight-bold">Les plus commentés</div>
                     <div class="card-body">
-                        {% if mostCommented | length > 0 %}
+                        {% if most_commented | length > 0 %}
                             <ul class="pl-4 mb-2">
-                                {% for post in mostCommented %}
-                                    <li title="{{ post.postPost }}">
-                                        <a href="{{ post.permalink }}">{{ post.postPost | truncate(20) }} ({{ post.numComments }})</a>
+                                {% for post in most_commented %}
+                                    <li title="{{ post.ownerPost }}">
+                                        <a href="{{ post.permalink }}">{{ post.ownerPost | truncate(20) }} ({{ post.numComments }})</a>
                                     </li>
                                 {% endfor %}
                             </ul>
@@ -78,13 +78,16 @@
                         <!-- Rating Stars Box -->
                         <div class="rating-stars text-center">
                             <div class="mb-2">
-                                {% if ratings | length > 0 %}
+                                {% set all = ratings | length %}
+                                {% if all > 0 %}
                                     {% set sum = 0 %}
                                     {% for rating in ratings %}
                                         {% set sum = sum + rating.rating %}
                                     {% endfor %}
 
                                     Note de la communauté: {{ (sum / ratings | length) | round(1) }} / 5
+                                    <br>
+                                    {{ all }} Votes.
                                 {% endif %}
                             </div>
                             <ul id="stars" class="mb-2 {{ has_rated is same as(true) ? 'mb-done' }}">
@@ -158,7 +161,6 @@
                     </div>
                 </div>
             </div>
-
 
         </div>
     </div>

@@ -1,0 +1,17 @@
+<li class="media mb-3 p-1 border-bottom">
+    {%  include 'partials/avatar.html.twig' with {'current_user': comment.user, 'size': 64, 'classes': 'mr-3 rounded' } only %}
+
+    <div class="media-body">
+        <p class="mt-0 mb-1">
+            <strong>Par: <a href="{{ path('user_show', { 'username' : comment.user.username })  }}" target="_blank">{{ comment.user.username }}</a></strong> |
+            <span class="text-secondary">Le: {{ comment.createdAt | date }}</span>
+        </p>
+        <p>{{ comment.comment | nl2br }}</p>
+    </div>
+
+    {% if app.user and comment.user.id == app.user.id %}
+        <button class="btn btn-danger float-right js_comment-remove" data-uid="{{ comment.id }}">
+            <i class="fa fa-trash" title="Supprimer"></i>
+        </button>
+    {% endif %}
+</li>

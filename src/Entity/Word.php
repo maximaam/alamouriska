@@ -8,6 +8,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -22,9 +23,9 @@ use Symfony\Component\Validator\Constraints as Assert;
  * })
  * @ORM\Entity(repositoryClass="App\Repository\WordRepository")
  * @ORM\HasLifecycleCallbacks
- * @UniqueEntity(fields={"inLatin"}, message="msg.duplicate_post")
+ * @UniqueEntity(fields={"post"}, message="msg.duplicate_post")
  */
-final class Word extends AbstractPost
+class Word extends AbstractPost
 {
     /**
      * @ORM\Column(type="string", length=128)
@@ -48,6 +49,17 @@ final class Word extends AbstractPost
      * @ORM\JoinColumn(nullable=false)
      */
     protected $user;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="word")
+     * @ORM\OrderBy({"id" = "DESC"})
+     */
+    private $comments;
+
+    public function __construct()
+    {
+        $this->comments = new ArrayCollection();
+    }
 
     /**
      * @return string|null
@@ -104,5 +116,13 @@ final class Word extends AbstractPost
         $this->user = $user;
 
         return $this;
+    }
+
+    /**
+     * @return Collection|Comment[]
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
     }
 }

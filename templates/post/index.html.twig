@@ -102,7 +102,7 @@
 
                                 <a href="{{ path('post_show', {'domain': domain, 'id': post.id, 'slug': post.slug }) }}" title="{{ 'label.details_reactions' | trans }}" class="ml-3">
                                     <i class="fa fa-comment"></i>
-                                    {{ 'label.comments' | trans }}
+                                    {{ 'label.comments' | trans }} ({{ post.comments | length }})
                                 </a>
                             </div>
 

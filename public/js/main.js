@@ -20,18 +20,14 @@ $(document).ready(function() {
         });
     });
 
-    $('.fos_comment_comment_remove').on('click', function() {
-        let target = $(this).parents('.fos_comment_comment_show').attr('id');
-        setTimeout(function() {
-            $('#' + target).fadeOut();
-        }, 2000);
-    });
-
-    $('.js_ask-log-in').on('click', function(e) {
+    $('.js_comment-remove').on('click', function(e) {
         e.preventDefault();
 
-        $.get('/async/ask-log-in', function (data) {
-            $(this).append(data);
+        let $this = $(this);
+        $.get('/async/comment-remove?uid=' + $this.data('uid'), function (response) {
+            if (+response.status === 1) {
+                $this.parents('li').fadeOut();
+            }
         });
     });
 
@@ -173,9 +169,7 @@ $(document).ready(function() {
     });
 
     $('.js_del-journal').on('click', function () {
-
         let $btn = $(this);
-
         $.get('/async/del-journal?id=' + $btn.attr('data-uid'), function (data) {
             if (+data.status === 1) {
                 $btn.parents('li').fadeOut();
@@ -193,9 +187,35 @@ $(document).ready(function() {
     }, 3000);
      */
 
+    $(document).on('submit', '.comment-form', function(e){
+        e.preventDefault();
 
+        let $form = $(e.target),
+            $type = $('#comment_type'),
+            $btn = $form.find(':submit');
 
+        $type.val($form.data('type'));
+        $btn.data('label', $btn.html());
+        $btn.html('<i class="fa fa-spinner fa-pulse"></i>');
+        $btn.prop('disabled', true);
 
+        $.ajax({
+            url: $form.attr('action'),
+            method: 'POST',
+            data: $form.serialize(),
+            success: function(response) {
+                response = response.replace('border-bottom', 'border-bottom bg-sky'); //TMP add success class
+                $('ul.list-comments').prepend(response);
+                $btn.html($btn.data('label'));
+                $('#comment_comment').val('');
+                $btn.prop('disabled', false);
+            },
+            error: function(jqXHR, status, error) {
+                alert('Erreur. Essaie encore.');
+                $btn.prop('disabled', false);
+            }
+        });
+    });
 });
 
 $(document)

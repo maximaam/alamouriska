@@ -122,6 +122,11 @@ class User extends BaseUser
     private $journals;
 
     /**
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="user", orphanRemoval=true)
+     */
+    private $comments;
+
+    /**
      * User constructor.
      * @throws \Exception
      */
@@ -136,6 +141,7 @@ class User extends BaseUser
         $this->proverbs = new ArrayCollection();
         $this->jokes = new ArrayCollection();
         $this->journals = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
 
     /**
@@ -282,6 +288,14 @@ class User extends BaseUser
         }
 
         return $this;
+    }
+
+    /**
+     * @return Collection|Comment[]
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
     }
 
     /**

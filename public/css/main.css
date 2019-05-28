@@ -278,6 +278,13 @@ fieldset.form-group legend {
     background-color: lightpink;
 }
 
+.list-comments li:hover {
+    background-color: #eee;
+}
+.comment-form .form-group:nth-child(3) {
+    text-align: right;
+}
+
 .vich-image img {
     width: 128px;
 }

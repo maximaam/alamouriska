@@ -9,6 +9,7 @@
 namespace App\Controller;
 
 use App\Entity\AbstractPost;
+use App\Entity\Comment;
 use App\Entity\Deleted;
 use App\Entity\Joke;
 use App\Entity\Liking;
@@ -16,6 +17,7 @@ use App\Entity\Expression;
 use App\Entity\Word;
 use App\Entity\Proverb;
 use App\Entity\Thread;
+use App\Form\CommentType;
 use App\Repository\JokeRepository;
 use App\Repository\ExpressionRepository;
 use App\Repository\WordRepository;
@@ -27,7 +29,6 @@ use App\Utils\PhpUtils;
 use Doctrine\DBAL\Query\QueryBuilder;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\{ RedirectResponse, Request, Response };
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -89,12 +90,10 @@ class PostController extends AbstractController
      *     )
      *
      * @param Request $request
-     * @param ThreadManagerInterface $threadManager
-     * @param CommentManagerInterface $commentManager
      * @return Response
      * @throws \ReflectionException
      */
-    public function show(CommentManagerInterface $commentManager, ThreadManagerInterface $threadManager, Request $request): Response
+    public function show(Request $request): Response
     {
         $domain = $request->get('domain');
         $entity = ModelUtils::getEntityByDomain($domain);
@@ -106,15 +105,11 @@ class PostController extends AbstractController
             throw new NotFoundHttpException('Post introuvable');
         }
 
-        $thread = $this->createThread($threadManager, $request, $model);
-        $comments = $commentManager->findCommentTreeByThread($thread);
-
         return $this->render('post/show.html.twig', [
+            'commentForm'    => $this->createForm(CommentType::class, new Comment())->createView(),
             'domain'    => $domain,
             'entity'    => $entity,
             'post'      => $model,
-            'comments'  => $comments,
-            'thread'    => $thread,
             'likings' => $this->getLikings($entity)
         ]);
     }
@@ -156,15 +151,6 @@ class PostController extends AbstractController
                 ->setUserId($model->getUser()->getId())
                 ->setUsername($model->getUser()->getUsername())
                 ;
-
-            /** @var Thread $thread */
-            $thread = $manager
-                ->getRepository(Thread::class)
-                ->findOneBy(['postType' => PhpUtils::getClassName($model), 'postId' => $model->getId()]);
-
-            if (null !== $thread) {
-                $manager->remove($thread);
-            }
 
             $manager->persist($deleted);
             $manager->remove($model);
@@ -294,38 +280,4 @@ class PostController extends AbstractController
 
         return LikingUtils::getLikingsUsersIds($likings);
     }
-
-    /**
-     * @param ThreadManagerInterface $threadManager
-     * @param Request $request
-     * @param Word|Expression|Proverb|Joke $post
-     * @return ThreadInterface
-     * @throws \ReflectionException
-     */
-    private function createThread(ThreadManagerInterface $threadManager, Request $request, $post): ThreadInterface
-    {
-        //Use a hash of the entity and its ID as the thread id to enable multiple entities having same IDs to get comments
-        $threadIdentifier = \md5(\get_class($post) . $post->getId());
-
-        /** @var ThreadManagerInterface $thread */
-        $thread = $threadManager->findThreadById($threadIdentifier);
-
-        if (null === $thread) {
-            $postOwner = new \ReflectionClass($post);
-
-            /** @var Thread $thread */
-            $thread = $threadManager->createThread();
-            $thread->setId($threadIdentifier);
-            $thread->setPermalink($request->getUri());
-            $thread->setPost($postOwner->getShortName());
-            $thread->setPostId($post->getId());
-            $thread->setPostMainEntry($post->getPost());
-
-            // Add the thread
-            $threadManager->saveThread($thread);
-        }
-
-        return $thread;
-    }
-
 }

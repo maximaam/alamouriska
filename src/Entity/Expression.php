@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -14,7 +16,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @UniqueEntity(fields={"expression"}, message="msg.duplicate_post")
  * @ORM\HasLifecycleCallbacks
  */
-final class Expression extends AbstractPost
+class Expression extends AbstractPost
 {
     /**
      * @ORM\Column(type="string", length=128)
@@ -27,6 +29,16 @@ final class Expression extends AbstractPost
      * @ORM\JoinColumn(nullable=false)
      */
     protected $user;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="expression")
+     */
+    private $comments;
+
+    public function __construct()
+    {
+        $this->comments = new ArrayCollection();
+    }
 
     /**
      * @return User|null
@@ -45,5 +57,13 @@ final class Expression extends AbstractPost
         $this->user = $user;
 
         return $this;
+    }
+
+    /**
+     * @return Collection|Comment[]
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
     }
 }

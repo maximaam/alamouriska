@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    {{ entity }} algérien(ne) : {{ post }}
+    {{ domain }} algérien(ne) : {{ post.post }}
     {{ parent() }}
 {% endblock %}
 
@@ -25,7 +25,7 @@
                 {% endif %}
             </div>
 
-            <div class="col-sm-10 almrsk-post">
+            <div class="col-sm-10">
                 <div class="bg-white rounded text-dark mb-4">
 
                     {% if post.imageName %}
@@ -74,22 +74,24 @@
                     <div class="card-header font-weight-bold">{{ 'label.comments' | trans }}</div>
 
                     <div class="card-body">
+                        {{ form(commentForm, {
+                            'action': path('async_comment_create'),
+                            'attr': { 'class': 'comment-form bg-light p-1 mb-2', 'data-type': domain ~'-'~ post.id}
+                        }) }}
 
-                        <div id="fos_comment_thread" data-thread="{{ thread.id }}" class="row">
-                            {% include 'partials/comments.html.twig' with {
-                                'comments': comments,
-                                'thread': thread
-                            } %}
-                        </div>
-                        {#{% include '@FOSComment/Thread/async.html.twig' with {'id': mot.id } %}#}
+                        <ul class="list-unstyled list-comments">
+                        {% if post.comments | length > 0 %}
+                            {% for comment in post.comments %}
+                                {% include 'partials/_comment-item.html.twig' with { 'comment': comment} %}
+                            {% endfor %}
+                        {% endif %}
+                        </ul>
                     </div>
 
                 </div>
             </div>
         </div>
     </div>
-
-    <div id="fos_comment_thread"></div>
 
     <!-- Modal -->
     <div class="modal fade" id="delete-post" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -112,8 +114,4 @@
         </div>
     </div>
 
-{% endblock %}
-
-{% block javascripts %}
-    <script src="{{ asset('bundles/foscomment/js/comments.js') }}"></script>
 {% endblock %}
