@@ -20,11 +20,16 @@ $(document).ready(function() {
         });
     });
 
-    $('.js_comment-remove').on('click', function(e) {
+    //Remove a comment: post comments or journal
+    $(document).on('click', '.js_comment-remove', function(e) {
         e.preventDefault();
 
+        if (!confirm('Tu confirmes la suppression?')) {
+            return false;
+        }
+
         let $this = $(this);
-        $.get('/async/comment-remove?uid=' + $this.data('uid'), function (response) {
+        $.get('/async/'+$this.data('type')+'-remove?uid=' + $this.data('uid'), function (response) {
             if (+response.status === 1) {
                 $this.parents('li').fadeOut();
             }
@@ -168,30 +173,15 @@ $(document).ready(function() {
 
     });
 
-    $('.js_del-journal').on('click', function () {
-        let $btn = $(this);
-        $.get('/async/del-journal?id=' + $btn.attr('data-uid'), function (data) {
-            if (+data.status === 1) {
-                $btn.parents('li').fadeOut();
-            }
-        });
-    });
-
-
-    /*
     setTimeout(function () {
-        $('.start-page > .row').fadeIn('slow', function () {
-            $(this).removeClass('d-none');
-        });
-
-    }, 3000);
-     */
+        $('#journal-public').fadeIn('slow');
+    }, 5000);
 
     $(document).on('submit', '.comment-form', function(e){
         e.preventDefault();
 
         let $form = $(e.target),
-            $type = $('#comment_type'),
+            $type = $('#comment_type'), //Not for journal comment
             $btn = $form.find(':submit');
 
         $type.val($form.data('type'));
@@ -207,8 +197,8 @@ $(document).ready(function() {
                 response = response.replace('border-bottom', 'border-bottom bg-sky'); //TMP add success class
                 $('ul.list-comments').prepend(response);
                 $btn.html($btn.data('label'));
-                $('#comment_comment').val('');
                 $btn.prop('disabled', false);
+                $form.find('textarea').val('');
             },
             error: function(jqXHR, status, error) {
                 alert('Erreur. Essaie encore.');

@@ -23,7 +23,8 @@ class CommentType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('comment', TextareaType::class, [
+            ->add('message', TextareaType::class, [
+                'label' => 'label.your_comment',
                 'attr'  => [
                     'minlength' => 25,
                     'maxlength' => 2000
@@ -31,12 +32,6 @@ class CommentType extends AbstractType
             ])
             ->add('type', HiddenType::class, [
                 'mapped' => false,
-            ])
-            ->add('submit', SubmitType::class, [
-                'label' => 'label.submit',
-                'attr'  => [
-                    'class' => 'btn btn-happy',
-                ]
             ])
         ;
     }

@@ -54,6 +54,8 @@
                     </div>
                 </div>
 
+
+                <!--
                 <div class="card mb-2">
                     <div class="card-header font-weight-bold">Les plus commentés</div>
                     <div class="card-body">
@@ -65,11 +67,10 @@
                                     </li>
                                 {% endfor %}
                             </ul>
-
-
                         {% endif %}
                     </div>
                 </div>
+                -->
 
                 <div class="card bg-sky font-weight-bold mb-2">
                     <div class="card-header">Noter {{ app_name }}</div>
@@ -84,26 +85,27 @@
                                     {% for rating in ratings %}
                                         {% set sum = sum + rating.rating %}
                                     {% endfor %}
+                                    {% set rating_value = (sum / all) | round(1) %}
 
-                                    Note de la communauté: {{ (sum / ratings | length) | round(1) }} / 5
+                                    Note de la communauté: {{ rating_value }} / 5
                                     <br>
                                     {{ all }} Votes.
                                 {% endif %}
                             </div>
                             <ul id="stars" class="mb-2 {{ has_rated is same as(true) ? 'mb-done' }}">
-                                <li class="star" title="Oh ! Pas bien du tout !" data-value="1">
+                                <li class="star {{ rating_value >= 1 ? 'selected' }}" title="Oh ! Pas bien du tout !" data-value="1">
                                     <i class="fa fa-star fa-fw"></i>
                                 </li>
-                                <li class="star" title="Peut mieux faire." data-value="2">
+                                <li class="star {{ rating_value >= 2 ? 'selected' }}" title="Peut mieux faire." data-value="2">
                                     <i class="fa fa-star fa-fw"></i>
                                 </li>
-                                <li class="star" title="Intik. Pas mauvais ce truc." data-value="3">
+                                <li class="star {{ rating_value >= 3 ? 'selected' }}" title="Intik. Pas mauvais ce truc." data-value="3">
                                     <i class="fa fa-star fa-fw"></i>
                                 </li>
-                                <li class="star" title="Super ! Bien fait !" data-value="4">
+                                <li class="star {{ rating_value >= 4 ? 'selected' }}" title="Super ! Bien fait !" data-value="4">
                                     <i class="fa fa-star fa-fw"></i>
                                 </li>
-                                <li class="star" title="Excellent ! J'adore !" data-value="5">
+                                <li class="star {{ rating_value >= 5 ? 'selected' }}" title="Excellent ! J'adore !" data-value="5">
                                     <i class="fa fa-star fa-fw"></i>
                                 </li>
                             </ul>
@@ -117,53 +119,34 @@
             </div>
 
             <div class="col-sm-8">
-                <div class="card">
-                    <p class="card-header font-weight-bold" id="journal-public">Journal public</p>
+                <div class="card" id="journal-public">
+                    <div class="card-header font-weight-bold">Journal public</div>
                     <div class="card-body">
+                        {% if app.user %}
+                            {{ include('partials/_form.html.twig', {
+                                'form': journalForm,
+                                'form_options':  {
+                                    'action': path('async_journal_create'),
+                                    'attr': { 'class': 'comment-form bg-light p-1 mb-2', 'data-type': 'journal' }
+                                },
+                                'btn' : {'label': 'label.publish' | trans, 'classes' : 'btn-happy'} })
+                            }}
+                        {% else %}
+                            {% include 'partials/_comment-login-teaser.html.twig' with { 'header': 'Publier un message'} %}
+                        {% endif %}
 
-                        <div class="journal-form mb-4 border-bottom pb-2">
-                            {% if app.user %}
-                                {{ include('partials/_form.html.twig', {'btn' : {'label': 'label.publish' | trans, 'classes' : 'btn-happy'} }) }}
-                            {% else %}
-                                <div class="form-group">
-                                    <label for="op">Publier un message</label>
-                                    <textarea id="op" name="op" disabled="disabled" class="form-control"></textarea>
-                                </div>
-                                {{ include('partials/_btn-login.html.twig', { 'class' : 'btn-happy' }) }}
-                                <div class="fb-login-button" data-width="" data-size="large" data-button-type="continue_with" data-auto-logout-link="false" data-use-continue-as="false"></div>
-
-                            {% endif %}
-                        </div>
-
-                        <div class="journal-feed mt-2">
+                        <ul class="list-unstyled list-comments">
                             {% if journals | length > 0 %}
-                                <ul class="list-unstyled">
-                                    {% for journal in journals %}
-                                        <li class="media mb-3 p-1 border-bottom">
-                                            {%  include 'partials/avatar.html.twig' with {'current_user': journal.user, 'size': 64, 'classes': 'mr-3 rounded' } only %}
-                                            <div class="media-body">
-                                                <p class="mt-0 mb-1">
-                                                    <strong>Par: {{ journal.user.username }}</strong> |
-                                                    <span class="text-secondary">Le: {{ journal.createdAt | date }}</span>
-                                                </p>
-                                                <p>{{ journal.message | nl2br }}</p>
-                                            </div>
-
-                                            {% if app.user %}
-                                                <button class="js_del-journal btn btn-danger float-right" data-uid="{{ journal.id }}"><i class="fa fa-trash"></i></button>
-                                            {% endif %}
-                                        </li>
-                                    {% endfor %}
-                                </ul>
+                                {% for journal in journals %}
+                                    {% include 'partials/_comment-item.html.twig' with { 'object': journal, 'object_type': 'journal'} %}
+                                {% endfor %}
                             {% endif %}
-                        </div>
-
+                        </ul>
                     </div>
                 </div>
             </div>
 
         </div>
     </div>
-
 
 {% endblock %}

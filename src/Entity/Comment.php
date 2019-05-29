@@ -31,7 +31,7 @@ class Comment
      *      maxMessage = "Le maximum de {{ limit }} caractètes a été atteint."
      * )
      */
-    private $comment;
+    private $message;
 
     /**
      * @ORM\ManyToOne(targetEntity="Word", inversedBy="comments")
@@ -64,14 +64,14 @@ class Comment
         return $this->id;
     }
 
-    public function getComment(): ?string
+    public function getMessage(): ?string
     {
-        return $this->comment;
+        return $this->message;
     }
 
-    public function setComment(string $comment): self
+    public function setMessage(string $message): self
     {
-        $this->comment = $comment;
+        $this->message = $message;
 
         return $this;
     }

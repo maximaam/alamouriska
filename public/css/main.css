@@ -200,8 +200,6 @@ fieldset.form-group legend {
 }
 
 .btn-happy,
-.fos_comment_submit input,
-.fos_comment_comment_edit_cancel,
 .pagination a {
     color: #333;
     background-color: #e6d845;
@@ -210,14 +208,8 @@ fieldset.form-group legend {
 }
 
 .btn-happy:hover,
-.fos_comment_submit input:hover,
-.fos_comment_comment_edit_cancel:hover,
 .pagination a:hover {
     background-color: #e6d845;
-}
-.fos_comment_submit {
-    margin-top: 10px;
-    text-align: right;
 }
 .pagination {
     text-align: center;
@@ -228,8 +220,6 @@ fieldset.form-group legend {
     background: #ccc;
 }
 
-.fos_comment_submit input,
-.fos_comment_comment_edit_cancel,
 .pagination a,
 .pagination .current,
 .custom-file-input {
@@ -250,10 +240,6 @@ fieldset.form-group legend {
     transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
 
-.fos_comment_comment_metas {
-    margin-bottom: 10px;
-}
-
 .custom-file-label { opacity: 0; }
 .custom-file-input { opacity: 1; }
 
@@ -268,18 +254,17 @@ fieldset.form-group legend {
     padding: 10px;
     border-radius: .25rem;
 }
-.journal-feed li {
+/*
+.list-comments li {
     pointer-events: none;
 }
-.journal-feed li button {
+.list-comments li button, .list-comments li a {
     pointer-events: auto;
 }
-.journal-feed li:hover {
-    background-color: lightpink;
-}
+*/
 
 .list-comments li:hover {
-    background-color: #eee;
+    background-color: #eeeeee;
 }
 .comment-form .form-group:nth-child(3) {
     text-align: right;
@@ -293,17 +278,6 @@ fieldset.form-group legend {
 }
 .fos_comment_comment_reply {
     display: none;
-}
-.fos_comment_comment_show {
-    border-bottom: 1px solid #dee2e6;
-    margin: 10px 0;
-    padding-bottom: 10px;
-    overflow: hidden;
-}
-#fos_comment_comment_body {
-    height: 100px;
-}
-.fos_comment_comment_form_holder {
 }
 .post-form-layer {
     position: absolute;
@@ -350,6 +324,10 @@ fieldset.form-group legend {
     }
     h3 {
         font-size: 1rem;
+    }
+
+    #journal-public {
+        display: none;
     }
 
     .main-footer .col-md-4 {

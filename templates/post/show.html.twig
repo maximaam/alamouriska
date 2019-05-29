@@ -74,15 +74,22 @@
                     <div class="card-header font-weight-bold">{{ 'label.comments' | trans }}</div>
 
                     <div class="card-body">
-                        {{ form(commentForm, {
-                            'action': path('async_comment_create'),
-                            'attr': { 'class': 'comment-form bg-light p-1 mb-2', 'data-type': domain ~'-'~ post.id}
-                        }) }}
+                        {% if app.user %}
+                            {{ include('partials/_form.html.twig', {
+                                'form':commentForm, 'form_options':  {
+                                    'action': path('async_comment_create'),
+                                    'attr': { 'class': 'comment-form bg-light p-1 mb-2', 'data-type': domain ~'-'~ post.id}
+                                },
+                                'btn' : {'label': 'label.comment' | trans, 'classes' : 'btn-happy'} })
+                            }}
+                        {% else %}
+                            {% include 'partials/_comment-login-teaser.html.twig' with { 'header': 'Ajouter un commentaire'} %}
+                        {% endif %}
 
                         <ul class="list-unstyled list-comments">
                         {% if post.comments | length > 0 %}
                             {% for comment in post.comments %}
-                                {% include 'partials/_comment-item.html.twig' with { 'comment': comment} %}
+                                {% include 'partials/_comment-item.html.twig' with { 'object': comment, 'object_type': 'comment'} %}
                             {% endfor %}
                         {% endif %}
                         </ul>

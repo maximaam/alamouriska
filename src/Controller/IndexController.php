@@ -22,36 +22,17 @@ class IndexController extends AbstractController
      * @Route("/", name="index_index")
      *
      * @param Request $request
-     * @param PaginatorInterface $paginator
      * @return Response
      */
-    public function index(Request $request, PaginatorInterface $paginator): Response
+    public function index(Request $request): Response
     {
-        $journal = (new Journal())->setUser($this->getUser());
-
-        $form = $this->createForm(JournalType::class, $journal);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-
-            $journal->setAddr($request->getClientIp());
-
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($journal);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('index_index');
-        }
-
-        $journals = $this->getDoctrine()->getRepository(Journal::class)->findBy([], ['id' => 'DESC'], 20);
-
         return $this->render('index/index.html.twig', [
-            'form' => $form->createView(),
-            'journals' => $journals,
+            'journalForm' => $this->createForm(JournalType::class, new Journal())->createView(),
+            'journals' => $this->getDoctrine()->getRepository(Journal::class)->findBy([], ['id' => 'DESC'], 20),
             'most_commented'=> [],
             'ratings' => $this->getDoctrine()->getRepository(Rating::class)->findAll(),
-            'has_rated' => null !== $this->getDoctrine()->getRepository(Rating::class)->findOneBy(['addr' => $request->getClientIp()]),
+            //'has_rated' => null !== $this->getDoctrine()->getRepository(Rating::class)->findOneBy(['addr' => $request->getClientIp()]),
+            'has_rated' => false,
             'page' => $this->getDoctrine()->getRepository(Page::class)->findOneBy(['alias' => 'homepage']),
         ]);
     }

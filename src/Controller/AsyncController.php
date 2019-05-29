@@ -5,11 +5,13 @@ namespace App\Controller;
 use App\Entity\Comment;
 use App\Entity\Expression;
 use App\Entity\Joke;
+use App\Entity\Journal;
 use App\Entity\Proverb;
 use App\Entity\Rating;
 use App\Entity\User;
 use App\Entity\Word;
 use App\Form\CommentType;
+use App\Form\JournalType;
 use App\Repository\JournalRepository;
 use App\Repository\RatingRepository;
 use App\Repository\UserRepository;
@@ -26,7 +28,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 /**
  * Class AsyncController
  *
- * @Route("/async")
+ * @Route("/async", name="async_", condition="request.isXmlHttpRequest()")
  *
  * @package App\Controller
  */
@@ -35,10 +37,8 @@ class AsyncController extends AbstractController
     const STATUS_SUCCESS = 1;
     const STATUS_ERROR = 2;
 
-
-
     /**
-     * @Route("/liking", name="async_liking", condition="request.isXmlHttpRequest()")
+     * @Route("/liking", name="liking")
      *
      * @param Request $request
      * @param LikingRepository $repository
@@ -47,9 +47,7 @@ class AsyncController extends AbstractController
      */
     public function liking(Request $request, LikingRepository $repository, TranslatorInterface $translator): JsonResponse
     {
-        $user = $this->getUser();
-
-        if ($user) {
+        if (null !== $user = $this->getUser()) {
             $entityManager = $this->getDoctrine()->getManager();
             list($owner, $ownerId) = \explode('-', $request->get('owner'));
 
@@ -83,7 +81,7 @@ class AsyncController extends AbstractController
     }
 
     /**
-     * @Route("/rating", name="async_rating", condition="request.isXmlHttpRequest()")
+     * @Route("/rating", name="rating")
      *
      * @param Request $request
      * @param RatingRepository $repository
@@ -99,7 +97,7 @@ class AsyncController extends AbstractController
             //'createdAt' => $request->get('ownerId')
         ]);
 
-        if (null === $rating) {
+        //if (null === $rating) {
             $newRating = (new Rating())
                 ->setRating($request->get('rating'))
                 ->setAddr($request->getClientIp())
@@ -112,28 +110,58 @@ class AsyncController extends AbstractController
             return new JsonResponse([
                 'status' => self::STATUS_SUCCESS,
             ], 200);
-        }
+        //}
 
         return new JsonResponse(['status' => self::STATUS_ERROR], 410);
     }
 
-
     /**
-     * @Route("/del-journal", name="async_del_journal", condition="request.isXmlHttpRequest()")
+     * @Route("/journal-create", name="journal_create")
      *
      * @param Request $request
-     * @param JournalRepository $repository
+     * @return Response
+     */
+    public function journalCreate(Request $request): Response
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        $journal = (new Journal())->setUser($this->getUser());
+        $form = $this
+            ->createForm(JournalType::class, $journal)
+            ->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $journal->setAddr($request->getClientIp());
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($journal);
+            $entityManager->flush();
+
+            return $this->render('partials/_comment-item.html.twig', [
+                'object'   => $journal,
+                'object_type' => 'journal'
+            ]);
+        }
+
+        return new Response(self::STATUS_ERROR);
+    }
+
+
+    /**
+     * @Route("/journal-remove", name="journal_remove")
+     *
+     * @param Request $request
      * @return JsonResponse
      */
-    public function delJournal(Request $request, JournalRepository $repository): JsonResponse
+    public function journalRemove(Request $request): JsonResponse
     {
-        $user = $this->getUser();
+        if (null !== $user = $this->getUser()) {
+            $entityManager = $this->getDoctrine()->getManager();
 
-        if ($user) {
-            $journal = $repository->findOneBy(['user' => $user, 'id' => $request->get('id')]);
+            /** @var Journal $journal */
+            $journal = $entityManager->find(Journal::class, (int)$request->get('uid'));
 
-            if (null !== $journal) {
-                $entityManager = $this->getDoctrine()->getManager();
+            if (null !== $journal && $user === $journal->getUser()) {
                 $entityManager->remove($journal);
                 $entityManager->flush();
 
@@ -147,7 +175,7 @@ class AsyncController extends AbstractController
     }
 
     /**
-     * @Route("/member-contact", name="async_member_contact", condition="request.isXmlHttpRequest()")
+     * @Route("/member-contact", name="member_contact")
      *
      * @param Request $request
      * @param \Swift_Mailer $mailer
@@ -179,7 +207,7 @@ class AsyncController extends AbstractController
     }
 
     /**
-     * @Route("/comment-create", name="async_comment_create", condition="request.isXmlHttpRequest()")
+     * @Route("/comment-create", name="comment_create")
      *
      * @param Request $request
      * @param \Swift_Mailer $mailer
@@ -203,12 +231,13 @@ class AsyncController extends AbstractController
                 ->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
-                $this->getDoctrine()->getManager()->persist($comment);
-                $this->getDoctrine()->getManager()->flush();
+                $manager->persist($comment);
+                $manager->flush();
 
                 return $this->render('partials/_comment-item.html.twig', [
-                    'comment'   => $comment
-                    ]);
+                    'object' => $comment,
+                    'object_type' => 'comment'
+                ]);
             }
         }
 
