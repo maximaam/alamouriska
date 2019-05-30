@@ -12,6 +12,7 @@ class ModelUtils
 {
     const DOMAINS = ['mots', 'expressions', 'proverbes', 'blagues'];
     const ENTITIES = ['mot' => 'word', 'expression' => 'expression', 'proverbe' => 'proverb', 'blague' => 'joke'];
+    const ENTITY_DOMAIN = ['mots' => 'word', 'expressions' => 'expression', 'proverbes' => 'proverb', 'blagues' => 'joke'];
 
     /**
      * @param string $domain
@@ -23,5 +24,16 @@ class ModelUtils
         $entity = self::ENTITIES[$domain];
 
         return \ucfirst($entity);
+    }
+
+    /**
+     * @param string $entity
+     * @return string
+     */
+    public static function getDomainByEntity(string $entity): string
+    {
+        $domains = \array_flip(self::ENTITY_DOMAIN);
+
+        return $domains[$entity];
     }
 }

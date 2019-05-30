@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Comment;
+use App\Entity\CommentMailQueue;
 use App\Entity\Expression;
 use App\Entity\Joke;
 use App\Entity\Journal;
@@ -16,6 +17,7 @@ use App\Repository\JournalRepository;
 use App\Repository\RatingRepository;
 use App\Repository\UserRepository;
 use App\Utils\ModelUtils;
+use App\Utils\PhpUtils;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Entity\Liking;
 use App\Repository\LikingRepository;
@@ -179,14 +181,13 @@ class AsyncController extends AbstractController
      *
      * @param Request $request
      * @param \Swift_Mailer $mailer
+     * @param UserRepository $userRepository
      * @return Response
      */
-    public function memberContact(Request $request, \Swift_Mailer $mailer): Response
+    public function memberContact(Request $request, \Swift_Mailer $mailer, UserRepository $userRepository): Response
     {
-        /** @var UserRepository $userRepo */
-        $userRepo = $this->getDoctrine()->getRepository(User::class);
-        $sender = $userRepo->find($request->get('sender'));
-        $receiver = $userRepo->find($request->get('receiver'));
+        $sender = $userRepository->find($request->get('sender'));
+        $receiver = $userRepository->find($request->get('receiver'));
 
         if ($sender && $receiver) {
             $message = (new \Swift_Message('Message privé de ' . $sender->getUsername()))
@@ -210,10 +211,10 @@ class AsyncController extends AbstractController
      * @Route("/comment-create", name="comment_create")
      *
      * @param Request $request
-     * @param \Swift_Mailer $mailer
      * @return Response
+     * @throws \ReflectionException
      */
-    public function commentCreate(Request $request, \Swift_Mailer $mailer): Response
+    public function commentCreate(Request $request): Response
     {
         list($domain, $id) = \explode('-', $request->request->get('comment')['type']);
         $entity = ModelUtils::getEntityByDomain($domain);
@@ -231,6 +232,20 @@ class AsyncController extends AbstractController
                 ->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
+                $postEntity = PhpUtils::getClassName($post);
+
+                $mailQueue = $manager
+                    ->getRepository(CommentMailQueue::class)
+                    ->findOneBy(['post' => $postEntity, 'postId' => $post->getId()]);
+
+                if (null === $mailQueue) {
+                    $mailQueue = (new CommentMailQueue())
+                        ->setPost($postEntity)
+                        ->setPostId($post->getId());
+
+                    $manager->persist($mailQueue);
+                }
+
                 $manager->persist($comment);
                 $manager->flush();
 
