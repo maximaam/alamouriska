@@ -180,19 +180,19 @@ class PostController extends AbstractController
 
         if (\strlen($domain) >= 3 && \strlen($term) >= 3) {
             switch ($domain) {
-                case 'mots':
+                case 'mots-algeriens':
                     return $this->render('post/search.html.twig', ['words' => $wordRepository->search($term)]);
                     break;
 
-                case 'expressions':
+                case 'expressions-algeriennes':
                     return $this->render('post/search.html.twig', ['expressions' => $expressionRepository->search($term)]);
                     break;
 
-                case 'proverbes':
+                case 'proverbes-algeriens':
                     return $this->render('post/search.html.twig', ['proverbs' => $proverbRepository->search($term)]);
                     break;
 
-                case 'blagues':
+                case 'blagues-algeriennes':
                     return $this->render('post/search.html.twig', ['jokes' => $jokeRepository->search($term)]);
                     break;
 
@@ -204,6 +204,9 @@ class PostController extends AbstractController
                         'jokes' => $jokeRepository->search($term),
                     ]);
                     break;
+
+                default:
+                    throw new \Exception('Cette publication est inconnue.');
             }
         }
 
