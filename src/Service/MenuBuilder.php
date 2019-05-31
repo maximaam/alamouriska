@@ -50,11 +50,12 @@ class MenuBuilder
         $menu = $this->factory->createItem('root');
         $menu->setChildrenAttribute('class', 'navbar-nav mr-auto');
 
-        foreach (ModelUtils::DOMAINS as $domain) {
-            $menu->addChild(\ucfirst($domain), [
+        foreach (ModelUtils::ENTITY_DOMAIN as $domain => $entity) {
+
+            $menu->addChild(\ucfirst(\strstr($domain, '-', true)), [
                 'route'     => 'post_index',
                 'routeParameters'   => [
-                    'domain'    => $domain //Use plural for routes
+                    'domain'    => $domain //SEO route
                 ],
                 /*
                 'extras'    => [

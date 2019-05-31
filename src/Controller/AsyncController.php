@@ -216,7 +216,7 @@ class AsyncController extends AbstractController
      */
     public function commentCreate(Request $request): Response
     {
-        list($domain, $id) = \explode('-', $request->request->get('comment')['type']);
+        list($domain, $id) = \explode('_', $request->request->get('comment')['type']);
         $entity = ModelUtils::getEntityByDomain($domain);
         $manager = $this->getDoctrine()->getManager();
 

@@ -12,14 +12,17 @@
 {% block body %}
 
     <div class="container start-page">
-        <div class="bubbles">
-            <h1 class="font-weight-bold">{{ app_name }}<span class="text-sky">AAA</span>AAAA<span class="text-sky">A</span>A !</h1>
-        </div>
-        <h2 class="text-sky font-italic">
-            Le cri de sauvetage de la langue algérienne !
-        </h2>
 
-        <div class="row text-dark mt-5">
+        <div class="jumbotron{{ app.request.cookies.get('jumbotron') ? ' done' }}">
+            <div class="bubbles">
+                <h1 class="font-weight-bold">{{ app_name }}<span class="text-sky">AAA</span>AAAA<span class="text-sky">A</span>A</h1>
+            </div>
+            <h2 class="text-sky font-italic">
+                Le cri de sauvetage de la langue algérienne !
+            </h2>
+        </div>
+
+        <div class="row text-dark mt-3">
             <div class="col-sm-4">
 
                 {% if app.user is same as(null) %} {# For non users only #}
@@ -36,13 +39,28 @@
                 {% endif %}
 
                 <div class="card mb-2">
+                    <div class="card-header font-weight-bold">Les derniers ajouts</div>
+                    <div class="card-body">
+                        <ul class="pl-4 mb-2">
+                            {% for latest_post in latest_posts %}
+                                <li title="{{ latest_post.post | truncate(50) }}">
+                                    <a href="{{ path('post_show', { 'domain': domain_by_entity(latest_post), 'id': latest_post.id, 'slug': latest_post.slug }) }}">
+                                        {{ latest_post.post | truncate(25) }}
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card mb-2">
                     <div class="card-header font-weight-bold">Les plus enigmatiques</div>
                     <div class="card-body">
                         <ul class="pl-4 mb-2">
-                            {% for domain in constant('App\\Utils\\ModelUtils::DOMAINS') %}
+                            {% for domain,entity in constant('App\\Utils\\ModelUtils::ENTITY_DOMAIN') %}
                             <li>
                                 <a href="{{ path('post_index', { 'domain': domain, 'enigmatique': true }) }}">
-                                    Les {{ domain | capitalize }}
+                                    Les {{ ('label.' ~ domain) | trans }}
                                 </a>
                             </li>
                             {% endfor %}
@@ -80,6 +98,7 @@
                         <div class="rating-stars text-center">
                             <div class="mb-2">
                                 {% set all = ratings | length %}
+                                {% set rating_value = 0 %}
                                 {% if all > 0 %}
                                     {% set sum = 0 %}
                                     {% for rating in ratings %}
@@ -116,6 +135,12 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="fb-page mb-2 d-xs-none" data-href="https://www.facebook.com/alamouriska/" data-tabs="timeline" data-width="350" data-height="" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true">
+                    <blockquote cite="https://www.facebook.com/alamouriska/" class="fb-xfbml-parse-ignore">
+                        <a href="https://www.facebook.com/alamouriska/">Alamouriska</a>
+                    </blockquote>
+                </div>
             </div>
 
             <div class="col-sm-8">
@@ -124,7 +149,7 @@
                     <div class="card-body">
                         {% if app.user %}
                             {{ include('partials/_form.html.twig', {
-                                'form': journalForm,
+                                'form': journal_form,
                                 'form_options':  {
                                     'action': path('async_journal_create'),
                                     'attr': { 'class': 'comment-form bg-light p-1 mb-2', 'data-type': 'journal' }

@@ -35,15 +35,15 @@
                     {% endif %}
 
                     <div class="p-3">
-                        {% if domain == 'mots' %}
-                            <h1 class="mb-1" title="Mot">{{ post.post }}</h1>
+                        {% if domain == 'mots-algeriens' %}
+                            <h1 class="mb-2" title="Mot">{{ post.post }}</h1>
                             <h2 class="mt-0 pb-2 text-muted border-bottom">
                                 <span>{{ 'label.tamazight_char' | trans }}: {{ post.inTamazight | default('...') }}</span>
                                 <br>
                                 <span>{{ 'label.arabic_char' | trans }}: {{ post.inArabic | default('...') }}</span>
                             </h2>
                             <p>{{ post.description }}</p>
-                        {% elseif domain == 'blagues' %}
+                        {% elseif domain == 'blagues-algeriennes' %}
                             <p class="mb-0 pb-2">
                                 {{ post.post }}
                             </p>
@@ -76,11 +76,11 @@
                     <div class="card-body">
                         {% if app.user %}
                             {{ include('partials/_form.html.twig', {
-                                'form':commentForm, 'form_options':  {
+                                'form':comment_form, 'form_options':  {
                                     'action': path('async_comment_create'),
-                                    'attr': { 'class': 'comment-form bg-light p-1 mb-2', 'data-type': domain ~'-'~ post.id}
+                                    'attr': { 'class': 'comment-form bg-light p-1 mb-2', 'data-type': domain ~'_'~ post.id}
                                 },
-                                'btn' : {'label': 'label.comment' | trans, 'classes' : 'btn-happy'} })
+                                'btn' : {'label': 'label.submit' | trans, 'classes' : 'btn-happy'} })
                             }}
                         {% else %}
                             {% include 'partials/_comment-login-teaser.html.twig' with { 'header': 'Ajouter un commentaire'} %}

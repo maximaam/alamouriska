@@ -36,6 +36,11 @@ label:
   expressions: 'Expressions'
   proverbs: 'Proverbes'
   jokes: 'Blagues'
+  mots-algeriens: 'Mots Algériens'
+  expressions-algeriennes: 'Expressions Algériennes'
+  proverbes-algeriens: 'Proverbes Algériens'
+  blagues-algeriennes: 'Blagues Algériennes'
+  your_comment: 'Ton commentaire'
 
   # Mots, Expressions...etc pages
   almrsk:

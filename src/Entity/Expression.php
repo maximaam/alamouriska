@@ -31,7 +31,7 @@ class Expression extends AbstractPost
     protected $user;
 
     /**
-     * @ORM\OneToMany(targetEntity="Comment", mappedBy="expression")
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="expression", cascade="remove")
      */
     private $comments;
 

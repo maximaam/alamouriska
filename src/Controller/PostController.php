@@ -49,7 +49,7 @@ class PostController extends AbstractController
      *     "/{domain}",
      *     name="post_index",
      *     methods={"GET","POST"},
-     *     requirements={"domain"="mots|expressions|proverbes|blagues"}
+     *     requirements={"domain"="%seo_route_domains%"}
      *     )
      *
      * @param Request $request
@@ -86,7 +86,7 @@ class PostController extends AbstractController
      *     "/{domain}/{id<\d+>}/{slug}",
      *     name="post_show",
      *     methods={"GET"},
-     *     requirements={"domain"="mots|expressions|proverbes|blagues"}
+     *     requirements={"domain"="%seo_route_domains%"}
      *     )
      *
      * @param Request $request
@@ -106,7 +106,7 @@ class PostController extends AbstractController
         }
 
         return $this->render('post/show.html.twig', [
-            'commentForm'    => $this->createForm(CommentType::class, new Comment())->createView(),
+            'comment_form'    => $this->createForm(CommentType::class, new Comment())->createView(),
             'domain'    => $domain,
             'entity'    => $entity,
             'post'      => $model,
@@ -119,7 +119,7 @@ class PostController extends AbstractController
      *     "/supprimer/{domain}/{id<\d+>}",
      *     name="post_delete",
      *     methods={"GET"},
-     *     requirements={"domain"="mots|expressions|proverbes|blagues"}
+     *     requirements={"domain"="%seo_route_domains%"}
      *     )
      *
      * @param string $domain

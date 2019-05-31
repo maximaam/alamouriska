@@ -10,9 +10,7 @@ namespace App\Utils;
  */
 class ModelUtils
 {
-    const DOMAINS = ['mots', 'expressions', 'proverbes', 'blagues'];
-    const ENTITIES = ['mot' => 'word', 'expression' => 'expression', 'proverbe' => 'proverb', 'blague' => 'joke'];
-    const ENTITY_DOMAIN = ['mots' => 'word', 'expressions' => 'expression', 'proverbes' => 'proverb', 'blagues' => 'joke'];
+    const ENTITY_DOMAIN = ['mots-algeriens' => 'word', 'expressions-algeriennes' => 'expression', 'proverbes-algeriens' => 'proverb', 'blagues-algeriennes' => 'joke'];
 
     /**
      * @param string $domain
@@ -20,10 +18,7 @@ class ModelUtils
      */
     public static function getEntityByDomain(string $domain): string
     {
-        $domain = \substr($domain, 0, -1);
-        $entity = self::ENTITIES[$domain];
-
-        return \ucfirst($entity);
+        return \ucfirst(self::ENTITY_DOMAIN[$domain]);
     }
 
     /**
@@ -35,5 +30,18 @@ class ModelUtils
         $domains = \array_flip(self::ENTITY_DOMAIN);
 
         return $domains[$entity];
+    }
+
+    /**
+     * @param $post
+     * @return string
+     * @throws \ReflectionException
+     */
+    public static function getDomainByPost($post): string
+    {
+        $domains = \array_flip(self::ENTITY_DOMAIN);
+        $entity = PhpUtils::getClassName($post);
+
+        return $domains[strtolower($entity)];
     }
 }

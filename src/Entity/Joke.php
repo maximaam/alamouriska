@@ -25,7 +25,7 @@ class Joke extends AbstractPost
     protected $user;
 
     /**
-     * @ORM\OneToMany(targetEntity="Comment", mappedBy="joke")
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="joke", cascade="remove")
      */
     private $comments;
 

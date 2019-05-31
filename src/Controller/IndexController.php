@@ -5,12 +5,13 @@ namespace App\Controller;
 use App\Entity\Journal;
 use App\Entity\Page;
 use App\Entity\Rating;
+use App\Entity\Word;
 use App\Form\JournalType;
-use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Cookie;
 
 /**
  * Class IndexController
@@ -26,15 +27,20 @@ class IndexController extends AbstractController
      */
     public function index(Request $request): Response
     {
-        return $this->render('index/index.html.twig', [
-            'journalForm' => $this->createForm(JournalType::class, new Journal())->createView(),
+        $response = $this->render('index/index.html.twig', [
+            'journal_form' => $this->createForm(JournalType::class, new Journal())->createView(),
             'journals' => $this->getDoctrine()->getRepository(Journal::class)->findBy([], ['id' => 'DESC'], 20),
+            'latest_posts' => $this->getDoctrine()->getRepository(Word::class)->findBy([], ['id' => 'DESC'], 10),
             'most_commented'=> [],
             'ratings' => $this->getDoctrine()->getRepository(Rating::class)->findAll(),
             //'has_rated' => null !== $this->getDoctrine()->getRepository(Rating::class)->findOneBy(['addr' => $request->getClientIp()]),
             'has_rated' => false,
             'page' => $this->getDoctrine()->getRepository(Page::class)->findOneBy(['alias' => 'homepage']),
         ]);
+
+        $response->headers->setCookie(new Cookie('jumbotron', 'done', \strtotime('now + 1 week')));
+
+        return $response;
     }
 
     /**

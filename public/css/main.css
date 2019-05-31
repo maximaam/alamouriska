@@ -1,7 +1,5 @@
 body {
     color: #ffffff;
-    background: #001a33 url(../images/deep-sea.jpg) no-repeat fixed;
-    background-size: cover;
 }
 main {
     min-height: 80rem;
@@ -306,6 +304,16 @@ fieldset.form-group legend {
     background-color: rgba(255, 255, 255, .7);
 }
 
+.jumbotron {
+    background-color: transparent;
+    height: 550px;
+    text-align: center;
+}
+
+.jumbotron.done {
+    display: none;
+}
+
 #mot_question {
     width: 25px;
     height: 25px;
@@ -316,6 +324,11 @@ fieldset.form-group legend {
 }
 
 @media (min-width:1025px) { /* big landscape tablets, laptops, and desktops */
+
+    body {
+        background: #001a33 url(../images/deep-sea.jpg) no-repeat fixed;
+        background-size: cover;
+    }
     h1 {
         font-size: 1.8rem;
     }
@@ -324,10 +337,6 @@ fieldset.form-group legend {
     }
     h3 {
         font-size: 1rem;
-    }
-
-    #journal-public {
-        display: none;
     }
 
     .main-footer .col-md-4 {
@@ -364,7 +373,6 @@ fieldset.form-group legend {
         text-align: center;
     }
 
-
     body:before {
         content: "";
         display: block;
@@ -382,8 +390,8 @@ fieldset.form-group legend {
     }
 
     body.cp:before {
-        background-position-x: -240px;
-        background-position-y: -160px;
+        background-position-x: -400px;
+        background-position-y: 0;
     }
 }
 

@@ -51,7 +51,7 @@ class Word extends AbstractPost
     protected $user;
 
     /**
-     * @ORM\OneToMany(targetEntity="Comment", mappedBy="word")
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="word", cascade="remove")
      * @ORM\OrderBy({"id" = "DESC"})
      */
     private $comments;

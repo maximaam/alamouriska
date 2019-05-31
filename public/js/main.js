@@ -173,9 +173,14 @@ $(document).ready(function() {
 
     });
 
-    setTimeout(function () {
-        $('#journal-public').fadeIn('slow');
-    }, 5000);
+    let $jumbotron = $('.jumbotron');
+    if (!$jumbotron.hasClass('done')) {
+        setTimeout(function () {
+            $('.jumbotron').slideUp(6000);
+        }, 5000);
+    } else {
+        $jumbotron.remove();
+    }
 
     $(document).on('submit', '.comment-form', function(e){
         e.preventDefault();

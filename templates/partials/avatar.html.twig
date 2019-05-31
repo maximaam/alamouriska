@@ -1,4 +1,4 @@
-{% set avatar = asset('images/default-avatar.jpg') %}
+{% set avatar = asset('images/default-avatar.png') %}
 
 {% if current_user.avatarName is not null %}
     {% set avatar = vich_uploader_asset(current_user, 'avatarFile') %}

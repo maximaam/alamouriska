@@ -11,6 +11,7 @@ parameters:
 
     mailer_user: 'alamouriska.app@gmail.com'
     mailer_from: 'no-reply@sparheld.de'
+    seo_route_domains: 'mots-algeriens|expressions-algeriennes|proverbes-algeriens|blagues-algeriennes'
 
 services:
     # default configuration for services in *this* file
