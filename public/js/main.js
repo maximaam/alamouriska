@@ -176,7 +176,9 @@ $(document).ready(function() {
     let $jumbotron = $('.jumbotron');
     if (!$jumbotron.hasClass('done')) {
         setTimeout(function () {
-            $('.jumbotron').slideUp(6000);
+            $('.jumbotron').slideUp(6000, function () {
+                $jumbotron.remove();
+            });
         }, 5000);
     } else {
         $jumbotron.remove();

@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    {{ domain }} algérien(ne) : {{ post.post }}
+    {{ ('label.' ~ domain) | trans }} : {{ post.post | truncate(25) }}
     {{ parent() }}
 {% endblock %}
 

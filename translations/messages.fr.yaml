@@ -1,4 +1,5 @@
 welcome_title: 'Bievenue aux alamouriskeurs !'
+slogan: 'Le cri de sauvetage de la langue algérienne !'
 user:
   change_avatar: 'Change ta photo de profil'
   password:
@@ -45,7 +46,6 @@ label:
   # Mots, Expressions...etc pages
   almrsk:
       insert_new: 'Ajouter une publication'
-      h1: 'Liste des %almrsk% %gender% alamouriské(e)s'
       search_h1: 'Publications trouvées pour "%term%"'
       by_user: 'Proposé par %username%'
 

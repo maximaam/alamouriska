@@ -1,7 +1,9 @@
 {% extends 'base.html.twig' %}
 
+{% set title = 'Liste des ' ~ ('label.' ~ domain) | trans ~ ' de la Derdja' %}
+
 {% block title %}
-    {{ 'label.almrsk.h1' | trans({'%almrsk%' : domain, '%gender%': 'algériens'}) }} -
+    {{ title }}
     {{ parent() }}
 {% endblock %}
 
@@ -10,12 +12,11 @@
 {% endblock %}
 
 {% block body %}
-
     <div class="container almrsk-post">
         <div class="row">
 
             <div class="col-sm-8">
-                <h1 class="mb-3">{{ 'label.almrsk.h1' | trans({'%almrsk%' : domain, '%gender%': 'algériens'}) }}</h1>
+                <h1 class="mb-3">{{ title }}</h1>
 
                 {% if app.request.get('enigmatique') %}
                     <p>
@@ -84,10 +85,6 @@
                                 </div>
 
                             </div>
-
-                            <!--
-                            <div class="fb-like" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
-                            -->
 
                             <div class="bottom-container p-2 text-right">
                                 {% if likings is defined %}

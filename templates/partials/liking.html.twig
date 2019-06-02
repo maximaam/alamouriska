@@ -14,5 +14,6 @@
     <a href="{{ path('fos_user_security_login') }}" title="{{ 'label.log_in' | trans }}">
         <i class="fa fa-thumbs-up"></i>
         {{ 'label.liking_add' | trans }}
+        (<span class="likings-sum">{{ liking_users | length }}</span>)
     </a>
 {% endif %}

@@ -39,10 +39,10 @@
         </div>
 
         <div class="row text-dark">
-            <div class="col-sm">{% include 'partials/post_list.html.twig' with {'posts': user.words, 'domain': 'mots', 'header': 'label.words' | trans } only %}</div>
-            <div class="col-sm">{% include 'partials/post_list.html.twig' with {'posts': user.expressions, 'domain': 'expressions', 'header': 'label.expressions' | trans } only %}</div>
-            <div class="col-sm">{% include 'partials/post_list.html.twig' with {'posts': user.proverbs, 'domain': 'proverbes', 'header': 'label.proverbs' | trans } only %}</div>
-            <div class="col-sm">{% include 'partials/post_list.html.twig' with {'posts': user.jokes, 'domain': 'blagues', 'header': 'label.jokes' | trans } only %}</div>
+            <div class="col-sm">{% include 'partials/post_list.html.twig' with {'posts': user.words, 'domain': domain_by_entity('App\\Entity\\Word'), 'header': 'label.words' | trans } only %}</div>
+            <div class="col-sm">{% include 'partials/post_list.html.twig' with {'posts': user.expressions, 'domain': domain_by_entity('App\\Entity\\Expression'), 'header': 'label.expressions' | trans } only %}</div>
+            <div class="col-sm">{% include 'partials/post_list.html.twig' with {'posts': user.proverbs, 'domain': domain_by_entity('App\\Entity\\Proverb'), 'header': 'label.proverbs' | trans } only %}</div>
+            <div class="col-sm">{% include 'partials/post_list.html.twig' with {'posts': user.jokes, 'domain': domain_by_entity('App\\Entity\\Joke'), 'header': 'label.jokes' | trans } only %}</div>
         </div>
     </div>
 {% endblock %}
