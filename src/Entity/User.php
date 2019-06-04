@@ -127,6 +127,11 @@ class User extends BaseUser
     private $comments;
 
     /**
+     * @ORM\Column(type="string", length=64, nullable=true)
+     */
+    private $facebookId;
+
+    /**
      * User constructor.
      * @throws \Exception
      */
@@ -296,6 +301,18 @@ class User extends BaseUser
     public function getComments(): Collection
     {
         return $this->comments;
+    }
+
+    public function getFacebookId(): ?int
+    {
+        return $this->facebookId;
+    }
+
+    public function setFacebookId(?int $facebookId): self
+    {
+        $this->facebookId = $facebookId;
+
+        return $this;
     }
 
     /**

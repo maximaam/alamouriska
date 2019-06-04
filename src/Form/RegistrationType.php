@@ -31,7 +31,7 @@ class RegistrationType extends AbstractType
 
         $builder->add('username', null, [
             'label' => 'form.username', 'translation_domain' => 'FOSUserBundle',
-            'help'  => 'Min 4 caractères, max 30 caractères alpha-numériques. Chiffres et lettres seulement.'
+            'help'  => 'Min 4, max 30 caractères. Chiffres et lettres seulement. Pas d\'espaces.'
         ]);
 
         $builder->add('plainPassword', RepeatedType::class, [

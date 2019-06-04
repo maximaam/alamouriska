@@ -12,13 +12,17 @@
 
         <div class="card-body">
             <div class="media mb-5">
-                {%  include 'partials/avatar.html.twig' with {'current_user': user, 'size': 128, 'classes': 'mr-3 rounded' } only %}
+                {%  include 'partials/avatar.html.twig' with {'current_user': user, 'size': 128, 'classes': 'mr-3 rounded', 'pathTo' : 'fos_user_profile_edit' } only %}
                 <div class="media-body">
                     <dl class="dl-horizontal">
                         <dt>{{ 'form.username' | trans }}</dt>
                         <dd>{{ user.username }}</dd>
                         <dt>{{ 'form.email' | trans }}</dt>
                         <dd>{{ user.email }}</dd>
+                        <dt>{{ 'user.allow_member_contact' | trans({}, 'messages') }}</dt>
+                        <dd>{{ user.allowMemberContact ? 'Oui' : 'Non' }}</dd>
+                        <dt>{{ 'user.allow_post_notification' | trans({}, 'messages') }}</dt>
+                        <dd>{{ user.allowPostNotification ? 'Oui' : 'Non' }}</dd>
                     </dl>
                 </div>
             </div>
@@ -28,14 +32,26 @@
                     <i class="fa fa-edit"></i>
                     {{ 'profile.edit.submit' | trans }}
                 </a>
+
+                {% if user.facebookId is same as(null) %}
                 <a href="{{ path('fos_user_resetting_request') }}" class="btn btn-primary">
                     <i class="fa fa-lock"></i>
                     {{ 'resetting.reset.submit' | trans }}
                 </a>
-                <a href="{{ path('fos_user_security_logout') }}" class="btn btn-danger">
-                    <i class="fa fa-lock"></i>
-                    {{ 'layout.logout' | trans }}
-                </a>
+                {% endif %}
+
+                {% if user.facebookId is same as(null) %}
+                    <a href="{{ path('fos_user_security_logout') }}" class="btn btn-danger">
+                        <i class="fa fa-lock"></i>
+                        {{ 'layout.logout' | trans }}
+                    </a>
+                {% else %}
+                    <a href="{{ path('fos_user_security_logout') }}" class="btn btn-danger" onclick="fbLogout()">
+                        <i class="fa fa-lock"></i>
+                        {{ 'layout.logout' | trans }}
+                    </a>
+                {% endif %}
+
             </div>
         </div>
     </div>

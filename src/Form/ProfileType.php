@@ -29,12 +29,17 @@ class ProfileType extends AbstractType
     {
         parent::buildForm($builder, $options);
 
+        $builder->add('username', null, [
+            'label' => 'form.username', 'translation_domain' => 'FOSUserBundle',
+            'help'  => 'Min 4, max 30 caractères. Chiffres et lettres seulement. Pas d\'espaces.'
+        ]);
+
         $builder
             ->add('allowMemberContact', null, [
-                'label' => 'Les membres peuvent me contacter directement'
+                'label' => 'user.allow_member_contact'
             ])
             ->add('allowPostNotification', null, [
-                'label' => 'Envoyez-moi un email à chaque nouvelle publication'
+                'label' => 'user.allow_post_notification'
             ])
             ->add('avatarFile', VichImageType::class, [
                 'label'         => 'Photo',

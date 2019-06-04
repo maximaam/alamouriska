@@ -13,19 +13,27 @@ use App\Entity\User;
 use App\Entity\Word;
 use App\Form\CommentType;
 use App\Form\JournalType;
-use App\Repository\JournalRepository;
 use App\Repository\RatingRepository;
 use App\Repository\UserRepository;
 use App\Utils\ModelUtils;
 use App\Utils\PhpUtils;
+use FOS\UserBundle\Model\UserInterface;
+use FOS\UserBundle\Model\UserManager;
+use FOS\UserBundle\Model\UserManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Entity\Liking;
 use App\Repository\LikingRepository;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
+
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 
 /**
  * Class AsyncController
@@ -260,7 +268,7 @@ class AsyncController extends AbstractController
     }
 
     /**
-     * @Route("/comment-remove", name="async_comment_remove", condition="request.isXmlHttpRequest()")
+     * @Route("/comment-remove", name="comment_remove")
      *
      * @param Request $request
      * @return JsonResponse
@@ -286,6 +294,72 @@ class AsyncController extends AbstractController
         }
 
         return new JsonResponse(['status' => self::STATUS_ERROR], 410);
+    }
+
+    /**
+     * https://ourcodeworld.com/articles/read/459/how-to-authenticate-login-manually-an-user-in-a-controller-with-or-without-fosuserbundle-on-symfony-3
+     *
+     * @Route("/fb-login", name="fb_login")
+     *
+     * @param Request $request
+     * @param TokenStorageInterface $storage
+     * @param EventDispatcherInterface $eventDispatcher
+     * @return JsonResponse
+     * @throws \Exception
+     */
+    public function fbLogin(Request $request, TokenStorageInterface $storage, EventDispatcherInterface $eventDispatcher): JsonResponse
+    {
+        $username = $request->get('name');
+        $email = $request->get('email');
+        $facebookId = $request->get('id');
+        $response = [
+            'register'  => 0,
+            'status'    => 0
+        ];
+
+        if (null === $user = $this->getDoctrine()->getRepository(User::class)->findOneBy(['facebookId' => $facebookId])) {
+            $user = $this->fbRegister($email, $username, $facebookId);
+            $response['register'] = 1;
+        }
+
+        $token = new UsernamePasswordToken($user, null, 'main', $user->getRoles());
+        $storage->setToken($token);
+
+        $event = new InteractiveLoginEvent($request, $token);
+        $eventDispatcher->dispatch("security.interactive_login", $event);
+
+        if (null !== $this->getUser()) {
+            $response['status'] = 1;
+        }
+
+        return new JsonResponse($response);
+    }
+
+    /**
+     * @param string $email
+     * @param string $name
+     * @param int $facebookId
+     * @return UserInterface
+     * @throws \Exception
+     */
+    protected function fbRegister(string $email, string $name, int $facebookId): UserInterface
+    {
+
+        $user = new User();
+        $user
+            ->setFacebookId($facebookId)
+            ->setEmail($email)
+            ->setEmailCanonical($email)
+            ->setUsername($name)
+            ->setUsernameCanonical($name)
+            ->setEnabled(true)
+            ->setPlainPassword($email)
+            ->setRoles([]);
+
+        $this->getDoctrine()->getManager()->persist($user);
+        $this->getDoctrine()->getManager()->flush();
+
+        return $user;
     }
 
 }

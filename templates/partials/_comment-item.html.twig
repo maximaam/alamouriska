@@ -3,7 +3,7 @@
 
     <div class="media-body">
         <p class="mt-0 mb-1">
-            <strong>Par: <a href="{{ path('user_show', { 'username' : object.user.username })  }}" target="_blank">{{ object.user.username }}</a></strong> |
+            <strong>Par: <a href="{{ path('user_show', { 'username' : object.user.username })  }}">{{ object.user.username }}</a></strong> |
             <span class="text-secondary">Le: {{ object.createdAt | date }}</span>
         </p>
         <p>{{ object.message | nl2br }}</p>

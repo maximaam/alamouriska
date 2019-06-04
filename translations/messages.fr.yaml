@@ -1,6 +1,8 @@
 welcome_title: 'Bievenue aux alamouriskeurs !'
 slogan: 'Le cri de sauvetage de la langue algérienne !'
 user:
+  allow_member_contact: 'Les membres peuvent me contacter directement'
+  allow_post_notification: 'Les membres peuvent me contacter directement'
   change_avatar: 'Change ta photo de profil'
   password:
     difficulty: 'Le mot de passe doit contenir des chiffres et des lettres.'
