@@ -1,14 +1,14 @@
 swiftmailer:
-    #url: '%env(MAILER_URL)%'
-    transport: "smtp"
-    host:      "smtp.strato.de"
+    url: '%env(MAILER_URL)%'
+    #transport: "smtp"
+    #host:      "smtp.gmail.com"
     #username:  "mimo.berlino@gmail.com"
     #password:  "15$Hannah$16"
-    username:  "app@alamouriska.com"
-    password:  "emailAlamouriska15"
+    #username:  "alamouriska.app@gmail.com"
+    #password:  "15$Lacasbah$15"
     #auth_mode: "login"
-    port:      "465"
-    encryption: "tls"
+    #port:      "587"
+    #encryption: "tls"
     #stream_options:
         #ssl:
             #allow_self_signed: true
