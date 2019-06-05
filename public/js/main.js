@@ -103,10 +103,10 @@ $(document).ready(function() {
     });
 
     if ($('.almrsk-post').length) {
-        $('#mot_inTamazight_help').append('<a href="https://www.lexilogos.com/clavier/tamazight.htm" target="_blank" class="ml-2">Clavier Tamazight <i class="fa fa-external-link"></i></a>');
-        $('#mot_inArabic_help').append('<a href="https://www.lexilogos.com/clavier/araby.htm" target="_blank" class="ml-2">Clavier Arabe <i class="fa fa-external-link"></i></a>');
+        $('#word_inTamazight_help').append('<a href="https://www.lexilogos.com/clavier/tamazight.htm" target="_blank" class="ml-2">Clavier Tamazight <i class="fa fa-external-link"></i></a>');
+        $('#word_inArabic_help').append('<a href="https://www.lexilogos.com/clavier/araby.htm" target="_blank" class="ml-2">Clavier Arabe <i class="fa fa-external-link"></i></a>');
 
-        $('#mot_question').parents('.form-group').addClass('almrsk-form-question');
+        $('#word_question').parents('.form-group').addClass('almrsk-form-question');
     }
 
     /* 1. Visualizing things on Hover - See next part for action on click */
