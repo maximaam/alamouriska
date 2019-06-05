@@ -303,12 +303,19 @@ class User extends BaseUser
         return $this->comments;
     }
 
-    public function getFacebookId(): ?int
+    /**
+     * @return string|null
+     */
+    public function getFacebookId(): ?string
     {
         return $this->facebookId;
     }
 
-    public function setFacebookId(?int $facebookId): self
+    /**
+     * @param string|null $facebookId
+     * @return User
+     */
+    public function setFacebookId(?string $facebookId): self
     {
         $this->facebookId = $facebookId;
 
