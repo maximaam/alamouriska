@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="App\Repository\JournalRepository")
  * @ORM\HasLifecycleCallbacks
  */
-final class Journal
+class Journal
 {
     use Timestampable;
 
