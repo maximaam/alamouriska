@@ -28,7 +28,7 @@ abstract class AbstractPost
 {
     use Timestampable;
 
-    const PAGINATOR_MAX = 3;
+    const PAGINATOR_MAX = 20;
 
     /**
      * @ORM\Column(type="integer")
