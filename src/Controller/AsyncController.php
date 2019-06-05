@@ -338,13 +338,12 @@ class AsyncController extends AbstractController
     /**
      * @param string $email
      * @param string $name
-     * @param int $facebookId
+     * @param string $facebookId
      * @return UserInterface
      * @throws \Exception
      */
-    protected function fbRegister(string $email, string $name, int $facebookId): UserInterface
+    protected function fbRegister(string $email, string $name, string $facebookId): UserInterface
     {
-
         $user = new User();
         $user
             ->setFacebookId($facebookId)
