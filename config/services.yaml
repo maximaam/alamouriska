@@ -7,9 +7,9 @@ parameters:
     locale: 'fr'
     app_name: 'ALAMOURISKA'
     app_secret: '%env(APP_SECRET)%'
-    app_notifier_email: 'alamouriska.app@gmail.com'
-    mailer_user: 'alamouriska.app@gmail.com'
-    mailer_from: 'alamouriska.app@gmail.com'
+    app_notifier_email: 'app@alamouriska.com'
+    mailer_user: 'app@alamouriska.com'
+    mailer_from: 'app@alamouriska.com'
     seo_route_domains: 'mots-algeriens|expressions-algeriennes|proverbes-algeriens|blagues-algeriennes'
 
 services:
