@@ -25,7 +25,7 @@ prod:
     host: ftp.strato.com
     port: 21
     user: rezouani.com
-    pass: rezouan1WEB
+    pass: masterPassStrato15
     check: true
     path:
         #local: release/
