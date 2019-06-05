@@ -51,7 +51,7 @@ class IndexController extends AbstractController
      */
     public function page(Page $page): Response
     {
-        return $this->render(sprintf('index/%s.html.twig', $page->getAlias()), [
+        return $this->render('index/page.html.twig', [
             'page'   => $page,
         ]);
     }
