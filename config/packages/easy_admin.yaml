@@ -8,7 +8,7 @@ easy_admin:
                 fields:
                     - id
                     - createdAt
-                    - inLatin
+                    - post
                     - inTamazight
                     - inArabic
                     #- description
@@ -25,7 +25,7 @@ easy_admin:
                 fields:
                     - id
                     - createdAt
-                    - expression
+                    - post
                     - description
                     - { property: 'imageName', label: 'Image', type: 'image', base_path: '/images/posts/' }
                     - question
@@ -36,7 +36,7 @@ easy_admin:
                 fields:
                     - id
                     - createdAt
-                    - proverb
+                    - post
                     - description
                     - { property: 'imageName', label: 'Image', type: 'image', base_path: '/images/posts/' }
                     - question
@@ -47,12 +47,12 @@ easy_admin:
                 fields:
                     - id
                     - createdAt
-                    - joke
+                    - post
                     - user
         Comment:
             class: App\Entity\Comment
             list:
-                fields: ['id', 'comment', 'user']
+                fields: ['id', 'message', 'user']
         User:
             class: App\Entity\User
             list:
