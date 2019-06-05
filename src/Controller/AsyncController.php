@@ -107,7 +107,7 @@ class AsyncController extends AbstractController
             //'createdAt' => $request->get('ownerId')
         ]);
 
-        //if (null === $rating) {
+        if (null === $rating) {
             $newRating = (new Rating())
                 ->setRating($request->get('rating'))
                 ->setAddr($request->getClientIp())
@@ -120,7 +120,7 @@ class AsyncController extends AbstractController
             return new JsonResponse([
                 'status' => self::STATUS_SUCCESS,
             ], 200);
-        //}
+        }
 
         return new JsonResponse(['status' => self::STATUS_ERROR], 410);
     }

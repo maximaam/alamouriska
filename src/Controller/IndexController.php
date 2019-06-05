@@ -33,8 +33,8 @@ class IndexController extends AbstractController
             'latest_posts' => $this->getDoctrine()->getRepository(Word::class)->findBy([], ['id' => 'DESC'], 10),
             'most_commented'=> [],
             'ratings' => $this->getDoctrine()->getRepository(Rating::class)->findAll(),
-            //'has_rated' => null !== $this->getDoctrine()->getRepository(Rating::class)->findOneBy(['addr' => $request->getClientIp()]),
-            'has_rated' => false,
+            'has_rated' => null !== $this->getDoctrine()->getRepository(Rating::class)->findOneBy(['addr' => $request->getClientIp()]),
+            //'has_rated' => false,
             'page' => $this->getDoctrine()->getRepository(Page::class)->findOneBy(['alias' => 'homepage']),
         ]);
 
