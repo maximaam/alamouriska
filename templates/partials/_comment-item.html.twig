@@ -1,10 +1,9 @@
 <li class="media mb-3 p-1 border-bottom">
-    {%  include 'partials/avatar.html.twig' with {'current_user': object.user, 'size': 64, 'classes': 'mr-3 rounded' } only %}
+    {%  include 'partials/avatar.html.twig' with {'current_user': object.user } only %}
 
     <div class="media-body">
         <p class="mt-0 mb-1">
-            <strong>Par: <a href="{{ path('user_show', { 'username' : object.user.username })  }}">{{ object.user.username }}</a></strong> |
-            <span class="text-secondary">Le: {{ object.createdAt | date }}</span>
+            {%  include 'partials/_action_by.html.twig' with {'user': object.user, 'action_date': object.createdAt } only %}
         </p>
         <p>{{ object.message | nl2br }}</p>
     </div>

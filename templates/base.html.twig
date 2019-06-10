@@ -124,7 +124,7 @@
                             <a href="{{ path('fos_user_profile_show') }}" class="user btn" title="Paramètres">
                                 <i class="fa fa-cog"></i>
                             </a>
-                            {%  include 'partials/avatar.html.twig' with { 'current_user': app.user, 'size': 32, 'classes': 'rounded-circle mt-n2' } only %}
+                            {%  include 'partials/avatar.html.twig' with { 'current_user': app.user, 'size': 32, 'classes': 'mt-n2' } only %}
                         {% else %}
                             <a href="{{ path('fos_user_security_login') }}" title="Se connecter ou S'inscrire" class="user btn rounded">
                                 <i class="fa fa-user-circle"></i>

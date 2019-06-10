@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% set title = 'Liste des ' ~ ('label.' ~ domain) | trans ~ ' de la Derdja' %}
+{% set title = 'Liste des ' ~ ('label.' ~ domain) | trans %}
 
 {% block title %}
     {{ title }}
@@ -33,14 +33,10 @@
                     {% for post in posts %}
                         <div class="bg-white rounded text-dark mb-4">
                             <div class="media p-1 {{ post.imageName is null ? 'border-bottom' }}">
-                                {%  include 'partials/avatar.html.twig' with {'current_user': post.user, 'size': 64, 'classes': 'mr-3 rounded' } only %}
+                                {%  include 'partials/avatar.html.twig' with {'current_user': post.user } only %}
                                 <div class="media-body">
                                     <p class="mt-1">
-                                        <strong>Ajouté(e) par:
-                                            <a href="{{ path('user_show', { 'username': post.user.username }) }}">{{ post.user.username }}</a>
-                                        </strong>
-                                        <br>
-                                        <span class="text-secondary">Le: {{ post.createdAt | date }}</span>
+                                        {%  include 'partials/_action_by.html.twig' with {'user': post.user, 'action_date': post.createdAt  } only %}
                                     </p>
                                 </div>
                             </div>
@@ -54,8 +50,8 @@
                                             </a>
                                         </h2>
                                         <h3 class="text-muted border-bottom pb-2">
-                                            <span>{{ 'label.tamazight_char' | trans }}: {{ post.inTamazight | default('...') }}</span> |
-                                            <span>{{ 'label.arabic_char' | trans }}: {{ post.inArabic | default('...') }}</span>
+                                            <span class="border-right border-secondary pr-1" title="{{ 'label.tamazight_char' | trans }}">{{ post.inTamazight | default('...') }}</span>
+                                            <span class="" title="{{ 'label.arabic_char' | trans }}">{{ post.inArabic | default('...') }}</span>
                                         </h3>
                                         <p>{{ post.description }}</p>
 

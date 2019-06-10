@@ -13,7 +13,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *     @ORM\Index(name="created_at_idx", columns={"created_at"})
  * })
  * @ORM\Entity(repositoryClass="App\Repository\JokeRepository")
- * @UniqueEntity(fields={"joke"}, message="msg.duplicate_post")
+ * @UniqueEntity(fields={"post"}, message="msg.duplicate_post")
  * @ORM\HasLifecycleCallbacks()
  */
 class Joke extends AbstractPost

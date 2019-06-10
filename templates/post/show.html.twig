@@ -8,24 +8,24 @@
 {% block body %}
     <div class="container">
         <div class="row">
-            <div class="col-sm-2">
-                {%  include 'partials/avatar.html.twig' with {'current_user': post.user, 'size': 128, 'classes': 'mr-3 rounded' } only %}
-                <p class="mt-1">
-                    Par: {{ post.user.username }}
-                    <br>
-                    Le: {{ post.createdAt | date }}
-                </p>
+            <div class="col-sm-4">
+                <div class="bg-happy rounded p-2 text-dark mb-4">
+                    {%  include 'partials/avatar.html.twig' with {'current_user': post.user, 'size': 128, 'classes': 'mr-3', 'link_classes': 'd-block p-2 text-center' } only %}
+                    <p class="mt-1">
+                        {%  include 'partials/_action_by.html.twig' with {'user': post.user, 'action_date': post.createdAt } only %}
+                    </p>
 
-                {% if post.user == app.user %}
-                    <div>
-                        <button title="Supprimer cette publication" type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete-post">
-                            <i class="fa fa-trash"></i>
-                        </button>
-                    </div>
-                {% endif %}
+                    {% if post.user == app.user %}
+                        <div>
+                            <button title="Supprimer cette publication" type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete-post">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                        </div>
+                    {% endif %}
+                </div>
             </div>
 
-            <div class="col-sm-10">
+            <div class="col-sm-8">
                 <div class="bg-white rounded text-dark mb-4">
                     <div class="p-3">
                         {% if domain == 'mots-algeriens' %}

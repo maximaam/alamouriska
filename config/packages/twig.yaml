@@ -11,4 +11,4 @@ twig:
         app_name: '%app_name%'
 
     date:
-        format: d/m/Y
+        format: d-m-Y
