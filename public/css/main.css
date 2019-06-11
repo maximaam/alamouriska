@@ -327,7 +327,7 @@ fieldset.form-group legend {
 @media (min-width:1025px) { /* big landscape tablets, laptops, and desktops */
 
     body {
-        background: #001a33 url(../images/deep-sea.jpg) no-repeat fixed;
+        background: #001a33 url(../images/deep-sea2.jpg) no-repeat fixed;
         background-size: cover;
     }
     h1 {
