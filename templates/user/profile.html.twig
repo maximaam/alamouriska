@@ -7,30 +7,16 @@
 {% block body %}
 
     <div class="container profile">
-        <div class="row mb-4">
-            <div class="col-sm-8">
-                <div class="row text-center">
-                    <div class="col-sm-3">
-                        {%  include 'partials/avatar.html.twig' with {'current_user': user, 'size': 128 } only %}
-                    </div>
-                    <div class="col-sm-9 mt-3 posts-h">
-                        <h1>Publications ({{ (user.words | length + user.expressions | length + user.proverbs | length + user.jokes | length) }}) de {{ user.username }}</h1>
-                        <h2>Membre depuis le {{ user.createdAt | localizeddate('long', 'none', app.request.locale) }}</h2>
-                    </div>
-                </div>
+        <div class="row mb-4 text-center">
+            <div class="col-sm-2">
+                {%  include 'partials/avatar.html.twig' with {'current_user': user, 'size': 128 } only %}
             </div>
-        </div>
-
-        <div class="row text-dark">
-            <div class="col-sm">{% include 'partials/post_list.html.twig' with {'posts': user.words, 'domain': domain_by_entity('App\\Entity\\Word'), 'header': 'label.words' | trans } only %}</div>
-            <div class="col-sm">{% include 'partials/post_list.html.twig' with {'posts': user.expressions, 'domain': domain_by_entity('App\\Entity\\Expression'), 'header': 'label.expressions' | trans } only %}</div>
-            <div class="col-sm">{% include 'partials/post_list.html.twig' with {'posts': user.proverbs, 'domain': domain_by_entity('App\\Entity\\Proverb'), 'header': 'label.proverbs' | trans } only %}</div>
-            <div class="col-sm">{% include 'partials/post_list.html.twig' with {'posts': user.jokes, 'domain': domain_by_entity('App\\Entity\\Joke'), 'header': 'label.jokes' | trans } only %}</div>
-        </div>
-
-        {% if app.user %}
-            <div class="row text-dark">
-                {% if user.allowMemberContact is same as(true) %}
+            <div class="col-sm-5 mt-3 posts-h">
+                <h1>Publications ({{ (user.words | length + user.expressions | length + user.proverbs | length + user.jokes | length) }}) de {{ user.username }}</h1>
+                <h2>Membre depuis le {{ user.createdAt | localizeddate('long', 'none', app.request.locale) }}</h2>
+            </div>
+            <div class="col-sm-5 mt-3 text-right">
+                {% if app.user and user.allowMemberContact is same as(true) %}
                     <form method="post" name="member-contact" id="member-contact" class="bg-happy p-2 rounded">
                         <div class="form-group m-0">
                             <label for="message" class="d-inline"></label>
@@ -42,7 +28,14 @@
                     </form>
                 {% endif %}
             </div>
-        {% endif %}
+        </div>
+
+        <div class="row text-dark">
+            <div class="col-sm">{% include 'partials/post_list.html.twig' with {'posts': user.words, 'domain': domain_by_entity('App\\Entity\\Word'), 'header': 'label.words' | trans } only %}</div>
+            <div class="col-sm">{% include 'partials/post_list.html.twig' with {'posts': user.expressions, 'domain': domain_by_entity('App\\Entity\\Expression'), 'header': 'label.expressions' | trans } only %}</div>
+            <div class="col-sm">{% include 'partials/post_list.html.twig' with {'posts': user.proverbs, 'domain': domain_by_entity('App\\Entity\\Proverb'), 'header': 'label.proverbs' | trans } only %}</div>
+            <div class="col-sm">{% include 'partials/post_list.html.twig' with {'posts': user.jokes, 'domain': domain_by_entity('App\\Entity\\Joke'), 'header': 'label.jokes' | trans } only %}</div>
+        </div>
 
     </div>
 {% endblock %}
