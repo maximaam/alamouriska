@@ -3,7 +3,7 @@ slogan: "L'appel au secours de la langue algérienne derdja !"
 
 user:
   allow_member_contact: 'Les membres peuvent me contacter directement'
-  allow_post_notification: 'Les membres peuvent me contacter directement'
+  allow_post_notification: 'Recevoir une notification à chaque nouvelle publication'
   change_avatar: 'Change ta photo de profil'
   password:
     difficulty: 'Le mot de passe doit contenir des chiffres et des lettres.'

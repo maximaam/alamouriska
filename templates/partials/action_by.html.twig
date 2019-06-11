@@ -1,5 +1,7 @@
 <strong>
-    <a href="{{ path('user_show', { 'username': user.username }) }}" title="Ajouté(e) par: {{ user.username }}">{{ user.username }}</a>
+    <a href="{{ path('user_show', { 'username': user.username }) }}" title="Ajouté(e) par: {{ user.username }}">
+        {{ user.username | wordwrap(20) }}
+    </a>
 </strong>
 <br>
 <span class="text-secondary" title="Publié(e) le">{{ action_date | date }}</span>
