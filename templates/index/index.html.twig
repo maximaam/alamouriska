@@ -12,12 +12,13 @@
 
     <div class="container start-page">
 
-        <div class="jumbotron{{ app.request.cookies.get('jumbotron') ? ' done' }}">
-
+        {% if app.request.cookies.get('jumbotron') is same as(null) %}
+        <div class="jumbotron">
             <div class="bubbles" style="width: 100%">
                 <h1>{{ app_name }} - {{ 'slogan' | trans }}</h1>
             </div>
         </div>
+        {% endif %}
 
         <div class="row text-dark mt-3">
             <div class="col-sm-4">

@@ -302,10 +302,6 @@ fieldset.form-group legend {
     text-align: center;
 }
 
-.jumbotron.done {
-    display: none;
-}
-
 #mot_question {
     width: 25px;
     height: 25px;

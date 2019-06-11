@@ -57,7 +57,7 @@ $(document).ready(function() {
             // Define a blank array for the effect positions. This will be populated based on width of the title.
             let bArray = [];
             // Define a size array, this will be used to vary bubble sizes
-            let sArray = [4,6,8,10,16];
+            let sArray = [4,6,8,10,16,25];
 
             // Push the header width values to bArray
             for (let i = 0; i < $bubbles.width(); i++) {
@@ -174,14 +174,12 @@ $(document).ready(function() {
     });
 
     let $jumbotron = $('.jumbotron');
-    if (!$jumbotron.hasClass('done')) {
+    if ($jumbotron.length > 0) {
         setTimeout(function () {
             $('.jumbotron').slideUp(6000, function () {
                 $jumbotron.remove();
             });
-        }, 5000);
-    } else {
-        $jumbotron.remove();
+        }, 6000);
     }
 
     $(document).on('submit', '.comment-form', function(e){
