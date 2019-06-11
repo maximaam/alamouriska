@@ -57,16 +57,16 @@
 
                                     {% elseif domain == 'blagues-algeriennes' %}
                                         <p class="mb-0 pb-2">
-                                            {{ post.post }}
+                                            {{ post.post | nl2br }} }}
                                         </p>
                                     {% else %}
                                         <p class="border-bottom mb-0 pb-2">
                                             <i class="fa fa-book"></i>
-                                            {{ post.post }}
+                                            {{ post.post | nl2br }}
                                         </p>
                                         <p class="mb-0 pt-2" title="Explication">
                                             <i class="fa fa-question-circle"></i>
-                                            {{ post.description }}
+                                            {{ post.description | nl2br }}
                                         </p>
                                     {% endif %}
                                 </div>

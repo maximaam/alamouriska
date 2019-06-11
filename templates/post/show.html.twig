@@ -36,15 +36,15 @@
                                 <br>
                                 <span>{{ 'label.arabic_char' | trans }}: {{ post.inArabic | default('...') }}</span>
                             </h2>
-                            <p>{{ post.description }}</p>
+                            <p>{{ post.description | nl2br }}</p>
                         {% elseif domain == 'blagues-algeriennes' %}
                             <p class="mb-0 pb-2">
-                                {{ post.post }}
+                                {{ post.post | nl2br }}
                             </p>
                         {% else %}
                             <p class="p-2 border-bottom mb-0" title="{{ entity }}">
                                 <i class="fa fa-book"></i>
-                                {{ post.post }}
+                                {{ post.post | nl2br }}
                             </p>
                             <p class="p-2 mb-0" title="Explication">
                                 <i class="fa fa-question-circle"></i>
