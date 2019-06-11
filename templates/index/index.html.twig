@@ -6,7 +6,6 @@
 {% endblock %}
 
 {% block font %}
-    <link href="https://fonts.googleapis.com/css?family=Concert+One" rel="stylesheet">
 {% endblock %}
 
 {% block body %}
@@ -16,7 +15,7 @@
         <div class="jumbotron{{ app.request.cookies.get('jumbotron') ? ' done' }}">
 
             <div class="bubbles" style="width: 100%">
-                <h1 style="visibility: hidden">{{ app_name }} - {{ 'slogan' | trans }}</h1>
+                <h1>{{ app_name }} - {{ 'slogan' | trans }}</h1>
             </div>
         </div>
 

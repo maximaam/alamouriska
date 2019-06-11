@@ -1,5 +1,6 @@
 body {
     color: #ffffff;
+    font-family: Arial, Helvetica, sans-serif;
 }
 main {
     min-height: 80rem;
@@ -7,19 +8,9 @@ main {
     margin-top: 60px;
 }
 
-.start-page h1, .start-page h2  {
-    font-family: 'Concert One', cursive;
-}
-
 .start-page h1 {
-    font-size: 1.5rem!important;
-    letter-spacing: 3px;
+    visibility: hidden;
 }
-.start-page h2 {
-    font-size: 1.1rem !important;
-    margin-top: -10px !important;
-}
-
 h1 {
     font-size: 1.2rem;
     font-weight: bold;
@@ -345,15 +336,6 @@ fieldset.form-group legend {
     }
     .main-footer .col-md-4:last-child {
         border: 0
-    }
-
-    .start-page h1 {
-        font-size: 3rem!important;
-        letter-spacing: 3px;
-    }
-    .start-page h2 {
-        font-size: 1.5rem !important;
-        margin-top: -10px !important;
     }
 
     .posts-h {
