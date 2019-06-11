@@ -1,1 +1,7 @@
-<img class="d-block mx-auto mw-100" src="{{ vich_uploader_asset(type, 'imageFile') }}" alt="" height="375">
+{% set height = 375 %}
+
+{% if is_mobile(app.request.headers) is same as(true) %}
+    {% set height = 200 %}
+{% endif %}
+
+<img class="d-block mx-auto mw-100" src="{{ vich_uploader_asset(type, 'imageFile') }}" alt="" height="{{ height }}">
