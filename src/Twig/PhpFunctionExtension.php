@@ -58,8 +58,6 @@ class PhpFunctionExtension extends AbstractExtension
         $needles = ['mobile', 'iphone', 'android', 'windows phone'];
         $userAgent = \strtolower($headers->get('User-Agent'));
 
-        echo $userAgent;
-
         foreach ($needles as $needle) {
             if (\strpos($userAgent, $needle)) {
                 return true;
