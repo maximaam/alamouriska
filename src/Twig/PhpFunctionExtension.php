@@ -6,6 +6,7 @@ namespace App\Twig;
 
 use App\Utils\ModelUtils;
 use App\Utils\PhpUtils;
+use Symfony\Component\HttpFoundation\HeaderBag;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
@@ -34,6 +35,7 @@ class PhpFunctionExtension extends AbstractExtension
     {
         return [
             new TwigFunction('domain_by_entity', [$this, 'domainByEntity']),
+            new TwigFunction('is_mobile', [$this, 'isMobile']),
         ];
     }
 
@@ -44,8 +46,26 @@ class PhpFunctionExtension extends AbstractExtension
      */
     public function domainByEntity(string $class): string
     {
-        $entity = PhpUtils::getClassName($class);
+        return ModelUtils::getDomainByEntity(\strtolower(PhpUtils::getClassName($class)));
+    }
 
-        return ModelUtils::getDomainByEntity(\strtolower($entity));
+    /**
+     * @param HeaderBag $headers
+     * @return bool
+     */
+    public function isMobile(HeaderBag $headers): bool
+    {
+        $needles = ['mobile', 'iphone', 'android', 'windows phone'];
+        $userAgent = \strtolower($headers->get('User-Agent'));
+
+        echo $userAgent;
+
+        foreach ($needles as $needle) {
+            if (\strpos($userAgent, $needle)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

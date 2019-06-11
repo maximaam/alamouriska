@@ -1,6 +1,10 @@
 <strong>
     <a href="{{ path('user_show', { 'username': user.username }) }}" title="Ajouté(e) par: {{ user.username }}">
-        {{ user.username | wordwrap(18) }}
+        {% if is_mobile(app.request.headers) is same as(true) %}
+            {{ user.username | wordwrap(18) }}
+        {% else %}
+            {{ user.username }}
+        {% endif %}
     </a>
 </strong>
 <br>
