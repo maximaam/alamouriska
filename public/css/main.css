@@ -362,12 +362,6 @@ fieldset.form-group legend {
 }
 
 @media only screen and (min-width : 320px) and (max-width : 1024px) {
-
-}
-
-/* Smartphones (portrait and landscape) ----------- */
-
-@media only screen and (min-width : 320px) and (max-width : 480px) {
     .nav-item {
         border-right: 0;
         text-align: left;
@@ -394,10 +388,19 @@ fieldset.form-group legend {
         background-size: cover;
     }
 
+    /*
     body.cp:before {
         background-position-x: -400px;
         background-position-y: 0;
     }
+
+     */
+}
+
+/* Smartphones (portrait and landscape) ----------- */
+
+@media only screen and (min-width : 320px) and (max-width : 480px) {
+
 }
 
 
