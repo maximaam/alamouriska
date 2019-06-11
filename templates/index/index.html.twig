@@ -148,7 +148,7 @@
                     <div class="card-header font-weight-bold">Journal public</div>
                     <div class="card-body">
                         {% if app.user %}
-                            {{ include('partials/_form.html.twig', {
+                            {{ include('partials/form.html.twig', {
                                 'form': journal_form,
                                 'form_options':  {
                                     'action': path('async_journal_create'),
@@ -157,13 +157,13 @@
                                 'btn' : {'label': 'label.publish' | trans, 'classes' : 'btn-happy'} })
                             }}
                         {% else %}
-                            {% include 'partials/_comment-login-teaser.html.twig' with { 'header': 'Publier un message'} %}
+                            {% include 'partials/comment-login-teaser.html.twig' with { 'header': 'Publier un message'} %}
                         {% endif %}
 
                         <ul class="list-unstyled list-comments">
                             {% if journals | length > 0 %}
                                 {% for journal in journals %}
-                                    {% include 'partials/_comment-item.html.twig' with { 'object': journal, 'object_type': 'journal'} %}
+                                    {% include 'partials/comment-item.html.twig' with { 'object': journal, 'object_type': 'journal'} %}
                                 {% endfor %}
                             {% endif %}
                         </ul>

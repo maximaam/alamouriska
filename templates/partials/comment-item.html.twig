@@ -3,7 +3,7 @@
 
     <div class="media-body">
         <p class="mt-0 mb-1">
-            {%  include 'partials/_action_by.html.twig' with {'user': object.user, 'action_date': object.createdAt } only %}
+            {%  include 'partials/action_by.html.twig' with {'user': object.user, 'action_date': object.createdAt } only %}
         </p>
         <p>{{ object.message | nl2br }}</p>
     </div>

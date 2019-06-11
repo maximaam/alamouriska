@@ -147,7 +147,7 @@ class AsyncController extends AbstractController
             $entityManager->persist($journal);
             $entityManager->flush();
 
-            return $this->render('partials/_comment-item.html.twig', [
+            return $this->render('partials/comment-item.html.twig', [
                 'object'   => $journal,
                 'object_type' => 'journal'
             ]);
@@ -257,7 +257,7 @@ class AsyncController extends AbstractController
                 $manager->persist($comment);
                 $manager->flush();
 
-                return $this->render('partials/_comment-item.html.twig', [
+                return $this->render('partials/comment-item.html.twig', [
                     'object' => $comment,
                     'object_type' => 'comment'
                 ]);

@@ -107,9 +107,6 @@ class NotificationManager
             return;
         }
 
-        $recipients = \implode(',', $recipients);
-        $recipients = \trim($recipients, ',');
-
         $appMailer = $this->container->getParameter('app_notifier_email');
         $appName = $this->container->getParameter('app_name');
 
@@ -122,7 +119,8 @@ class NotificationManager
 
         $messageToParticipants = (new Swift_Message($this->translator->trans('email.commenter.subject')))
             ->setFrom($appMailer, $appName)
-            ->setTo($recipients)
+            ->setTo($appMailer)
+            ->setBcc($recipients)
             ->setBody($this->twig->render('emails/comment__to-recipients.html.twig', [
                 'post'  => $post, 'post_url' => $permalink]
             ), 'text/html');

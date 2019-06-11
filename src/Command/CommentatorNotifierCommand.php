@@ -62,14 +62,11 @@ class CommentatorNotifierCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $io = new SymfonyStyle($input, $output);
-        $io->note('Starting notifications...');
 
         /** @var CommentMailQueue[] $queues */
         $queues = $this->entityManager->getRepository(CommentMailQueue::class)->findAll();
 
-        $this->truncateTable($this->entityManager->getClassMetadata(CommentMailQueue::class)->getTableName());
-
-        $io->write(\sprintf('Found %d cases in the queue', \count($queues)));
+        $io->note(\sprintf('Starting notifications. Found %d case(s) in the queue', \count($queues)));
 
         foreach ($queues as $queue) {
 
@@ -82,6 +79,8 @@ class CommentatorNotifierCommand extends Command
 
             $this->notificationManager->send($post);
         }
+
+        $this->truncateTable($this->entityManager->getClassMetadata(CommentMailQueue::class)->getTableName());
 
         $io->success('Finished.');
     }

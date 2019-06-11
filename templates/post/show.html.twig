@@ -8,25 +8,26 @@
 {% block body %}
     <div class="container">
         <div class="row">
-            <div class="col-sm-4">
-                <div class="bg-happy rounded p-2 text-dark mb-4">
-                    {%  include 'partials/avatar.html.twig' with {'current_user': post.user, 'size': 128, 'classes': 'mr-3', 'link_classes': 'd-block p-2 text-center' } only %}
-                    <p class="mt-1">
-                        {%  include 'partials/_action_by.html.twig' with {'user': post.user, 'action_date': post.createdAt } only %}
-                    </p>
+            <div class="col-sm-6">
 
-                    {% if post.user == app.user %}
-                        <div>
-                            <button title="Supprimer cette publication" type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete-post">
-                                <i class="fa fa-trash"></i>
-                            </button>
-                        </div>
-                    {% endif %}
-                </div>
-            </div>
-
-            <div class="col-sm-8">
                 <div class="bg-white rounded text-dark mb-4">
+                    <div class="media p-1 {{ post.imageName is null ? 'border-bottom' }}">
+                        {%  include 'partials/avatar.html.twig' with {'current_user': post.user } only %}
+                        <div class="media-body">
+                            <p class="mt-1">
+                                {%  include 'partials/action_by.html.twig' with {'user': post.user, 'action_date': post.createdAt  } only %}
+                            </p>
+                        </div>
+
+                        {% if post.user == app.user %}
+                            <div>
+                                <button title="Supprimer cette publication" type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete-post">
+                                    <i class="fa fa-trash"></i>
+                                </button>
+                            </div>
+                        {% endif %}
+                    </div>
+
                     <div class="p-3">
                         {% if domain == 'mots-algeriens' %}
                             <h1 class="mb-2" title="Mot">{{ post.post }}</h1>
@@ -68,13 +69,15 @@
                         {% endif %}
                     </div>
                 </div>
+            </div>
 
+            <div class="col-sm-6">
                 <div class="card text-dark">
                     <div class="card-header font-weight-bold">{{ 'label.comments' | trans }}</div>
 
                     <div class="card-body">
                         {% if app.user %}
-                            {{ include('partials/_form.html.twig', {
+                            {{ include('partials/form.html.twig', {
                                 'form':comment_form, 'form_options':  {
                                     'action': path('async_comment_create'),
                                     'attr': { 'class': 'comment-form bg-light p-1 mb-2', 'data-type': domain ~'_'~ post.id}
@@ -82,13 +85,13 @@
                                 'btn' : {'label': 'label.submit' | trans, 'classes' : 'btn-happy'} })
                             }}
                         {% else %}
-                            {% include 'partials/_comment-login-teaser.html.twig' with { 'header': 'Ajouter un commentaire'} %}
+                            {% include 'partials/comment-login-teaser.html.twig' with { 'header': 'Ajouter un commentaire'} %}
                         {% endif %}
 
                         <ul class="list-unstyled list-comments">
                         {% if post.comments | length > 0 %}
                             {% for comment in post.comments %}
-                                {% include 'partials/_comment-item.html.twig' with { 'object': comment, 'object_type': 'comment'} %}
+                                {% include 'partials/comment-item.html.twig' with { 'object': comment, 'object_type': 'comment'} %}
                             {% endfor %}
                         {% endif %}
                         </ul>

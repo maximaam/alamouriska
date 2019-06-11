@@ -22,6 +22,7 @@ main {
 
 h1 {
     font-size: 1.2rem;
+    font-weight: bold;
 }
 h2 {
     font-size: 1rem;
@@ -353,6 +354,10 @@ fieldset.form-group legend {
     .start-page h2 {
         font-size: 1.5rem !important;
         margin-top: -10px !important;
+    }
+
+    .posts-h {
+        text-align: left;
     }
 }
 
