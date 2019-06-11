@@ -2,8 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Expression;
+use App\Entity\Joke;
 use App\Entity\Journal;
 use App\Entity\Page;
+use App\Entity\Proverb;
 use App\Entity\Rating;
 use App\Entity\Word;
 use App\Form\JournalType;
@@ -30,7 +33,10 @@ class IndexController extends AbstractController
         $response = $this->render('index/index.html.twig', [
             'journal_form' => $this->createForm(JournalType::class, new Journal())->createView(),
             'journals' => $this->getDoctrine()->getRepository(Journal::class)->findBy([], ['id' => 'DESC'], 20),
-            'latest_posts' => $this->getDoctrine()->getRepository(Word::class)->findBy([], ['id' => 'DESC'], 10),
+            'latest_posts_words' => $this->getDoctrine()->getRepository(Word::class)->findBy([], ['id' => 'DESC'], 5),
+            'latest_posts_expressions' => $this->getDoctrine()->getRepository(Expression::class)->findBy([], ['id' => 'DESC'], 5),
+            'latest_posts_proverbs' => $this->getDoctrine()->getRepository(Proverb::class)->findBy([], ['id' => 'DESC'], 5),
+            'latest_posts_jokes' => $this->getDoctrine()->getRepository(Joke::class)->findBy([], ['id' => 'DESC'], 5),
             'most_commented'=> [],
             'ratings' => $this->getDoctrine()->getRepository(Rating::class)->findAll(),
             'has_rated' => null !== $this->getDoctrine()->getRepository(Rating::class)->findOneBy(['addr' => $request->getClientIp()]),

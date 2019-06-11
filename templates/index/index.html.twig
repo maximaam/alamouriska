@@ -42,7 +42,28 @@
                     <div class="card-header font-weight-bold">Les derniers ajouts</div>
                     <div class="card-body">
                         <ul class="pl-4 mb-2">
-                            {% for latest_post in latest_posts %}
+                            {% for latest_post in latest_posts_words %}
+                                <li title="{{ latest_post.post | truncate(50) }}">
+                                    <a href="{{ path('post_show', { 'domain': domain_by_entity(latest_post), 'id': latest_post.id, 'slug': latest_post.slug }) }}">
+                                        {{ latest_post.post | truncate(25) }}
+                                    </a>
+                                </li>
+                            {% endfor %}
+                            {% for latest_post in latest_posts_expressions %}
+                                <li title="{{ latest_post.post | truncate(50) }}">
+                                    <a href="{{ path('post_show', { 'domain': domain_by_entity(latest_post), 'id': latest_post.id, 'slug': latest_post.slug }) }}">
+                                        {{ latest_post.post | truncate(25) }}
+                                    </a>
+                                </li>
+                            {% endfor %}
+                            {% for latest_post in latest_posts_proverbs %}
+                                <li title="{{ latest_post.post | truncate(50) }}">
+                                    <a href="{{ path('post_show', { 'domain': domain_by_entity(latest_post), 'id': latest_post.id, 'slug': latest_post.slug }) }}">
+                                        {{ latest_post.post | truncate(25) }}
+                                    </a>
+                                </li>
+                            {% endfor %}
+                            {% for latest_post in latest_posts_jokes %}
                                 <li title="{{ latest_post.post | truncate(50) }}">
                                     <a href="{{ path('post_show', { 'domain': domain_by_entity(latest_post), 'id': latest_post.id, 'slug': latest_post.slug }) }}">
                                         {{ latest_post.post | truncate(25) }}
