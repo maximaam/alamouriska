@@ -61,27 +61,26 @@
                         </div>
                     </div>
                 </form>
-
-                <div class="pt-5 text-center">
-                    {{ include('partials/fb-login.html.twig', { 'label': 'Se connecter avec Facebook'}) }}
-                </div>
             </div>
-            <div class="col-sm mt-5">
+            <div class="col-sm mt-4 p-2 bg-white text-dark rounded">
                 <div>
                     Tu n'es pas encore un alamouriskeur?
                     <br>
-                    <a href="{{ path('fos_user_registration_register') }}" title="Inscris-toi" class="light">
+                    <a href="{{ path('fos_user_registration_register') }}" title="Inscris-toi">
                         <i class="fa fa-arrow-circle-right"></i>
-                        Alamouriski rou7ak!
+                        Inscription. Alamouriski rou7ak!
                     </a>
+                    <hr>
+                    Ou alors avec ton compte facebook<br>
+                    {{ include('partials/fb-login.html.twig', { 'label': 'Se connecter avec Facebook'}) }}
                 </div>
                 <hr>
                 <div>
                     <abbr title="Quoi? T'as perdu le mot de passe?">Kifech?</abbr> T'ba7arlak el mot de passe?
                     <br>
-                    <a href="{{ path('fos_user_resetting_request') }}" title="Clique ici" class="light">
+                    <a href="{{ path('fos_user_resetting_request') }}" title="Clique ici">
                         <i class="fa fa-arrow-circle-right"></i>
-                        3abaz h'na
+                        Par ici, 3abaz h'na!
                     </a>
                 </div>
             </div>
