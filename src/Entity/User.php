@@ -83,22 +83,22 @@ class User extends BaseUser
     private $avatarFile;
 
     /**
-     * @ORM\OneToMany(targetEntity="Word", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="Word", mappedBy="user", cascade="remove")
      */
     private $words;
 
     /**
-     * @ORM\OneToMany(targetEntity="Expression", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="Expression", mappedBy="user", cascade="remove")
      */
     private $expressions;
 
     /**
-     * @ORM\OneToMany(targetEntity="Proverb", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="Proverb", mappedBy="user", cascade="remove")
      */
     private $proverbs;
 
     /**
-     * @ORM\OneToMany(targetEntity="Joke", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="Joke", mappedBy="user", cascade="remove")
      */
     private $jokes;
 
@@ -117,12 +117,12 @@ class User extends BaseUser
     private $allowPostNotification = false;
 
     /**
-     * @ORM\OneToMany(targetEntity="Journal", mappedBy="user", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="Journal", mappedBy="user", orphanRemoval=true, cascade="remove")
      */
     private $journals;
 
     /**
-     * @ORM\OneToMany(targetEntity="Comment", mappedBy="user", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="user", orphanRemoval=true, cascade="remove")
      */
     private $comments;
 
