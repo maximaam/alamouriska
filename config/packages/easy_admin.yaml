@@ -15,10 +15,13 @@ easy_admin:
                     - { property: 'imageName', label: 'Image', type: 'image', base_path: '/images/posts/' }
                     - question
                     - user
+                    - comments
             show:
                 fields:
-                    - inLatin
+                    - post
                     - description
+            form:
+                fields: ['post', 'inTamazight', 'inArabic', 'description', 'question']
         Expression:
             class: App\Entity\Expression
             list:
@@ -30,6 +33,9 @@ easy_admin:
                     - { property: 'imageName', label: 'Image', type: 'image', base_path: '/images/posts/' }
                     - question
                     - user
+                    - comments
+                form:
+                    fields: ['post', 'description', 'question']
         Proverb:
             class: App\Entity\Proverb
             list:
@@ -41,6 +47,9 @@ easy_admin:
                     - { property: 'imageName', label: 'Image', type: 'image', base_path: '/images/posts/' }
                     - question
                     - user
+                    - comments
+                form:
+                    fields: ['post', 'description', 'question']
         Joke:
             class: App\Entity\Joke
             list:
@@ -49,10 +58,20 @@ easy_admin:
                     - createdAt
                     - post
                     - user
+                    - comments
+                form:
+                    fields: ['post', 'description']
         Comment:
             class: App\Entity\Comment
             list:
-                fields: ['id', 'message', 'user']
+                fields:
+                    - id
+                    - { property: 'word', label: 'Word' }
+                    - expression
+                    - proverb
+                    - joke
+                    - message
+                    - user
         User:
             class: App\Entity\User
             list:
