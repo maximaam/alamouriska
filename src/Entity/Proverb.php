@@ -26,7 +26,8 @@ class Proverb extends AbstractPost
     protected $user;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="proverb", cascade="remove")
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="proverb", cascade="remove")
+     * @ORM\OrderBy({"id" = "DESC"})
      */
     private $comments;
 

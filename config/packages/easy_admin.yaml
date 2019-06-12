@@ -29,7 +29,7 @@ easy_admin:
                     - id
                     - createdAt
                     - post
-                    - description
+                    #- description
                     - { property: 'imageName', label: 'Image', type: 'image', base_path: '/images/posts/' }
                     - question
                     - user
@@ -43,13 +43,13 @@ easy_admin:
                     - id
                     - createdAt
                     - post
-                    - description
+                    #- description
                     - { property: 'imageName', label: 'Image', type: 'image', base_path: '/images/posts/' }
                     - question
                     - user
                     - comments
-                form:
-                    fields: ['post', 'description', 'question']
+            form:
+                fields: ['post', 'description', 'question']
         Joke:
             class: App\Entity\Joke
             list:
@@ -59,8 +59,8 @@ easy_admin:
                     - post
                     - user
                     - comments
-                form:
-                    fields: ['post', 'description']
+            form:
+                fields: ['post', 'description']
         Comment:
             class: App\Entity\Comment
             list:
@@ -72,6 +72,8 @@ easy_admin:
                     - joke
                     - message
                     - user
+            form:
+                fields: ['message']
         User:
             class: App\Entity\User
             list:
@@ -82,6 +84,8 @@ easy_admin:
                     - email
                     - roles
                     - { property: 'avatarName', label: 'Image', type: 'image', base_path: '/images/profiles/' }
+            form:
+                fields: ['username', 'email', 'roles', 'avatarName']
         Page:
             class: App\Entity\Page
             form:
