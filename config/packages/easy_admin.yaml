@@ -83,6 +83,8 @@ easy_admin:
                     - username
                     - email
                     - roles
+                    - enabled
+                    - facebookId
                     - { property: 'avatarName', label: 'Image', type: 'image', base_path: '/images/profiles/' }
             form:
                 fields: ['username', 'email', 'roles', 'avatarName']
