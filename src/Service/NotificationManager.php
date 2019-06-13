@@ -80,16 +80,18 @@ class NotificationManager
     public function send($post): void
     {
         $entity = \strtolower(PhpUtils::getClassName($post));
-        $permalink = $this->router->generate('post_show', [
-            'domain' => ModelUtils::getDomainByEntity($entity),
-            'id' => $post->getId(),
-            'slug' => $post->getSlug()
-        ], RouterInterface::ABSOLUTE_URL);
+        $permalink =  $this->container->getParameter('full_domain') . '/' . ModelUtils::getDomainByEntity($entity) . '/' . $post->getId() . '/' . $post->getSlug();
 
         $recipients = [];
+        $comments = $post->getComments();
+
+        //Only when more than one comment should users be notified
+        if (\count($comments) < 2) {
+            return;
+        }
 
         /** @var Comment $comment */
-        foreach ($post->getComments() as $comment) {
+        foreach ($comments as $comment) {
             $email = $comment->getUser()->getEmail();
 
             if (!\in_array($email, $recipients)) {

@@ -11,6 +11,7 @@ parameters:
     mailer_user: 'app@alamouriska.com'
     mailer_from: 'app@alamouriska.com'
     seo_route_domains: 'mots-algeriens|expressions-algeriennes|proverbes-algeriens|blagues-algeriennes'
+    full_domain: 'https://www.alamouriska.com'
 
 services:
     # default configuration for services in *this* file
