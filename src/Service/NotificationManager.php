@@ -86,28 +86,21 @@ class NotificationManager
         $comments = $post->getComments();
 
         //Only when more than one comment should users be notified
-        if (\count($comments) < 2) {
-            return;
-        }
+        if (\count($comments) > 1) {
+            /** @var Comment $comment */
+            foreach ($comments as $comment) {
+                $email = $comment->getUser()->getEmail();
 
-        /** @var Comment $comment */
-        foreach ($comments as $comment) {
-            $email = $comment->getUser()->getEmail();
-
-            if (!\in_array($email, $recipients)) {
-                \array_push($recipients, $email);
+                if (!\in_array($email, $recipients)) {
+                    \array_push($recipients, $email);
+                }
             }
         }
 
-        //Remove post owner from recipients
+        //Remove post owner from recipients, if he is participating
         $recipients = \array_filter($recipients, function($e) use ($post) {
             return ($e !== $post->getUser()->getEmail());
         });
-
-        //Do not notify if the recipients are empty - for example when the post owner comments his post
-        if (empty($recipients)) {
-            return;
-        }
 
         $appMailer = $this->container->getParameter('app_notifier_email');
         $appName = $this->container->getParameter('app_name');
@@ -119,16 +112,19 @@ class NotificationManager
                     'post'  => $post, 'post_url' => $permalink]
             ), 'text/html');
 
-        $messageToParticipants = (new Swift_Message($this->translator->trans('email.commenter.subject')))
-            ->setFrom($appMailer, $appName)
-            ->setTo($appMailer)
-            ->setBcc($recipients)
-            ->setBody($this->twig->render('emails/comment__to-recipients.html.twig', [
-                'post'  => $post, 'post_url' => $permalink]
-            ), 'text/html');
-
         $this->mailer->send($messageToOwner);
-        $this->mailer->send($messageToParticipants);
+
+        if (!empty($recipients)) {
+            $messageToParticipants = (new Swift_Message($this->translator->trans('email.commenter.subject')))
+                ->setFrom($appMailer, $appName)
+                ->setTo($appMailer)
+                ->setBcc($recipients)
+                ->setBody($this->twig->render('emails/comment__to-recipients.html.twig', [
+                        'post'  => $post, 'post_url' => $permalink]
+                ), 'text/html');
+
+            $this->mailer->send($messageToParticipants);
+        }
     }
 
 }
