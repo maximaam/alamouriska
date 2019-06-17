@@ -30,6 +30,8 @@ abstract class AbstractPost
 
     const PAGINATOR_MAX = 20;
 
+    const SLUG_LIMIT = 128;
+
     /**
      * @ORM\Column(type="integer")
      * @ORM\Id

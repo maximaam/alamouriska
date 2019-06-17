@@ -233,7 +233,7 @@ class PostController extends AbstractController
         }
         */
 
-        $model->setSlug(Linguistic::toSlug($model->getPost()));
+        $model->setSlug(\substr(Linguistic::toSlug($model->getPost()), 0, AbstractPost::SLUG_LIMIT));
         $model->setAddr($addr);
 
         $entityManager = $this->getDoctrine()->getManager();
