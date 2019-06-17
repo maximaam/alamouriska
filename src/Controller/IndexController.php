@@ -2,15 +2,11 @@
 
 namespace App\Controller;
 
-use App\Entity\Expression;
-use App\Entity\Joke;
 use App\Entity\Journal;
 use App\Entity\LatestPosts;
 use App\Entity\Page;
-use App\Entity\Proverb;
 use App\Entity\Rating;
 use App\Entity\User;
-use App\Entity\Word;
 use App\Form\JournalType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;

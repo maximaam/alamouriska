@@ -51,6 +51,10 @@ label:
       insert_new: 'Ajouter une publication'
       search_h1: 'Publications trouvées pour "%term%"'
       by_user: 'Proposé par %username%'
+      insert_new_Word: 'Ajouter un nouveau mot'
+      insert_new_Expression: 'Ajouter une nouvelle expression'
+      insert_new_Proverb: 'Ajouter un nouveau proverbe'
+      insert_new_Joke: 'Ajouter une nouvelle blague'
 
 email:
   publisher:
