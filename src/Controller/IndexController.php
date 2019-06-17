@@ -41,7 +41,7 @@ class IndexController extends AbstractController
             'has_rated' => null !== $this->getDoctrine()->getRepository(Rating::class)->findOneBy(['addr' => $request->getClientIp()]),
             //'has_rated' => false,
             'page' => $this->getDoctrine()->getRepository(Page::class)->findOneBy(['alias' => 'homepage']),
-            'latest_users'  => $this->getDoctrine()->getRepository(User::class)->findBy([], ['id' => 'DESC'], 6),
+            'latest_users'  => $this->getDoctrine()->getRepository(User::class)->findBy(['enabled' => true], ['id' => 'DESC'], 6),
         ]);
 
         $response->headers->setCookie(new Cookie('jumbotron', 'done', \strtotime('now + 1 week')));
