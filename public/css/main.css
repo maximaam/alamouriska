@@ -337,6 +337,10 @@ fieldset.form-group legend {
     .posts-h {
         text-align: left;
     }
+
+    #latest-users li {
+        float: left;
+    }
 }
 
 @media only screen and (min-width : 320px) and (max-width : 1024px) {

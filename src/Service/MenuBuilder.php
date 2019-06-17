@@ -13,6 +13,7 @@ use App\Entity\Post;
 use App\Utils\ModelUtils;
 use Knp\Menu\FactoryInterface;
 use Doctrine\ORM\EntityManager;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * Class MenuBuilder
@@ -31,14 +32,20 @@ class MenuBuilder
     private $em;
 
     /**
+     * @var RequestStack
+     */
+    private $requestStack;
+
+    /**
      * MenuBuilder constructor.
      * @param FactoryInterface $factory
      * @param EntityManager $em
      */
-    public function __construct(FactoryInterface $factory, EntityManager $em)
+    public function __construct(FactoryInterface $factory, EntityManager $em, RequestStack $requestStack)
     {
         $this->factory = $factory;
         $this->em = $em;
+        $this->requestStack = $requestStack;
     }
 
     /**
@@ -51,7 +58,6 @@ class MenuBuilder
         $menu->setChildrenAttribute('class', 'navbar-nav mr-auto');
 
         foreach (ModelUtils::ENTITY_DOMAIN as $domain => $entity) {
-
             $menu->addChild(\ucfirst(\strstr($domain, '-', true)), [
                 'route'     => 'post_index',
                 'routeParameters'   => [
@@ -60,9 +66,11 @@ class MenuBuilder
                 /*
                 'extras'    => [
                     'routes'    =>
-                        ['route' => $route . '_show'],
-                        ['route' => $route . '_new'],
-                        ['route' => $route . '_edit'],
+                        ['route' => 'post_show', 'parameters' => [
+                            'domain' => $domain,
+                            'id'    => $this->requestStack->getMasterRequest()->request->get('id'),
+                            'slug'  => $this->requestStack->getMasterRequest()->request->get('slug'),
+                        ]],
                 ],
                 */
                 'attributes' => [
@@ -73,6 +81,26 @@ class MenuBuilder
                     'class' => 'nav-link'
                 ]
             ]);
+        }
+
+        //Set current for sub items
+        $uri = $this->requestStack->getCurrentRequest()->getRequestUri();
+        switch (true) {
+            case \strpos($uri, 'mots'):
+                $menu->getChild('Mots')->setCurrent(true);
+                break;
+            case \strpos($uri, 'expressions'):
+                $menu->getChild('Expressions')->setCurrent(true);
+                break;
+            case \strpos($uri, 'proverbes'):
+                $menu->getChild('Proverbes')->setCurrent(true);
+                break;
+            case \strpos($uri, 'blagues'):
+                $menu->getChild('Blagues')->setCurrent(true);
+                break;
+
+            default:
+                $menu->setCurrent(true);
         }
 
         return $menu;

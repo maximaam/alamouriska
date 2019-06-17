@@ -36,7 +36,7 @@
                 </div>
                 {% endif %}
 
-                <div class="card mb-2">
+                <div class="card mb-3">
                     <div class="card-header font-weight-bold">Les derniers ajouts</div>
                     <div class="card-body">
                         <ul class="pl-4 mb-2">
@@ -47,7 +47,7 @@
                     </div>
                 </div>
 
-                <div class="card mb-2">
+                <div class="card mb-3">
                     <div class="card-header font-weight-bold">Les plus enigmatiques</div>
                     <div class="card-body">
                         <ul class="pl-4 mb-2">
@@ -84,7 +84,7 @@
                 </div>
                 -->
 
-                <div class="card bg-sky font-weight-bold mb-2">
+                <div class="card bg-sky font-weight-bold mb-3">
                     <div class="card-header">Noter {{ app_name }}</div>
 
                     <div class="card-body">
@@ -138,7 +138,7 @@
             </div>
 
             <div class="col-sm-8">
-                <div class="card" id="journal-public">
+                <div class="card mb-3" id="journal-public">
                     <div class="card-header font-weight-bold">Journal public</div>
                     <div class="card-body p-2">
                         {% if app.user %}
@@ -161,6 +161,22 @@
                                 {% endfor %}
                             {% endif %}
                         </ul>
+                    </div>
+                </div>
+
+                <div class="card" id="latest-users">
+                    <div class="card-header font-weight-bold">Membres récents</div>
+                    <div class="card-body p-2">
+                        {%  for latest_user in latest_users %}
+                            <li class="media mb-3 p-1 w-50">
+                                {%  include 'partials/avatar.html.twig' with {'current_user': latest_user } only %}
+                                <div class="media-body">
+                                    <p class="mt-0 mb-1">
+                                        {%  include 'partials/action_by.html.twig' with {'user': latest_user, 'action_date': latest_user.createdAt } only %}
+                                    </p>
+                                </div>
+                            </li>
+                        {% endfor %}
                     </div>
                 </div>
             </div>

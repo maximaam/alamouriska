@@ -9,6 +9,7 @@ use App\Entity\LatestPosts;
 use App\Entity\Page;
 use App\Entity\Proverb;
 use App\Entity\Rating;
+use App\Entity\User;
 use App\Entity\Word;
 use App\Form\JournalType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -40,6 +41,7 @@ class IndexController extends AbstractController
             'has_rated' => null !== $this->getDoctrine()->getRepository(Rating::class)->findOneBy(['addr' => $request->getClientIp()]),
             //'has_rated' => false,
             'page' => $this->getDoctrine()->getRepository(Page::class)->findOneBy(['alias' => 'homepage']),
+            'latest_users'  => $this->getDoctrine()->getRepository(User::class)->findBy([], ['id' => 'DESC'], 6),
         ]);
 
         $response->headers->setCookie(new Cookie('jumbotron', 'done', \strtotime('now + 1 week')));
