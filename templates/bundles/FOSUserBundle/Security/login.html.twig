@@ -64,15 +64,15 @@
             </div>
             <div class="col-sm mt-4 p-2 bg-white text-dark rounded">
                 <div>
-                    Tu n'es pas encore un alamouriskeur?
+                    Tu n'es pas encore membre?
                     <br>
-                    <a href="{{ path('fos_user_registration_register') }}" title="Inscris-toi">
+                    <a href="{{ path('fos_user_registration_register') }}" title="Inscris-toi" class="btn btn-happy">
                         <i class="fa fa-arrow-circle-right"></i>
-                        Inscription. Alamouriski rou7ak!
+                        Inscris-toi. Alamouriski rou7ak!
                     </a>
                     <hr>
                     Ou alors avec ton compte facebook<br>
-                    {{ include('partials/fb-login.html.twig', { 'label': 'Se connecter avec Facebook'}) }}
+                    {{ include('partials/fb-login.html.twig', { 'label': 'layout.login' | trans }) }}
                 </div>
                 <hr>
                 <div>

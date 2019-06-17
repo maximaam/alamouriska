@@ -132,6 +132,11 @@ class User extends BaseUser
     private $facebookId;
 
     /**
+     * @ORM\Column(type="string", length=64, nullable=true)
+     */
+    private $remoteAddr;
+
+    /**
      * User constructor.
      * @throws \Exception
      */
@@ -318,6 +323,18 @@ class User extends BaseUser
     public function setFacebookId(?string $facebookId): self
     {
         $this->facebookId = $facebookId;
+
+        return $this;
+    }
+
+    public function getRemoteAddr(): ?string
+    {
+        return $this->remoteAddr;
+    }
+
+    public function setRemoteAddr(?string $remoteAddr): self
+    {
+        $this->remoteAddr = $remoteAddr;
 
         return $this;
     }
