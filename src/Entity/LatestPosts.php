@@ -20,7 +20,7 @@ class LatestPosts
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=32)
+     * @ORM\Column(type="string", length=64)
      */
     private $post;
 

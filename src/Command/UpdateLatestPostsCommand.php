@@ -84,8 +84,14 @@ class UpdateLatestPostsCommand extends Command
 
         /** @var AbstractPost $obj */
         foreach ($all as $obj) {
+            $post = $obj->getPost();
+
+            if (\strlen($post) >= 32) {
+                $post = \substr($obj->getPost(), 0, 32) . '...';
+            }
+
             $posts[$obj->getCreatedAt()->getTimestamp()] = [
-                'post'  => \substr($obj->getPost(), 0, 32),
+                'post'  => $post,
                 'permalink' => $this->urlGenerator->generate('post_show', [
                     'id'    => $obj->getId(),
                     'domain'    => ModelUtils::getDomainByPost($obj),

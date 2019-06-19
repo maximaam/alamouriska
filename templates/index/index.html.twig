@@ -39,7 +39,7 @@
                 <div class="card mb-3">
                     <div class="card-header font-weight-bold">Les derniers ajouts</div>
                     <div class="card-body">
-                        <ul class="pl-4 mb-2">
+                        <ul class="pl-3 mb-2">
                             {% for latest_post in latest_posts %}
                                 <li><a href="{{ latest_post.permalink }}">{{ latest_post.post }}</a></li>
                             {% endfor %}
@@ -48,9 +48,9 @@
                 </div>
 
                 <div class="card mb-3">
-                    <div class="card-header font-weight-bold">Les plus enigmatiques</div>
+                    <div class="card-header font-weight-bold">Les plus énigmatiques</div>
                     <div class="card-body">
-                        <ul class="pl-4 mb-2">
+                        <ul class="pl-3 mb-2">
                             {% for domain,entity in constant('App\\Utils\\ModelUtils::ENTITY_DOMAIN') %}
                             <li>
                                 <a href="{{ path('post_index', { 'domain': domain, 'enigmatique': true }) }}">
@@ -168,7 +168,7 @@
                     <div class="card-header font-weight-bold">Membres récents</div>
                     <div class="card-body p-2">
                         {%  for latest_user in latest_users %}
-                            <li class="media mb-3 p-1 w-50">
+                            <li class="media mb-3 p-1">
                                 {%  include 'partials/avatar.html.twig' with {'current_user': latest_user } only %}
                                 <div class="media-body">
                                     <p class="mt-0 mb-1">
