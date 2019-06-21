@@ -7,6 +7,14 @@
     {{ parent() }}
 {% endblock %}
 
+{% block opengraph_title %}
+    <meta property="og:title" content="{{ title }} {{ parent() }}" />
+{% endblock %}
+
+{% block opengraph_description %}
+    <meta property="og:description" content="Cherchez et trouvez des mots de la langue algérienne populaire, derdja" />
+{% endblock %}
+
 {% block search %}
     {{ include('partials/search.html.twig', { 'domain' : domain }) }}
 {% endblock %}

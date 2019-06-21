@@ -1,8 +1,18 @@
 {% extends 'base.html.twig' %}
 
+{% set title = ('label.' ~ domain) | trans  ~ ' : ' ~post.post | truncate(32) %}
+
 {% block title %}
-    {{ ('label.' ~ domain) | trans }} : {{ post.post | truncate(25) }}
+    {{ title }}
     {{ parent() }}
+{% endblock %}
+
+{% block opengraph_title %}
+    <meta property="og:title" content="{{ title }}" />
+{% endblock %}
+
+{% block opengraph_description %}
+    <meta property="og:description" content="Cherchez et trouvez des mots de la langue algérienne populaire, derdja" />
 {% endblock %}
 
 {% block body %}

@@ -3,12 +3,22 @@
 <html lang="{{ app.request.locale }}">
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}- {{ app_name }}{% endblock %}
+        <title>{% block title %} - {{ app_name }}{% endblock %}
         </title>
 
+        <meta property="fb:app_id" content="440835073385326" />
         <meta property="og:locale" content="fr_FR" />
         <meta property="og:image" content="https://www.alamouriska.com/images/deep-sea2.jpg" />
-        <meta property="og:type" content="website" />
+        <meta property="og:url" content="{{ app.request.uri }}" />
+        <meta property="og:type" content="{{ (app.request.get('_route') == 'index_index') ? 'website' : 'article' }}" />
+
+        {% block opengraph_title %}
+            <meta property="og:title" content="- {{ app_name }}" />
+        {% endblock %}
+
+        {% block opengraph_description %}
+            <meta property="og:description" content="{{ app_name }} est une application dédiée au rassemblement et stockage des mots algériens, du repertoire historique de la derdja." />
+        {% endblock %}
 
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">

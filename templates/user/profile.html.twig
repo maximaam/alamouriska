@@ -4,6 +4,14 @@
     Profil de {{ user.username }} - {{ parent() }}
 {% endblock %}
 
+{% block opengraph_title %}
+    <meta property="og:title" content="Profil de {{ user.username }} - {{ app_name }}" />
+{% endblock %}
+
+{% block opengraph_description %}
+    <meta property="og:description" content="{{ user.username }} est membre de {{ app_name }} dans la recherche des mots et proverbes algériens en derdja" />
+{% endblock %}
+
 {% block body %}
 
     <div class="container profile">

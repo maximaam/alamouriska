@@ -1,10 +1,19 @@
 {% extends 'base.html.twig' %}
 
 {% set term = app.request.get('terme') %}
+{% set title = 'label.almrsk.search_h1' | trans({'%term%' : term }) %}
 
 {% block title %}
-    {{ 'label.almrsk.search_h1' | trans({'%term%' : term }) }} -
+    {{ title }}
     {{ parent() }}
+{% endblock %}
+
+{% block opengraph_title %}
+    <meta property="og:title" content="{{ title }}" />
+{% endblock %}
+
+{% block opengraph_description %}
+    <meta property="og:description" content="Cherchez et trouvez des mots de la langue algérienne populaire, derdja" />
 {% endblock %}
 
 {% block body %}
