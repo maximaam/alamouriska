@@ -103,6 +103,7 @@ class NotificationManager
         });
 
         $appMailer = $this->container->getParameter('app_notifier_email');
+        $appMailerReceiver = $this->container->getParameter('app_receiver_email');
         $appName = $this->container->getParameter('app_name');
 
         $messageToOwner = (new Swift_Message($this->translator->trans('email.publisher.subject')))
