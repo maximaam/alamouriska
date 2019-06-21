@@ -3,13 +3,12 @@
 <html lang="{{ app.request.locale }}">
     <head>
         <meta charset="UTF-8">
-        <title>
-            {% block title %}
-                - {{ app_name }}
-            {% endblock %}
+        <title>{% block title %}- {{ app_name }}{% endblock %}
         </title>
 
-        <meta property="og:image" content="https://www.alamouriska.com/images/alamouriska-logo-512.jpg" />
+        <meta property="og:locale" content="fr_FR" />
+        <meta property="og:image" content="https://www.alamouriska.com/images/deep-sea2.jpg" />
+        <meta property="og:type" content="website" />
 
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
