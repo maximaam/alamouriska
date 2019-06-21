@@ -118,7 +118,7 @@ class NotificationManager
         if (!empty($recipients)) {
             $messageToParticipants = (new Swift_Message($this->translator->trans('email.commenter.subject')))
                 ->setFrom($appMailer, $appName)
-                ->setTo($appMailer)
+                ->setTo($appMailerReceiver)
                 ->setBcc($recipients)
                 ->setBody($this->twig->render('emails/comment__to-recipients.html.twig', [
                         'post'  => $post, 'post_url' => $permalink]
