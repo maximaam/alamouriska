@@ -20,8 +20,9 @@
                 {%  include 'partials/avatar.html.twig' with {'current_user': user, 'size': 128 } only %}
             </div>
             <div class="col-sm-5 mt-3 posts-h">
-                <h1>Publications ({{ (user.words | length + user.expressions | length + user.proverbs | length + user.jokes | length) }}) de {{ user.username }}</h1>
+                <h1>Profil de {{ user.username }}</h1>
                 <h2>Membre depuis le {{ user.createdAt | localizeddate('long', 'none', app.request.locale) }}</h2>
+                <h3>{{ (user.words | length + user.expressions | length + user.proverbs | length + user.jokes | length) }} publications</h3>
             </div>
             <div class="col-sm-5 mt-3 text-right">
                 {% if app.user and user.allowMemberContact is same as(true) %}

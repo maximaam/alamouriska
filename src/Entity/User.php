@@ -84,26 +84,31 @@ class User extends BaseUser
 
     /**
      * @ORM\OneToMany(targetEntity="Word", mappedBy="user", cascade="remove")
+     * @ORM\OrderBy({"id" = "DESC"})
      */
     private $words;
 
     /**
      * @ORM\OneToMany(targetEntity="Expression", mappedBy="user", cascade="remove")
+     * @ORM\OrderBy({"id" = "DESC"})
      */
     private $expressions;
 
     /**
      * @ORM\OneToMany(targetEntity="Proverb", mappedBy="user", cascade="remove")
+     * @ORM\OrderBy({"id" = "DESC"})
      */
     private $proverbs;
 
     /**
      * @ORM\OneToMany(targetEntity="Joke", mappedBy="user", cascade="remove")
+     * @ORM\OrderBy({"id" = "DESC"})
      */
     private $jokes;
 
     /**
      * @ORM\OneToMany(targetEntity="Blog", mappedBy="user", cascade="remove")
+     * @ORM\OrderBy({"id" = "DESC"})
      */
     private $blogs;
 

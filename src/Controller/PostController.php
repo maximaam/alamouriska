@@ -17,7 +17,6 @@ use App\Entity\Liking;
 use App\Entity\Expression;
 use App\Entity\Word;
 use App\Entity\Proverb;
-use App\Entity\Thread;
 use App\Form\CommentType;
 use App\Repository\JokeRepository;
 use App\Repository\ExpressionRepository;
@@ -26,7 +25,6 @@ use App\Repository\ProverbRepository;
 use App\Utils\LikingUtils;
 use App\Utils\Linguistic;
 use App\Utils\ModelUtils;
-use App\Utils\PhpUtils;
 use Doctrine\DBAL\Query\QueryBuilder;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -34,9 +32,6 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\{ RedirectResponse, Request, Response };
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
-use FOS\CommentBundle\Model\ThreadInterface;
-use FOS\CommentBundle\Model\ThreadManagerInterface;
-use FOS\CommentBundle\Model\CommentManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 
 /**
