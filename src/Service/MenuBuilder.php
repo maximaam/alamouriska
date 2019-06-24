@@ -98,6 +98,9 @@ class MenuBuilder
             case \strpos($uri, 'blagues'):
                 $menu->getChild('Blagues')->setCurrent(true);
                 break;
+            case \strpos($uri, 'blogs'):
+                $menu->getChild('Blogs')->setCurrent(true);
+                break;
 
             default:
                 $menu->setCurrent(true);

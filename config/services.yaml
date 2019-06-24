@@ -11,7 +11,7 @@ parameters:
     app_receiver_email: 'alamouriska.app@gmail.com'
     mailer_user: 'app@alamouriska.com'
     mailer_from: 'app@alamouriska.com'
-    seo_route_domains: 'mots-algeriens|expressions-algeriennes|proverbes-algeriens|blagues-algeriennes'
+    seo_route_domains: 'mots-algeriens|expressions-algeriennes|proverbes-algeriens|blagues-algeriennes|blogs-algeriens'
     full_domain: 'https://www.alamouriska.com'
 
 services:

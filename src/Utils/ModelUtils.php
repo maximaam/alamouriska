@@ -10,7 +10,13 @@ namespace App\Utils;
  */
 class ModelUtils
 {
-    const ENTITY_DOMAIN = ['mots-algeriens' => 'word', 'expressions-algeriennes' => 'expression', 'proverbes-algeriens' => 'proverb', 'blagues-algeriennes' => 'joke'];
+    const ENTITY_DOMAIN = [
+        'mots-algeriens' => 'word',
+        'expressions-algeriennes' => 'expression',
+        'proverbes-algeriens' => 'proverb',
+        'blagues-algeriennes' => 'joke',
+        'blogs-algeriens' => 'blog'
+    ];
 
     /**
      * @param string $domain

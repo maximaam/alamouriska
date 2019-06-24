@@ -67,11 +67,29 @@
                                         <p class="mb-0 pb-2">
                                             {{ post.post | nl2br }} }}
                                         </p>
+
+                                    {% elseif domain == 'blogs-algeriens' %}
+
+                                        <h2 class="mb-3">
+                                            <a href="{{ path('post_show', {'domain': domain, 'id': post.id, 'slug': post.slug }) }}">
+                                                <i class="fa fa-book"></i>
+                                                {{ post.post }}
+                                            </a>
+                                        </h2>
+
+                                        <div>
+                                            <p class="d-inline-block mr-2">
+                                                <a href="{{ path('post_show', {'domain': domain, 'id': post.id, 'slug': post.slug }) }}">
+                                                    {%  include 'partials/post_image.html.twig' with {'type': post, 'force_height': 100 } only %}
+                                                </a>
+                                            </p>
+                                            <p class="d-inline-block" style="vertical-align: top">
+                                                {{ post.description | truncate(100) | nl2br }}
+                                            </p>
+                                        </div>
+
                                     {% else %}
-                                        <p class="border-bottom mb-0 pb-2">
-                                            <i class="fa fa-book"></i>
-                                            {{ post.post | nl2br }}
-                                        </p>
+
                                         <p class="mb-0 pt-2" title="Explication">
                                             <i class="fa fa-question-circle"></i>
                                             {{ post.description | nl2br }}
@@ -79,7 +97,7 @@
                                     {% endif %}
                                 </div>
 
-                                {% if post.imageName %}
+                                {% if post.imageName and domain != 'blogs-algeriens' %}
                                     <div class="bg-secondary">
                                         <a href="{{ path('post_show', {'domain': domain, 'id': post.id, 'slug': post.slug }) }}">
                                             {%  include 'partials/post_image.html.twig' with {'type': post } only %}

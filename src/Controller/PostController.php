@@ -9,6 +9,7 @@
 namespace App\Controller;
 
 use App\Entity\AbstractPost;
+use App\Entity\Blog;
 use App\Entity\Comment;
 use App\Entity\Deleted;
 use App\Entity\Joke;
@@ -215,7 +216,7 @@ class PostController extends AbstractController
 
     /**
      * @param FormInterface $form
-     * @param Word|Expression|Proverb|Joke $model
+     * @param Word|Expression|Proverb|Joke|Blog $model
      * @param string $domain
      * @param string $addr
      * @return RedirectResponse
@@ -271,6 +272,8 @@ class PostController extends AbstractController
 
         return $paginator->paginate($query, $page, AbstractPost::PAGINATOR_MAX);
     }
+
+
 
     /**
      * @param string $owner

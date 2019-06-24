@@ -103,6 +103,11 @@ class User extends BaseUser
     private $jokes;
 
     /**
+     * @ORM\OneToMany(targetEntity="Blog", mappedBy="user", cascade="remove")
+     */
+    private $blogs;
+
+    /**
      * Allow member to write to another member
      *
      * @ORM\Column(type="boolean")
@@ -229,6 +234,14 @@ class User extends BaseUser
     public function getJokes(): Collection
     {
         return $this->jokes;
+    }
+
+    /**
+     * @return Collection|Blog[]
+     */
+    public function getBlogs(): Collection
+    {
+        return $this->blogs;
     }
 
     /**

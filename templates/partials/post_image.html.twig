@@ -4,4 +4,4 @@
     {% set height = 200 %}
 {% endif %}
 
-<img class="d-block mx-auto mw-100" src="{{ vich_uploader_asset(type, 'imageFile') }}" alt="" height="{{ height }}">
+<img class="d-block mx-auto mw-100" src="{{ vich_uploader_asset(type, 'imageFile') }}" alt="" height="{{ force_height | default(height) }}">

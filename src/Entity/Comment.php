@@ -59,6 +59,12 @@ class Comment
      */
     private $user;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Blog", inversedBy="comments")
+     */
+    private $blog;
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -84,6 +90,18 @@ class Comment
     public function setWord(?Word $word): self
     {
         $this->word = $word;
+
+        return $this;
+    }
+
+    public function getBlog(): ?Blog
+    {
+        return $this->blog;
+    }
+
+    public function setBlog(?Blog $blog): self
+    {
+        $this->blog = $blog;
 
         return $this;
     }
@@ -155,6 +173,9 @@ class Comment
                 break;
             case $post instanceof Joke:
                 $this->setJoke($post);
+                break;
+            case $post instanceof Blog:
+                $this->setBlog($post);
                 break;
             default:
                 throw new \InvalidArgumentException('Erreur');

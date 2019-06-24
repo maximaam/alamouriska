@@ -31,6 +31,8 @@ label:
   profile: 'Profile'
   login: 'Connexion'
   login_or_sign: "Se connecter ou s'inscrire"
+  title: 'Titre'
+  content: 'Contenu'
 
   word: 'Mot'
   expression: 'Expression'
@@ -44,6 +46,7 @@ label:
   expressions-algeriennes: 'Expressions Algériennes'
   proverbes-algeriens: 'Proverbes Algériens'
   blagues-algeriennes: 'Blagues Algériennes'
+  blogs-algeriens: 'Blogs'
   your_comment: 'Ton commentaire'
 
   # Mots, Expressions...etc pages
@@ -55,6 +58,7 @@ label:
       insert_new_Expression: 'Ajouter une nouvelle expression'
       insert_new_Proverb: 'Ajouter un nouveau proverbe'
       insert_new_Joke: 'Ajouter une nouvelle blague'
+      insert_new_Blog: 'Ajouter un nouvea blog/idée'
 
 email:
   publisher:

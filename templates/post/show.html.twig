@@ -51,6 +51,10 @@
                             <p class="mb-0 pb-2">
                                 {{ post.post | nl2br }}
                             </p>
+
+                        {% elseif domain == 'blogs-algeriens' %}
+                            <h1 class="mb-3">{{ post.post }}</h1>
+                            <p>{{ post.description | nl2br }}</p>
                         {% else %}
                             <p class="p-2 border-bottom mb-0" title="{{ entity }}">
                                 <i class="fa fa-book"></i>

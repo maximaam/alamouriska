@@ -23,8 +23,8 @@ class SharedType extends AbstractType
                 ]
             ])
             ->add('question', null, [
-                'label' => 'Je pose une question',
-                'help'  => 'Coche la case si tu veux de l\'aide',
+                'label' => 'Je cherche l\'origine',
+                'help'  => 'Active la case si tu veux de l\'aide',
             ])
             ->add('imageFile', VichImageType::class, [
                 'label'         => 'Image ou Graphic',
