@@ -144,6 +144,11 @@ fieldset.form-group legend {
     padding: 5px 10px;
 }
 
+.navbar-brand .d-lg-none {
+    letter-spacing: -2px;
+    color: #00669e;
+}
+
 .nav-item:hover,
 .nav-item.current {
     background: #75bbd7 !important;
