@@ -139,6 +139,10 @@
                         <a href="https://www.facebook.com/alamouriska/">Alamouriska</a>
                     </blockquote>
                 </div>
+
+                {% if is_mobile(app.request.headers) %}
+                    <br>
+                {% endif %}
             </div>
 
             <div class="col-sm-8">

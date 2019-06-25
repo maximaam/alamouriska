@@ -3,14 +3,16 @@
 <html lang="{{ app.request.locale }}">
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %} - {{ app_name }}{% endblock %}
-        </title>
+        <title>{% block title %} - {{ app_name }}{% endblock %}</title>
 
         <meta property="fb:app_id" content="440835073385326" />
         <meta property="og:locale" content="fr_FR" />
-        <meta property="og:image" content="https://www.alamouriska.com/images/deep-sea2.jpg" />
         <meta property="og:url" content="{{ app.request.uri }}" />
         <meta property="og:type" content="{{ (app.request.get('_route') == 'index_index') ? 'website' : 'article' }}" />
+
+        {% block opengraph_image %}
+            <meta property="og:image" content="https://www.alamouriska.com/images/deep-sea2.jpg" />
+        {% endblock %}
 
         {% block opengraph_title %}
             <meta property="og:title" content="- {{ app_name }}" />
@@ -27,8 +29,7 @@
         <meta name="keywords" content="derdja algérienne, daridja, dardja, mots algériens, proverbes algériens, expressions algériennes, alamouriska, zkara, nafha, blagues algériennes">
         <meta name="description" content="{{ app_name }} est une application dédiée au rassemblement et stockage des mots algériens, du repertoire historique de la derdja.">
 
-        {% block font %}
-        {% endblock %}
+        {% block font %}{% endblock %}
 
         <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">

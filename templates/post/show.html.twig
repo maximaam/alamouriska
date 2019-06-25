@@ -2,17 +2,24 @@
 
 {% set title = ('label.' ~ domain) | trans  ~ ' : ' ~post.post | truncate(32) %}
 
-{% block title %}
-    {{ title }}
-    {{ parent() }}
-{% endblock %}
+{% block title %}{{ title }} {{ parent() }}{% endblock %}
+
+{% if post.imageName %}
+    {% block opengraph_image %}
+        <meta property="og:image" content="https://www.alamouriska.com{{ vich_uploader_asset(post, 'imageFile') }}" />
+    {% endblock %}
+{% endif %}
 
 {% block opengraph_title %}
     <meta property="og:title" content="{{ title }}" />
 {% endblock %}
 
 {% block opengraph_description %}
-    <meta property="og:description" content="Cherchez et trouvez des mots de la langue algérienne populaire, derdja" />
+    {% if post.description %}
+        <meta property="og:description" content="{{ post.description }}" />
+    {% else %}
+        <meta property="og:description" content="Cherchez et trouvez des mots de la langue algérienne populaire, derdja" />
+    {% endif %}
 {% endblock %}
 
 {% block body %}
