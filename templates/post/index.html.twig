@@ -90,8 +90,14 @@
 
                                     {% else %}
 
-                                        <p class="border-bottom mb-0 pb-2"><i class="fa fa-book"></i>{{ post.post }}</p>
-                                        <p class="mb-0 pt-2" title="Explication"><i class="fa fa-question-circle"></i>{{ post.description | raw }}</p>
+                                        <p class="border-bottom mb-0 pb-2">
+                                            <i class="fa fa-book"></i>
+                                            {{ post.post }}
+                                        </p>
+                                        <p class="mb-0 pt-2" title="Explication">
+                                            <i class="fa fa-question-circle"></i>
+                                            {{ post.description | raw }}
+                                        </p>
                                     {% endif %}
                                 </div>
 
