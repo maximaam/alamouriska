@@ -114,8 +114,8 @@ class NotificationManager
             ), 'text/html');
 
         $headers =& $messageToOwner->getHeaders();
-        $id = \md5($permalink . time());
-        $headers->addIdHeader('Message-ID', $id . 'alamouriska.com');
+        //$id = \md5($permalink . time());
+        //$headers->addIdHeader('Message-ID', $id . '@alamouriska.com');
         $headers->addTextHeader('MIME-Version', '1.0');
         $headers->addTextHeader('X-Mailer', 'PHP v' . \phpversion());
         $headers->addParameterizedHeader('Content-type', 'text/html', ['charset' => 'utf-8']);
@@ -132,8 +132,8 @@ class NotificationManager
                 ), 'text/html');
 
             $headers =& $messageToParticipants->getHeaders();
-            $id = \md5($permalink . time());
-            $headers->addIdHeader('Message-ID', $id . 'alamouriska.com');
+            //$id = \md5($permalink . time());
+            //$headers->addIdHeader('Message-ID', $id . '@alamouriska.com');
             $headers->addTextHeader('MIME-Version', '1.0');
             $headers->addTextHeader('X-Mailer', 'PHP v' . \phpversion());
             $headers->addParameterizedHeader('Content-type', 'text/html', ['charset' => 'utf-8']);
