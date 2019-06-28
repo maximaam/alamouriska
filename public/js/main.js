@@ -29,6 +29,11 @@ $(document).ready(function() {
         }
 
         let $this = $(this);
+
+        $this
+            .removeClass('js_comment-remove')
+            .html('<i class="fa fa-spinner fa-pulse"></i>');
+
         $.get('/async/'+$this.data('type')+'-remove?uid=' + $this.data('uid'), function (response) {
             if (+response.status === 1) {
                 $this.parents('li').fadeOut();
