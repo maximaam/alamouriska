@@ -86,6 +86,8 @@ easy_admin:
                     - enabled
                     - facebookId
                     - { property: 'avatarName', label: 'Image', type: 'image', base_path: '/images/profiles/' }
+                    - allowPostNotification
+                    - allowMemberContact
             form:
                 fields: ['username', 'email', 'roles', 'avatarName']
         Page:

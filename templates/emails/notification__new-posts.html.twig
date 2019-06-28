@@ -1,0 +1,11 @@
+<h3>Bonjour alamouriskeur,</h3>
+
+<p>Voici la liste des publications récentes sur {{ app_name }}</p>
+<ul>
+    {% for post in posts %}
+        <li>
+            <a href="{{ post.permalink }}" target="_blank">{{ post.post }} (Par: {{ post.username }})</a>
+        </li>
+    {% endfor %}
+</ul>
+<p>A bientôt,<br>{{ app_name }}</p>

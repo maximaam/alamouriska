@@ -2,8 +2,6 @@
 
 namespace App\Command;
 
-use App\Entity\AbstractPost;
-use App\Entity\CommentMailQueue;
 use App\Entity\Expression;
 use App\Entity\Joke;
 use App\Entity\LatestPosts;
