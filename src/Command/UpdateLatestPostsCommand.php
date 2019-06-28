@@ -82,9 +82,10 @@ class UpdateLatestPostsCommand extends Command
 
         $posts = [];
 
-        /** @var AbstractPost $obj */
+        /** @var Word|Expression|Proverb|Joke $obj */
         foreach ($all as $obj) {
             $post = $obj->getPost();
+            $user = $obj->getUser();
 
             if (\strlen($post) >= 32) {
                 $post = \substr($obj->getPost(), 0, 32) . '...';
@@ -92,6 +93,9 @@ class UpdateLatestPostsCommand extends Command
 
             $posts[$obj->getCreatedAt()->getTimestamp()] = [
                 'post'  => $post,
+                'username'  => $user->getUsername(),
+                'userId'  => $user->getId(),
+                'hasAvatar' => null !== $user->getAvatarName(),
                 'permalink' => $this->urlGenerator->generate('post_show', [
                     'id'    => $obj->getId(),
                     'domain'    => ModelUtils::getDomainByPost($obj),
@@ -107,6 +111,9 @@ class UpdateLatestPostsCommand extends Command
             $latest = (new LatestPosts())
                 ->setCreatedAt((new \DateTime())->setTimestamp($timestamp))
                 ->setPost($post['post'])
+                ->setUsername($post['username'])
+                ->setUserId($post['userId'])
+                ->setHasAvatar($post['hasAvatar'])
                 ->setPermalink($post['permalink'])
             ;
 

@@ -1,9 +1,24 @@
 {% set avatar = asset('images/default-avatar.png') %}
 
-{% if current_user.avatarName is not null %}
-    {% set avatar = vich_uploader_asset(current_user, 'avatarFile') %}
-{% endif %}
 
-<a href="{{ path(pathTo | default('user_show'), { 'username': current_user.username }) }}" title="Profil: {{ current_user.username }}" class="{{ link_classes | default('user img') }}">
-    <img class="align-self-start rounded-circle mr-2 {{ classes|default(null) }}" src="{{ avatar }}" alt="{{ current_user.username }}" width="{{ size|default(64) }}" height="{{ size|default(64) }}">
-</a>
+{% if current_user is defined %}
+
+    {% if current_user.avatarName is not null %}
+        {% set avatar = vich_uploader_asset(current_user, 'avatarFile') %}
+    {% endif %}
+
+    <a href="{{ path(pathTo | default('user_show'), { 'username': current_user.username }) }}" title="Profil: {{ current_user.username }}" class="{{ link_classes | default('user img') }}">
+        <img class="align-self-start rounded-circle mr-2 {{ classes|default(null) }}" src="{{ avatar }}" alt="{{ current_user.username }}" width="{{ size|default(64) }}" height="{{ size|default(64) }}">
+    </a>
+
+{% else %} {# Avat without user instance #}
+
+    {% if avatar is same as(true) %}
+        {% set avatar = asset('images/profiles/' ~ username ~ '.jpg') %}
+    {% endif %}
+
+    <a href="{{ path(pathTo | default('user_show'), { 'username': username }) }}" title="Profil: {{ username }}" class="{{ link_classes | default('user img') }}">
+        <img class="align-self-start rounded-circle mr-2 {{ classes|default(null) }}" src="{{ avatar }}" alt="{{ username }}" width="{{ size|default(64) }}" height="{{ size|default(64) }}">
+    </a>
+
+{% endif %}

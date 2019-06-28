@@ -19,7 +19,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 class Joke extends AbstractPost
 {
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="jokes")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="jokes", fetch="EAGER")
      * @ORM\JoinColumn(nullable=false)
      */
     protected $user;

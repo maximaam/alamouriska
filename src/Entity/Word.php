@@ -45,7 +45,7 @@ class Word extends AbstractPost
     private $inArabic;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="words")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="words", fetch="EAGER")
      * @ORM\JoinColumn(nullable=false)
      */
     protected $user;

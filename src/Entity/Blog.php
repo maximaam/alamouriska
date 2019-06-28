@@ -68,7 +68,7 @@ class Blog
     protected $imageFile;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="blogs")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="blogs", fetch="EAGER")
      * @ORM\JoinColumn(nullable=false)
      */
     protected $user;

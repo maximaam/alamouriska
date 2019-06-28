@@ -41,11 +41,14 @@
                 {% endif %}
 
                 <div class="card mb-3">
-                    <div class="card-header font-weight-bold">Les derniers ajouts</div>
+                    <div class="card-header font-weight-bold">Les publications récentes</div>
                     <div class="card-body">
-                        <ul class="pl-3 mb-2">
-                            {% for latest_post in latest_posts %}
-                                <li><a href="{{ latest_post.permalink }}">{{ latest_post.post }}</a></li>
+                        <ul class="pl-0 mb-2">
+                            {%  for latest_post in latest_posts %}
+                                <li class="media mb-2 border-bottom">
+                                    {%  include 'partials/avatar.html.twig' with {'username': latest_post.username, 'size': 32 } only %}
+                                    <a href="{{ latest_post.permalink }}" title="Par: {{ latest_post.username }} - Le: {{ latest_post.createdAt | date }}">{{ latest_post.post }}</a>
+                                </li>
                             {% endfor %}
                         </ul>
                     </div>
@@ -133,16 +136,6 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="fb-page d-xs-none mb-3" data-href="https://www.facebook.com/alamouriska/" data-tabs="timeline" data-width="350" data-height="" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true">
-                    <blockquote cite="https://www.facebook.com/alamouriska/" class="fb-xfbml-parse-ignore">
-                        <a href="https://www.facebook.com/alamouriska/">Alamouriska</a>
-                    </blockquote>
-                </div>
-
-                {% if is_mobile(app.request.headers) %}
-                    <br>
-                {% endif %}
             </div>
 
             <div class="col-sm-8">
@@ -174,7 +167,7 @@
 
                 <div class="card" id="latest-users">
                     <div class="card-header font-weight-bold">Membres récents</div>
-                    <div class="card-body p-2">
+                    <ul class="card-body p-2">
                         {%  for latest_user in latest_users %}
                             <li class="media mb-3 p-1">
                                 {%  include 'partials/avatar.html.twig' with {'current_user': latest_user } only %}
@@ -185,7 +178,7 @@
                                 </div>
                             </li>
                         {% endfor %}
-                    </div>
+                    </ul>
                 </div>
             </div>
 

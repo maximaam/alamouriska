@@ -8,12 +8,23 @@
 {% block body %}
 
     <div class="container">
-        <div class="card text-dark">
-            <div class="card-header">
-                <h1>{{ page.title }}</h1>
+        <div class="row">
+            <div class="col-sm-8">
+                <div class="card text-dark mb-3">
+                    <div class="card-header">
+                        <h1>{{ page.title }}</h1>
+                    </div>
+                    <div class="card-body">
+                        <p>{{ page.description | raw }}</p>
+                    </div>
+                </div>
             </div>
-            <div class="card-body">
-                <p class="text-justify">{{ page.description | raw }}</p>
+            <div class="col-sm-4">
+                <div class="fb-page d-xs-none mb-3" data-href="https://www.facebook.com/alamouriska/" data-tabs="timeline" data-width="350" data-height="" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true">
+                    <blockquote cite="https://www.facebook.com/alamouriska/" class="fb-xfbml-parse-ignore">
+                        <a href="https://www.facebook.com/alamouriska/">Alamouriska</a>
+                    </blockquote>
+                </div>
             </div>
         </div>
     </div>

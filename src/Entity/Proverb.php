@@ -20,7 +20,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 class Proverb extends AbstractPost
 {
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="proverbs")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="proverbs", fetch="EAGER")
      * @ORM\JoinColumn(nullable=false)
      */
     protected $user;

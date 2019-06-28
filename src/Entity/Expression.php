@@ -25,7 +25,7 @@ class Expression extends AbstractPost
     protected $post;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="expressions")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="expressions", fetch="EAGER")
      * @ORM\JoinColumn(nullable=false)
      */
     protected $user;
