@@ -18,8 +18,6 @@ use App\Repository\UserRepository;
 use App\Utils\ModelUtils;
 use App\Utils\PhpUtils;
 use FOS\UserBundle\Model\UserInterface;
-use FOS\UserBundle\Model\UserManager;
-use FOS\UserBundle\Model\UserManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Entity\Liking;
 use App\Repository\LikingRepository;
@@ -29,7 +27,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
@@ -198,18 +195,22 @@ class AsyncController extends AbstractController
         $receiver = $userRepository->find($request->get('receiver'));
 
         if ($sender && $receiver) {
-            $message = (new \Swift_Message('Message privé de ' . $sender->getUsername()))
-                ->setFrom($this->getParameter('app_notifier_email'), 'ALAMOURISKA')
-                ->setTo($receiver->getEmail())
-                ->setBody($this->render('emails/message__to-member.html.twig', [
-                    'sender'  => $sender,
-                    'receiver' => $receiver,
-                    'message' => $request->get('message')]
-                ), 'text/html');
+            try {
+                $message = (new \Swift_Message('Message privé de ' . $sender->getUsername()))
+                    ->setFrom($this->getParameter('app_notifier_email'), $this->getParameter('app_name'))
+                    ->setTo($receiver->getEmail())
+                    ->setBody($this->render('emails/message__to-member.html.twig', [
+                            'sender'  => $sender,
+                            'receiver' => $receiver,
+                            'message' => $request->get('message')]
+                    ), 'text/html');
 
-            $mailer->send($message);
+                $mailer->send($message);
 
-            return new Response('<i class="fa fa-thumbs-up"></i> Merci. <br>Ton message a été envoyé.');
+                return new Response('<i class="fa fa-thumbs-up"></i> Merci. <br>Ton message a été envoyé.');
+            } catch(\Exception $e) {
+                \error_log($e->getMessage());
+            }
         }
 
         return new Response('Erreur inconnue.');
