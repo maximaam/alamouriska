@@ -199,7 +199,7 @@ class AsyncController extends AbstractController
 
         if ($sender && $receiver) {
             $message = (new \Swift_Message('Message privé de ' . $sender->getUsername()))
-                ->setFrom('alamouriska.app@gmail.com', 'ALAMOURISKA')
+                ->setFrom($this->getParameter('app_notifier_email'), 'ALAMOURISKA')
                 ->setTo($receiver->getEmail())
                 ->setBody($this->render('emails/message__to-member.html.twig', [
                     'sender'  => $sender,
