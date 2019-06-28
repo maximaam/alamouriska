@@ -10,6 +10,7 @@ use App\Entity\User;
 use App\Entity\Word;
 use App\Service\NotificationManager;
 use App\Utils\ModelUtils;
+use App\Utils\PhpUtils;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -106,6 +107,7 @@ class NewPostsNotifierCommand extends Command
                 continue;
             }
 
+            $entity = \strtolower(PhpUtils::getClassName($obj));
             $post = $obj->getPost();
 
             if (\strlen($post) >= 32) {
@@ -115,11 +117,7 @@ class NewPostsNotifierCommand extends Command
             $posts[] = [
                 'post' => $post,
                 'username' => $obj->getUser()->getUsername(),
-                'permalink' => $this->urlGenerator->generate('post_show', [
-                    'id' => $obj->getId(),
-                    'domain' => ModelUtils::getDomainByPost($obj),
-                    'slug' => $obj->getSlug()
-                ], UrlGeneratorInterface::ABSOLUTE_URL)
+                'permalink' => $this->container->getParameter('full_domain') . '/' . ModelUtils::getDomainByEntity($entity) . '/' . $obj->getId() . '/' . $obj->getSlug()
             ];
         }
 
