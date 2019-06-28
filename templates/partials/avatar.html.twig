@@ -1,6 +1,5 @@
 {% set avatar = asset('images/default-avatar.png') %}
 
-
 {% if current_user is defined %}
 
     {% if current_user.avatarName is not null %}
@@ -13,7 +12,7 @@
 
 {% else %} {# Avat without user instance #}
 
-    {% if avatar is same as(true) %}
+    {% if has_avatar is defined and has_avatar is same as(true) %}
         {% set avatar = asset('images/profiles/' ~ username ~ '.jpg') %}
     {% endif %}
 
