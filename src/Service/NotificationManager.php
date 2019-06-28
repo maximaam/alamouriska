@@ -113,6 +113,13 @@ class NotificationManager
                     'post'  => $post, 'post_url' => $permalink]
             ), 'text/html');
 
+        $headers =& $messageToOwner->getHeaders();
+        $id = \md5($permalink . time());
+        $headers->addIdHeader('Message-ID', $id . 'alamouriska.com');
+        $headers->addTextHeader('MIME-Version', '1.0');
+        $headers->addTextHeader('X-Mailer', 'PHP v' . \phpversion());
+        $headers->addParameterizedHeader('Content-type', 'text/html', ['charset' => 'utf-8']);
+
         $this->mailer->send($messageToOwner);
 
         if (!empty($recipients)) {
@@ -123,6 +130,13 @@ class NotificationManager
                 ->setBody($this->twig->render('emails/comment__to-recipients.html.twig', [
                         'post'  => $post, 'post_url' => $permalink]
                 ), 'text/html');
+
+            $headers =& $messageToParticipants->getHeaders();
+            $id = \md5($permalink . time());
+            $headers->addIdHeader('Message-ID', $id . 'alamouriska.com');
+            $headers->addTextHeader('MIME-Version', '1.0');
+            $headers->addTextHeader('X-Mailer', 'PHP v' . \phpversion());
+            $headers->addParameterizedHeader('Content-type', 'text/html', ['charset' => 'utf-8']);
 
             $this->mailer->send($messageToParticipants);
         }
