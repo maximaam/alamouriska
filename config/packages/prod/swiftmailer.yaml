@@ -1,8 +1,8 @@
 swiftmailer:
   transport: "smtp"
   host:      "smtp.strato.de"
-  username:  "hermes@alamouriska.com"
-  password:  "$hermesAlamouriska15"
+  username:  "facteur@alamouriska.com"
+  password:  "15$SamingoMail$15"
   port:      "587"
   encryption: "tls"
   spool:
