@@ -6,16 +6,16 @@
 
 {% block opengraph_image %}
     {% if post.imageName %}
-        <meta property="og:image" content="https://www.alamouriska.com{{ vich_uploader_asset(post, 'imageFile') }}" />
+        <meta property="og:image" content="https://www.alamouriska.com{{ vich_uploader_asset(post, 'imageFile') }}">
     {% elseif post.user.avatarName is not null %}
-        <meta property="og:image" content="https://www.alamouriska.com{{ vich_uploader_asset(post.user, 'avatarFile') }}" />
+        <meta property="og:image" content="https://www.alamouriska.com{{ vich_uploader_asset(post.user, 'avatarFile') }}">
     {% else %}
         {{ parent() }}
     {% endif %}
 {% endblock %}
 
 {% block opengraph_title %}
-    <meta property="og:title" content="{{ title }} - Par: {{ post.user.username }}" />
+    <meta property="og:title" content="{{ title }} - Par: {{ post.user.username }}">
 {% endblock %}
 
 {% block opengraph_description %}

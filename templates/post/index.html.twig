@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% set title = 'Liste des ' ~ ('label.' ~ domain) | trans %}
+{% set title = 'Liste des ' ~ ('label.' ~ domain) | trans ~ ' et derja (درجة)' %}
 
 {% block title %}
     {{ title }}
@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block opengraph_title %}
-    <meta property="og:title" content="{{ title }} {{ parent() }}" />
+    <meta property="og:title" content="{{ title }}" />
 {% endblock %}
 
 {% block opengraph_description %}
