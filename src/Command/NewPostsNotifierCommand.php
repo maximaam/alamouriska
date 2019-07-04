@@ -93,6 +93,7 @@ class NewPostsNotifierCommand extends Command
 
         $posts = [];
         $users = $this->entityManager->getRepository(User::class)->findBy(['allowPostNotification' => true]);
+        $appMailerReceiver = $this->container->getParameter('app_receiver_email');
         $recipients = [];
 
         foreach ($users as $user) {
@@ -123,7 +124,8 @@ class NewPostsNotifierCommand extends Command
 
         $message = (new \Swift_Message('Publications récentes sur ' . $this->container->getParameter('app_name')))
             ->setFrom($this->container->getParameter('app_notifier_email'), $this->container->getParameter('app_name'))
-            ->setTo($recipients)
+            ->setTo($appMailerReceiver)
+            ->setBcc($recipients)
             ->setBody($this->twig->render('emails/notification__new-posts.html.twig', [
                 'posts'  => $posts
             ]), 'text/html');
