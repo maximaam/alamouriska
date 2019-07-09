@@ -92,7 +92,10 @@ class NewPostsNotifierCommand extends Command
         $io->note(\sprintf('Starting notifications. Found %d case(s)', \count($all)));
 
         $posts = [];
-        $users = $this->entityManager->getRepository(User::class)->findBy(['allowPostNotification' => true]);
+        $users = $this->entityManager
+            ->getRepository(User::class)
+            ->findBy(['enabled' => true, 'allowPostNotification' => true]);
+
         $appMailerReceiver = $this->container->getParameter('app_receiver_email');
         $recipients = [];
 
