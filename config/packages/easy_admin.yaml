@@ -80,9 +80,10 @@ easy_admin:
                 fields:
                     - id
                     - createdAt
+                    - remoteAddr
                     - username
                     - email
-                    - roles
+                    #- roles
                     - enabled
                     - facebookId
                     - { property: 'avatarName', label: 'Image', type: 'image', base_path: '/images/profiles/' }

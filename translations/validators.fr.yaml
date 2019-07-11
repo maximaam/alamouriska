@@ -1,2 +1,4 @@
 msg:
   duplicate_post: 'Désolé. Ce post a déjà été alamouriské!'
+  image_jpeg_png_only: 'Format JPEG ou PNG seulement.'
+  image_max_size: '1 MB max pour les images'

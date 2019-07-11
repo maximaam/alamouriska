@@ -60,8 +60,9 @@ abstract class AbstractPost
      * @var File
      * @Assert\Image(
      *     maxSize = "1M",
-     *     mimeTypes = {"image/jpeg"},
-     *     mimeTypesMessage = "msg.jpeg_only"
+     *     maxSizeMessage = "msg.image_max_size",
+     *     mimeTypes = {"image/jpeg", "image/jpg", "image/png"},
+     *     mimeTypesMessage = "msg.image_jpeg_png_only"
      * )
      * @Vich\UploadableField(mapping="posts_image", fileNameProperty="imageName")
      */
