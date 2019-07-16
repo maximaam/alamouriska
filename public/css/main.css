@@ -253,14 +253,14 @@ fieldset.form-group legend {
     padding: 10px;
     border-radius: .25rem;
 }
-/*
-.list-comments li {
-    pointer-events: none;
+
+.list-comments {
+    word-break: break-word;
 }
 .list-comments li button, .list-comments li a {
     pointer-events: auto;
 }
-*/
+
 
 .list-comments li:hover {
     background-color: #eeeeee;
