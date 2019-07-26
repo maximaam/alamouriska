@@ -2,6 +2,7 @@
 
 namespace App\Command;
 
+use App\Entity\Blog;
 use App\Entity\Expression;
 use App\Entity\Joke;
 use App\Entity\LatestPosts;
@@ -86,8 +87,9 @@ class NewPostsNotifierCommand extends Command
         $expressions = $this->entityManager->getRepository(Expression::class)->findBy([], ['id' => 'DESC'], 5);
         $proverbs = $this->entityManager->getRepository(Proverb::class)->findBy([], ['id' => 'DESC'], 5);
         $jokes = $this->entityManager->getRepository(Joke::class)->findBy([], ['id' => 'DESC'], 5);
+        $blogs = $this->entityManager->getRepository(Blog::class)->findBy([], ['id' => 'DESC'], 5);
 
-        $all = \array_merge($words, $expressions, $proverbs, $jokes);
+        $all = \array_merge($words, $expressions, $proverbs, $jokes, $blogs);
 
         $io->note(\sprintf('Starting notifications. Found %d case(s)', \count($all)));
 
@@ -107,7 +109,7 @@ class NewPostsNotifierCommand extends Command
 
         /** @var Word|Expression|Proverb|Joke $obj */
         foreach ($all as $obj) {
-            if ($obj->getCreatedAt() < (new \DateTime())->modify('-1 day')) {
+            if ($obj->getCreatedAt() < (new \DateTime())->modify('-7 day')) {
                 continue;
             }
 
