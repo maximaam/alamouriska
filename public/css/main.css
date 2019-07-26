@@ -165,10 +165,6 @@ fieldset.form-group legend {
     text-transform: capitalize !important;
 }
 
-.nav-item.last .nav-link {
-    color: mediumvioletred !important;
-}
-
 #terme {
     border-radius: .25rem 0 0 .25rem;
 }
