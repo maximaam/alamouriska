@@ -2,7 +2,7 @@ swiftmailer:
   transport: "smtp"
   host:      "smtp.strato.de"
   username:  "facteur@alamouriska.com"
-  password:  "mimosa-facteur%%%%"
+  password:  "%15MouRiskA16%"
   port:      "587"
   encryption: "tls"
   spool:
