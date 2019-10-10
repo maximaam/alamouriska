@@ -41,6 +41,28 @@ $(document).ready(function() {
         });
     });
 
+    //Edit a comment
+    $(document).on('click', '.js_comment-form-edit', function(e) {
+        e.preventDefault();
+
+        let $this = $(this),
+            uid = +$this.data('uid');
+
+        let $target = $('.form-comment-edit-' + uid);
+
+        if ($target.children().length === 0) {
+            let comment = $('.comment-item-' + uid).text();
+            let $form = $('<form>', {method: 'post', action: '/async/comment-edit/'+uid, class: 'comment-form-edit'})
+                .append($('<textarea/>', {name: 'comment_edit', id: 'comment-edit-'+uid, class: 'w-100', required: 'required', minLength: 25, maxLength: 2000, rows: 5}).val(comment))
+                .append($('<button/>', {class: 'btn btn-happy d-block', type: 'submit'}).html('OK'))
+            ;
+
+            $target.append($form);
+        } else {
+            $target.html('');
+        }
+    });
+
     $('#member-contact').submit(function(event){
         event.preventDefault(); //prevent default action
         let $form = $(this),
@@ -218,6 +240,36 @@ $(document).ready(function() {
             }
         });
     });
+
+    $(document).on('submit', '.comment-form-edit', function(e){
+        e.preventDefault();
+
+        let $form = $(e.target),
+            $btn = $form.find(':submit');
+
+        $btn.html('<i class="fa fa-spinner fa-pulse"></i>');
+        $btn.prop('disabled', true);
+
+        $.ajax({
+            url: $form.attr('action'),
+            method: 'POST',
+            data: $form.serialize(),
+            success: function(response) {
+                $btn.html('OK');
+                $btn.prop('disabled', false);
+                $form.parent().slideUp(function() {
+                    $(this).empty().show();
+                });
+                $('.comment-item-'+response.uid).html($('#comment-edit-'+response.uid).val());
+            },
+            error: function(jqXHR, status, error) {
+                alert('Erreur. Essaie encore.');
+                $btn.prop('disabled', false);
+            }
+        });
+    });
+
+
 });
 
 $(document)

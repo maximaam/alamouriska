@@ -269,6 +269,41 @@ class AsyncController extends AbstractController
     }
 
     /**
+     * @Route("/comment-edit/{id}", name="comment_edit")
+     *
+     * @param Request $request
+     * @param int $id
+     * @return JsonResponse
+     */
+    public function commentEdit(Request $request, int $id): JsonResponse
+    {
+        $user = $this->getUser();
+
+        if ($user) {
+            $manager = $this->getDoctrine()->getManager();
+
+            /** @var Comment $comment */
+            $comment = $manager->find(Comment::class, $id);
+
+            if (null !== $comment && $comment->getUser() === $user) {
+                $message = $request->request->get('comment_edit');
+
+                if (\strlen($message) >= 25 && strlen($message) <= 2000) {
+                    $comment->setMessage($message);
+                    $manager->flush();
+
+                    return new JsonResponse([
+                        'status' => self::STATUS_SUCCESS,
+                        'uid'   => $id,
+                    ], 200);
+                }
+            }
+        }
+
+        return new JsonResponse(['status' => self::STATUS_ERROR], 410);
+    }
+
+    /**
      * @Route("/comment-remove", name="comment_remove")
      *
      * @param Request $request
@@ -279,14 +314,14 @@ class AsyncController extends AbstractController
         $user = $this->getUser();
 
         if ($user) {
-            $entityManager = $this->getDoctrine()->getManager();
+            $manager = $this->getDoctrine()->getManager();
 
             /** @var Comment $comment */
-            $comment = $entityManager->find(Comment::class, (int)$request->get('uid'));
+            $comment = $manager->find(Comment::class, (int)$request->get('uid'));
 
             if (null !== $comment && $comment->getUser() === $user) {
-                $entityManager->remove($comment);
-                $entityManager->flush();
+                $manager->remove($comment);
+                $manager->flush();
 
                 return new JsonResponse([
                     'status' => self::STATUS_SUCCESS,

@@ -5,10 +5,16 @@
         <p class="mt-0 mb-1">
             {%  include 'partials/action_by.html.twig' with {'user': object.user, 'action_date': object.createdAt } only %}
         </p>
-        <p>{{ object.message | nl2br | wordwrap }}</p>
+        <p class="comment-item-{{ object.id }}">{{ object.message | nl2br }}</p>
+
+        <div class="form-comment-edit-{{ object.id }}">
+        </div>
     </div>
 
     {% if app.user and object.user.id == app.user.id %}
+        <button class="btn btn-happy float-right js_comment-form-edit mr-1" data-uid="{{ object.id }}" data-type="{{ object_type }}">
+            <i class="fa fa-edit" title="Modifier"></i>
+        </button>
         <button class="btn btn-danger float-right js_comment-remove" data-uid="{{ object.id }}" data-type="{{ object_type }}">
             <i class="fa fa-trash" title="Supprimer"></i>
         </button>
