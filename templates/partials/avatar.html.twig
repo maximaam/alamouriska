@@ -10,7 +10,7 @@
         <img class="align-self-start rounded-circle mr-2 {{ classes|default(null) }}" src="{{ avatar }}" alt="{{ current_user.username }}" width="{{ size|default(64) }}" height="{{ size|default(64) }}">
     </a>
 
-{% else %} {# Avat without user instance #}
+{% else %} {# Avatar without user instance #}
 
     {% if has_avatar is defined and has_avatar is same as(true) %}
         {% set avatar = asset('images/profiles/' ~ username ~ '.jpg') %}
