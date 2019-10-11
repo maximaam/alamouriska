@@ -40,7 +40,7 @@ class IndexController extends AbstractController
                 'journal_form' => $this->createForm(JournalType::class, new Journal())->createView(),
                 'journals' => $this->getDoctrine()->getRepository(Journal::class)->findBy([], ['id' => 'DESC'], 20),
                 'latest_posts' => $this->getDoctrine()->getRepository(LatestPosts::class)->findBy([], [], 10),
-                'latest_comments' => $this->getDoctrine()->getRepository(Comment::class)->findBy([], [], 10),
+                'latest_comments' => $this->getDoctrine()->getRepository(Comment::class)->findBy([], ['id' => 'DESC'], 10),
                 'most_commented'=> [],
                 'ratings' => $this->getDoctrine()->getRepository(Rating::class)->findAll(),
                 'has_rated' => null !== $this->getDoctrine()->getRepository(Rating::class)->findOneBy(['addr' => $request->getClientIp()]),
