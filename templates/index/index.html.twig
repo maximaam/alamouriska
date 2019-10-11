@@ -55,6 +55,23 @@
                 </div>
 
                 <div class="card mb-3">
+                    <div class="card-header font-weight-bold">Les commentaires récents</div>
+                    <div class="card-body">
+                        <ul class="pl-0 mb-2">
+                            {%  for latest_comment in latest_comments %}
+
+                                <li class="media mb-2 border-bottom">
+                                    {%  include 'partials/avatar.html.twig' with {'username': latest_comment.user.username, 'size': 32, 'has_avatar': latest_comment.user.avatarName != null } only %}
+                                    <a href="{{ path('post_show', { 'domain': domain_by_post(latest_comment.post), 'id': latest_comment.post.id, 'slug': latest_comment.post.slug }) }}">
+                                        {{ latest_comment.message | truncate(30) | wordwrap }}
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card mb-3">
                     <div class="card-header font-weight-bold">Les plus énigmatiques</div>
                     <div class="card-body">
                         <ul class="pl-3 mb-2">

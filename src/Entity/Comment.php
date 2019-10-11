@@ -181,4 +181,31 @@ class Comment
                 throw new \InvalidArgumentException('Erreur');
         }
     }
+
+    /**
+     * Decides which model is being commented
+     *
+     */
+    public function getPost()
+    {
+        switch (true) {
+            case null !== $this->getWord():
+                return $this->getWord();
+                break;
+            case null !== $this->getExpression():
+                return $this->getExpression();
+                break;
+            case null !== $this->getProverb():
+                return $this->getProverb();
+                break;
+            case null !== $this->getJoke():
+                return $this->getJoke();
+                break;
+            case null !== $this->getBlog():
+                return $this->getBlog();
+                break;
+            default:
+                throw new \InvalidArgumentException('Erreur');
+        }
+    }
 }

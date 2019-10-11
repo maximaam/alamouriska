@@ -76,7 +76,6 @@ $(document).ready(function() {
         });
     });
 
-
     let $bubbles = $('.bubbles');
     if ($bubbles.length > 0) {
         (function($){
@@ -205,10 +204,10 @@ $(document).ready(function() {
     let $jumbotron = $('.jumbotron');
     if ($jumbotron.length > 0) {
         setTimeout(function () {
-            $('.jumbotron').slideUp(6000, function () {
+            $('.jumbotron').slideUp(3000, function () {
                 $jumbotron.remove();
             });
-        }, 6000);
+        }, 3000);
     }
 
     $(document).on('submit', '.comment-form', function(e){
@@ -240,7 +239,6 @@ $(document).ready(function() {
             }
         });
     });
-
     $(document).on('submit', '.comment-form-edit', function(e){
         e.preventDefault();
 
@@ -268,8 +266,6 @@ $(document).ready(function() {
             }
         });
     });
-
-
 });
 
 $(document)

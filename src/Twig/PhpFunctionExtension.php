@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace App\Twig;
 
+use App\Entity\Expression;
+use App\Entity\Joke;
+use App\Entity\Proverb;
+use App\Entity\Word;
 use App\Utils\ModelUtils;
 use App\Utils\PhpUtils;
 use Symfony\Component\HttpFoundation\HeaderBag;
@@ -35,6 +39,7 @@ class PhpFunctionExtension extends AbstractExtension
     {
         return [
             new TwigFunction('domain_by_entity', [$this, 'domainByEntity']),
+            new TwigFunction('domain_by_post', [$this, 'domainByPost']),
             new TwigFunction('is_mobile', [$this, 'isMobile']),
         ];
     }
@@ -47,6 +52,16 @@ class PhpFunctionExtension extends AbstractExtension
     public function domainByEntity(string $class): string
     {
         return ModelUtils::getDomainByEntity(\strtolower(PhpUtils::getClassName($class)));
+    }
+
+    /**
+     * @param Word|Expression|Proverb|Joke $post $post
+     * @return string
+     * @throws \ReflectionException
+     */
+    public function domainByPost($post): string
+    {
+        return ModelUtils::getDomainByPost($post);
     }
 
     /**
