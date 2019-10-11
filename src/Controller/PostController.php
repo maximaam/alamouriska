@@ -33,6 +33,9 @@ use Symfony\Component\HttpFoundation\{ RedirectResponse, Request, Response };
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Contracts\Cache\CacheInterface;
+use Psr\Cache\InvalidArgumentException;
+use Symfony\Contracts\Cache\ItemInterface;
 
 /**
  * Class PostController
@@ -50,13 +53,17 @@ class PostController extends AbstractController
      *
      * @param Request $request
      * @param PaginatorInterface $paginator
+     * @param CacheInterface $cache
      * @return Response
+     * @throws InvalidArgumentException
      */
-    public function index(Request $request, PaginatorInterface $paginator): Response
+    public function index(Request $request, PaginatorInterface $paginator, CacheInterface $cache): Response
     {
         $domain = $request->get('domain');
         $entity = ModelUtils::getEntityByDomain($domain);
         $class = 'App\\Entity\\' . $entity;
+        $pageId = $request->query->getInt('page', 1);
+        $isEnigma = $request->query->getBoolean('enigmatique', false);
 
         /** @var  Word|Expression|Proverb|Joke $model */
         $model = (new $class())->setUser($this->getUser());
@@ -68,12 +75,24 @@ class PostController extends AbstractController
             return $this->submitForm($form, $model, $domain, $request->getClientIp());
         }
 
+        $posts = $cache->get('post_index_posts', function(ItemInterface $item) use ($paginator, $model, $pageId, $isEnigma) {
+            $item->expiresAfter(3600);
+
+            return $this->getPaginator($paginator, \get_class($model), $pageId, $isEnigma);
+        });
+
+        $likings = $cache->get('post_index_likings', function(ItemInterface $item) use ($entity) {
+            $item->expiresAfter(3600);
+
+            return $this->getLikings($entity);
+        });
+
         return $this->render('post/index.html.twig', [
             'domain' => $domain,
             'entity' => $entity,
+            'posts'  => $posts,
+            'likings' => $likings,
             'form'  => $form->createView(),
-            'posts'  => $this->getPaginator($paginator, \get_class($model), $request->query->getInt('page', 1), $request->query->getBoolean('enigmatique', false)),
-            'likings' => $this->getLikings($entity)
         ]);
     }
 

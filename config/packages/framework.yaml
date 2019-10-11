@@ -18,7 +18,5 @@ framework:
     php_errors:
         log: true
 
-    templating: { engines: ['twig'] }
-
     # Comment bundle
     http_method_override: true
