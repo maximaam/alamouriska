@@ -33,50 +33,23 @@ class IndexController extends AbstractController
      */
     public function index(Request $request, CacheInterface $cache): Response
     {
-        $latestUsers = $cache->get('index_latest_users', function (ItemInterface $item) {
+        $response = $cache->get('index_index', function (ItemInterface $item) use ($request) {
             $item->expiresAfter(3600);
-            return $this->getDoctrine()->getRepository(User::class)->findBy(['enabled' => true], ['id' => 'DESC'], 6);
+            $response =  $this->render('index/index.html.twig', [
+                'journal_form' => $this->createForm(JournalType::class, new Journal())->createView(),
+                'journals' => $this->getDoctrine()->getRepository(Journal::class)->findBy([], ['id' => 'DESC'], 20),
+                'latest_posts' => $this->getDoctrine()->getRepository(LatestPosts::class)->findBy([], [], 10),
+                'latest_comments' => $this->getDoctrine()->getRepository(Comment::class)->findBy([], ['id' => 'DESC'], 10),
+                'ratings' => $this->getDoctrine()->getRepository(Rating::class)->findAll(),
+                'has_rated' => null !== $this->getDoctrine()->getRepository(Rating::class)->findOneBy(['addr' => $request->getClientIp()]),
+                'page' => $this->getDoctrine()->getRepository(Page::class)->findOneBy(['alias' => 'homepage']),
+                'latest_users'  => $this->getDoctrine()->getRepository(User::class)->findBy(['enabled' => true], ['id' => 'DESC'], 6),
+            ]);
+
+            $response->headers->setCookie(new Cookie('jumbotron', 'done', \strtotime('now + 1 week')));
+
+            return $response;
         });
-
-        $latestPosts = $cache->get('index_latest_posts', function (ItemInterface $item) {
-            $item->expiresAfter(3600);
-            return $this->getDoctrine()->getRepository(LatestPosts::class)->findBy([], [], 10);
-        });
-
-        $latestComments = $cache->get('index_latest_comments', function (ItemInterface $item) {
-            $item->expiresAfter(3600);
-            return $this->getDoctrine()->getRepository(Comment::class)->findBy([], ['id' => 'DESC'], 10);
-        });
-
-
-        $page = $cache->get('index_page', function (ItemInterface $item) {
-            $item->expiresAfter(3600 * 12);
-            return $this->getDoctrine()->getRepository(Page::class)->findOneBy(['alias' => 'homepage']);
-        });
-
-        $ratings = $cache->get('index_ratings', function (ItemInterface $item) {
-            $item->expiresAfter(3600 * 6);
-            return $this->getDoctrine()->getRepository(Rating::class)->findAll();
-        });
-
-        $hasRated = $cache->get('index_has_rated', function (ItemInterface $item) use ($request) {
-            $item->expiresAfter(3600 * 365);
-            return null !== $this->getDoctrine()->getRepository(Rating::class)->findOneBy(['addr' => $request->getClientIp()]);
-        });
-
-        $response =  $this->render('index/index.html.twig', [
-            'journal_form' => $this->createForm(JournalType::class, new Journal())->createView(),
-            'journals' => $this->getDoctrine()->getRepository(Journal::class)->findBy([], ['id' => 'DESC'], 20),
-            'latest_posts' => $latestPosts,
-            'latest_comments' => $latestComments,
-            'most_commented'=> [],
-            'ratings' => $ratings,
-            'has_rated' => $hasRated,
-            'page' => $page,
-            'latest_users'  => $latestUsers,
-        ]);
-
-        $response->headers->setCookie(new Cookie('jumbotron', 'done', \strtotime('now + 1 week')));
 
         return $response;
     }

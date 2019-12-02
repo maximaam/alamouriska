@@ -89,24 +89,6 @@
                     </div>
                 </div>
 
-
-                <!--
-                <div class="card mb-2">
-                    <div class="card-header font-weight-bold">Les plus commentés</div>
-                    <div class="card-body">
-                        {% if most_commented | length > 0 %}
-                            <ul class="pl-4 mb-2">
-                                {% for post in most_commented %}
-                                    <li title="{{ post.ownerPost }}">
-                                        <a href="{{ post.permalink }}">{{ post.ownerPost | truncate(20) }} ({{ post.numComments }})</a>
-                                    </li>
-                                {% endfor %}
-                            </ul>
-                        {% endif %}
-                    </div>
-                </div>
-                -->
-
                 <div class="card bg-sky font-weight-bold mb-3">
                     <div class="card-header">Noter {{ app_name }}</div>
 

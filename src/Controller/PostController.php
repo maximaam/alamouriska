@@ -62,8 +62,6 @@ class PostController extends AbstractController
         $domain = $request->get('domain');
         $entity = ModelUtils::getEntityByDomain($domain);
         $class = 'App\\Entity\\' . $entity;
-        $pageId = $request->query->getInt('page', 1);
-        $isEnigma = $request->query->getBoolean('enigmatique', false);
 
         /** @var  Word|Expression|Proverb|Joke $model */
         $model = (new $class())->setUser($this->getUser());
@@ -75,25 +73,25 @@ class PostController extends AbstractController
             return $this->submitForm($form, $model, $domain, $request->getClientIp());
         }
 
-        $posts = $cache->get('post_index_posts_' . $entity, function(ItemInterface $item) use ($paginator, $model, $pageId, $isEnigma) {
+        $response = $cache->get('post_index_posts_' . $entity, function(ItemInterface $item) use ($request, $form, $entity, $domain, $model, $paginator) {
             $item->expiresAfter(3600);
 
-            return $this->getPaginator($paginator, \get_class($model), $pageId, $isEnigma);
+            $pageId = $request->query->getInt('page', 1);
+            $isEnigma = $request->query->getBoolean('enigmatique', false);
+
+            $response = $this->render('post/index.html.twig', [
+                'domain' => $domain,
+                'entity' => $entity,
+                'posts'  => $this->getPaginator($paginator, \get_class($model), $pageId, $isEnigma),
+                'likings' => $this->getLikings($entity),
+                'form'  => $form->createView(),
+            ]);
+
+            return $response;
         });
 
-        $likings = $cache->get('post_index_likings', function(ItemInterface $item) use ($entity) {
-            $item->expiresAfter(3600);
+        return $response;
 
-            return $this->getLikings($entity);
-        });
-
-        return $this->render('post/index.html.twig', [
-            'domain' => $domain,
-            'entity' => $entity,
-            'posts'  => $posts,
-            'likings' => $likings,
-            'form'  => $form->createView(),
-        ]);
     }
 
     /**
@@ -238,15 +236,6 @@ class PostController extends AbstractController
     private function submitForm(FormInterface $form, $model, string $domain, string $addr): RedirectResponse
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-
-        /*
-        dd($form);
-
-        /*
-        if ($form->getName() === 'joke') {
-            $model->setDescription('blabla');
-        }
-        */
 
         $model->setSlug(\substr(Linguistic::toSlug($model->getPost()), 0, AbstractPost::SLUG_LIMIT));
         $model->setAddr($addr);
