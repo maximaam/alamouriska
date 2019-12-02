@@ -54,7 +54,7 @@ class Comment
     private $joke;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="comments")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="comments", fetch="EAGER")
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;

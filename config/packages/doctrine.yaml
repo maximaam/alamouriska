@@ -19,6 +19,7 @@ doctrine:
     orm:
         #metadata_cache_driver: apcu
         #auto_generate_proxy_classes: true
+        #query_cache_driver: apc
         naming_strategy: doctrine.orm.naming_strategy.underscore
         auto_mapping: true
         mappings:

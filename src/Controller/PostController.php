@@ -75,7 +75,7 @@ class PostController extends AbstractController
             return $this->submitForm($form, $model, $domain, $request->getClientIp());
         }
 
-        $posts = $cache->get('post_index_posts', function(ItemInterface $item) use ($paginator, $model, $pageId, $isEnigma) {
+        $posts = $cache->get('post_index_posts_' . $entity, function(ItemInterface $item) use ($paginator, $model, $pageId, $isEnigma) {
             $item->expiresAfter(3600);
 
             return $this->getPaginator($paginator, \get_class($model), $pageId, $isEnigma);
