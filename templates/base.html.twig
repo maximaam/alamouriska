@@ -35,7 +35,7 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
         <link rel="stylesheet" href="{{ asset('css/main.css') }}">
-        <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
+        <link rel="shortcut icon" sizes="32x32" href="{{ asset('favicon.ico') }}" type="image/x-icon">
     </head>
 
     <body{{ app.request.get('_route') == 'index_index' ? ' class="cp"'}} data-fb-logged="{{ app.user ? 'true' : 'false' }}">
