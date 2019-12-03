@@ -73,6 +73,7 @@ class PostController extends AbstractController
             return $this->submitForm($form, $model, $domain, $request->getClientIp());
         }
 
+        /*
         $response = $cache->get('post_index_posts_' . $entity, function(ItemInterface $item) use ($request, $form, $entity, $domain, $model, $paginator) {
             $item->expiresAfter(3600);
 
@@ -89,6 +90,18 @@ class PostController extends AbstractController
 
             return $response;
         });
+        */
+
+        $pageId = $request->query->getInt('page', 1);
+        $isEnigma = $request->query->getBoolean('enigmatique', false);
+
+        $response = $this->render('post/index.html.twig', [
+            'domain' => $domain,
+            'entity' => $entity,
+            'posts'  => $this->getPaginator($paginator, \get_class($model), $pageId, $isEnigma),
+            'likings' => $this->getLikings($entity),
+            'form'  => $form->createView(),
+        ]);
 
         return $response;
 
