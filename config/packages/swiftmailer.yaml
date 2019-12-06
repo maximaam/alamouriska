@@ -1,17 +1,11 @@
 swiftmailer:
     #url: '%env(MAILER_URL)%'
-    transport: "smtp"
-    host:      "smtp.gmail.com"
-    username:  "alamouriska.app@gmail.com"
-    password:  "15$Lacasbah$15"
+    transport: "##############"
+    host:      "##############"
+    username:  "##############"
+    password:  "############"
     auth_mode: "login"
     port:      "587"
     encryption: "tls"
-    #stream_options:
-        #ssl:
-            #allow_self_signed: true
-            #verify_peer: false
-            #verify_peer_name: false
     spool:
         type: 'memory'
-        #path: '%kernel.project_dir%/var/spool/'

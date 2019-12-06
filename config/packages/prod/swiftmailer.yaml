@@ -1,10 +1,9 @@
 swiftmailer:
-  transport: "smtp"
-  host:      "smtp.strato.de"
-  username:  "facteur@alamouriska.com"
-  password:  "%%15MouRiskA16%%"
+  transport: '%env(MAILER_TRANSPORT)%'
+  host:      '%env(MAILER_HOST)%'
+  username:  '%env(MAILER_USERNAME)%'
+  password:  '%env(MAILER_PASSWORD)%'
   port:      "587"
   encryption: "tls"
   spool:
     type: 'memory'
-    #path: '%kernel.project_dir%/var/spool/'
