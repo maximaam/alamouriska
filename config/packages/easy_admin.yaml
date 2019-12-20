@@ -13,6 +13,8 @@ easy_admin:
                     - inArabic
                     #- description
                     - { property: 'imageName', label: 'Image', type: 'image', base_path: '/images/posts/' }
+                    - imageWidth
+                    - imageHeight
                     - question
                     - user
                     - comments
@@ -21,7 +23,7 @@ easy_admin:
                     - post
                     - description
             form:
-                fields: ['post', 'inTamazight', 'inArabic', 'description', 'question']
+                fields: ['post', 'inTamazight', 'inArabic', 'description', 'imageWidth', 'imageHeight', 'question']
         Expression:
             class: App\Entity\Expression
             list:
@@ -31,11 +33,13 @@ easy_admin:
                     - post
                     #- description
                     - { property: 'imageName', label: 'Image', type: 'image', base_path: '/images/posts/' }
+                    - imageWidth
+                    - imageHeight
                     - question
                     - user
                     - comments
                 form:
-                    fields: ['post', 'description', 'question']
+                    fields: ['post', 'description', 'imageWidth', 'imageHeight', 'question']
         Proverb:
             class: App\Entity\Proverb
             list:
@@ -45,11 +49,13 @@ easy_admin:
                     - post
                     #- description
                     - { property: 'imageName', label: 'Image', type: 'image', base_path: '/images/posts/' }
+                    - imageWidth
+                    - imageHeight
                     - question
                     - user
                     - comments
             form:
-                fields: ['post', 'description', 'question']
+                fields: ['post', 'description', 'imageWidth', 'imageHeight', 'question']
         Joke:
             class: App\Entity\Joke
             list:
@@ -61,6 +67,25 @@ easy_admin:
                     - comments
             form:
                 fields: ['post', 'description']
+        Blog:
+            class: App\Entity\Blog
+            list:
+                fields:
+                    - id
+                    - createdAt
+                    - post
+                    - { property: 'imageName', label: 'Image', type: 'image', base_path: '/images/posts/' }
+                    - imageWidth
+                    - imageHeight
+                    - user
+                    - comments
+            show:
+                fields:
+                    - post
+                    - description
+            form:
+                fields: ['post', 'description', 'imageWidth', 'imageHeight' ]
+
         Comment:
             class: App\Entity\Comment
             list:

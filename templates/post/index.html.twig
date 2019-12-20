@@ -80,7 +80,7 @@
                                         <div>
                                             <p class="d-inline-block mr-2">
                                                 <a href="{{ path('post_show', {'domain': domain, 'id': post.id, 'slug': post.slug }) }}">
-                                                    {%  include 'partials/post_image.html.twig' with {'type': post, 'force_height': 100 } only %}
+                                                    {%  include 'partials/post_image.html.twig' with {'post': post, 'force_height': 100 } only %}
                                                 </a>
                                             </p>
                                             <p class="d-inline-block" style="vertical-align: top">
@@ -104,7 +104,7 @@
                                 {% if post.imageName and domain != 'blogs-algeriens' %}
                                     <div class="bg-secondary">
                                         <a href="{{ path('post_show', {'domain': domain, 'id': post.id, 'slug': post.slug }) }}">
-                                            {%  include 'partials/post_image.html.twig' with {'post': post } only %}
+                                            {%  include 'partials/post_image.html.twig' %}
                                         </a>
                                     </div>
                                 {% endif %}

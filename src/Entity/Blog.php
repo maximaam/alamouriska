@@ -68,6 +68,16 @@ class Blog
     protected $imageFile;
 
     /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $imageWidth;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $imageHeight;
+
+    /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="blogs", fetch="EAGER")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -84,17 +94,26 @@ class Blog
         $this->comments = new ArrayCollection();
     }
 
-
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @return string|null
+     */
     public function getPost(): ?string
     {
         return $this->post;
     }
 
+    /**
+     * @param string $title
+     * @return $this
+     */
     public function setPost(string $title): self
     {
         $this->post = $title;
@@ -191,6 +210,44 @@ class Blog
         if (null !== $imageFile) {
             $this->updatedAt = new \DateTimeImmutable();
         }
+
+        return $this;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getImageWidth(): ?int
+    {
+        return $this->imageWidth;
+    }
+
+    /**
+     * @param int|null $imageWidth
+     * @return $this
+     */
+    public function setImageWidth(?int $imageWidth): self
+    {
+        $this->imageWidth = $imageWidth;
+
+        return $this;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getImageHeight(): ?int
+    {
+        return $this->imageHeight;
+    }
+
+    /**
+     * @param int|null $imageHeight
+     * @return $this
+     */
+    public function setImageHeight(?int $imageHeight): self
+    {
+        $this->imageHeight = $imageHeight;
 
         return $this;
     }
