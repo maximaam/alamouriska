@@ -11,7 +11,6 @@ easy_admin:
                     - post
                     - inTamazight
                     - inArabic
-                    #- description
                     - { property: 'imageName', label: 'Image', type: 'image', base_path: '/images/posts/' }
                     - imageWidth
                     - imageHeight
@@ -31,15 +30,14 @@ easy_admin:
                     - id
                     - createdAt
                     - post
-                    #- description
                     - { property: 'imageName', label: 'Image', type: 'image', base_path: '/images/posts/' }
                     - imageWidth
                     - imageHeight
                     - question
                     - user
                     - comments
-                form:
-                    fields: ['post', 'description', 'imageWidth', 'imageHeight', 'question']
+            form:
+                fields: ['post', 'description', 'imageWidth', 'imageHeight', 'question']
         Proverb:
             class: App\Entity\Proverb
             list:
@@ -47,7 +45,6 @@ easy_admin:
                     - id
                     - createdAt
                     - post
-                    #- description
                     - { property: 'imageName', label: 'Image', type: 'image', base_path: '/images/posts/' }
                     - imageWidth
                     - imageHeight
