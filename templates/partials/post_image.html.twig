@@ -1,7 +1,9 @@
-{% set height = 375 %}
+{% set width = post.imageWidth %}
+{% set height = post.imageHeight %}
 
 {% if is_mobile(app.request.headers) is same as(true) %}
-    {% set height = 200 %}
+    {% set width = width/2 %}
+    {% set height = height/2 %}
 {% endif %}
 
-<img class="d-block mx-auto mw-100" src="{{ vich_uploader_asset(type, 'imageFile') }}" alt="" height="{{ force_height | default(height) }}">
+<img class="d-block mx-auto mw-100 mh-100" src="{{ vich_uploader_asset(post, 'imageFile') }}" alt="{{ post.slug }}" width="{{ force_width | default(width) }}" height="{{ force_height | default(height) }}">

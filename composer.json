@@ -5,6 +5,7 @@
         "php": "^7.2",
         "ext-ctype": "*",
         "ext-iconv": "*",
+        "ext-gd": "*",
         "easycorp/easyadmin-bundle": "^2.1",
         "friendsofsymfony/user-bundle": "^2.1",
         "knplabs/knp-menu-bundle": "^2.2",

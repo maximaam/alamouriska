@@ -69,6 +69,16 @@ abstract class AbstractPost
     protected $imageFile;
 
     /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $imageWidth;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $imageHeight;
+
+    /**
      * @ORM\Column(type="boolean")
      */
     protected $question = false;
@@ -109,8 +119,6 @@ abstract class AbstractPost
 
         return $this;
     }
-
-
 
     /**
      * @return string|null
@@ -170,6 +178,30 @@ abstract class AbstractPost
         if (null !== $imageFile) {
             $this->updatedAt = new \DateTimeImmutable();
         }
+
+        return $this;
+    }
+
+    public function getImageWidth(): ?int
+    {
+        return $this->imageWidth;
+    }
+
+    public function setImageWidth(?int $imageWidth): self
+    {
+        $this->imageWidth = $imageWidth;
+
+        return $this;
+    }
+
+    public function getImageHeight(): ?int
+    {
+        return $this->imageHeight;
+    }
+
+    public function setImageHeight(?int $imageHeight): self
+    {
+        $this->imageHeight = $imageHeight;
 
         return $this;
     }

@@ -104,7 +104,7 @@
                                 {% if post.imageName and domain != 'blogs-algeriens' %}
                                     <div class="bg-secondary">
                                         <a href="{{ path('post_show', {'domain': domain, 'id': post.id, 'slug': post.slug }) }}">
-                                            {%  include 'partials/post_image.html.twig' with {'type': post } only %}
+                                            {%  include 'partials/post_image.html.twig' with {'post': post } only %}
                                         </a>
                                     </div>
                                 {% endif %}

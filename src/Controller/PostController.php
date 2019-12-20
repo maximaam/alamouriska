@@ -34,8 +34,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Contracts\Cache\CacheInterface;
-use Psr\Cache\InvalidArgumentException;
-use Symfony\Contracts\Cache\ItemInterface;
 
 /**
  * Class PostController
@@ -55,7 +53,6 @@ class PostController extends AbstractController
      * @param PaginatorInterface $paginator
      * @param CacheInterface $cache
      * @return Response
-     * @throws InvalidArgumentException
      */
     public function index(Request $request, PaginatorInterface $paginator, CacheInterface $cache): Response
     {

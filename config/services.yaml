@@ -41,6 +41,6 @@ services:
             - { name: knp_menu.menu_builder, method: createMainMenu, alias: main }
             - { name: knp_menu.menu_builder, method: createFooterMenu, alias: footer }
 
-    #App\EventListener\ConfirmEmailChangeSubscriber:
-        #tags:
-            #- { name: kernel.}
+    App\EventListener\ImageHandler:
+        tags:
+            - { name: kernel.event_listener, event: vich_uploader.post_upload , method: resizeImage }
