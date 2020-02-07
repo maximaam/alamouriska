@@ -54,7 +54,7 @@ class IndexController extends AbstractController
         });
         */
 
-        $response =  $this->render('index/index.html.twig', [
+        return $this->render('index/index.html.twig', [
             'journal_form' => $this->createForm(JournalType::class, new Journal())->createView(),
             'journals' => $this->getDoctrine()->getRepository(Journal::class)->findBy([], ['id' => 'DESC'], 20),
             'latest_posts' => $this->getDoctrine()->getRepository(LatestPosts::class)->findBy([], [], 10),
@@ -65,9 +65,7 @@ class IndexController extends AbstractController
             'latest_users'  => $this->getDoctrine()->getRepository(User::class)->findBy(['enabled' => true], ['id' => 'DESC'], 6),
         ]);
 
-        $response->headers->setCookie(new Cookie('jumbotron', 'done', \strtotime('now + 1 week')));
-
-        return $response;
+        //$response->headers->setCookie(new Cookie('jumbotron', 'done', \strtotime('now + 1 week')));
     }
 
     /**

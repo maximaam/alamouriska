@@ -5,7 +5,7 @@ body {
 main {
     min-height: 80rem;
     padding: 20px 0;
-    margin-top: 60px;
+    margin-top: 50px;
 }
 
 .start-page h1 {
@@ -57,7 +57,10 @@ a, a:hover {
 }
 
 .navbar {
-    background: #87ceeb;
+    height: 50px;
+    background: #fff;
+    padding: 0 1rem;
+    border-bottom: 3px solid #87ceeb;
     /*
     background: #87CEEB url(../images/bg-sky.jpg) no-repeat;
     background-size: contain;
@@ -107,6 +110,7 @@ fieldset.form-group legend {
     color:#FF912C;
 }
 
+/*
 .navbar::before{
     content: "";
     position: absolute;
@@ -131,7 +135,7 @@ fieldset.form-group legend {
     background-image: radial-gradient(circle at 10px 15px, #001a33 12px, transparent 13px);
     animation: animate 25s linear infinite;
 }
-
+*/
 .nav-item {
     -webkit-transition: all .2s ease-in-out;
     -o-transition: all .2s ease-in-out;

@@ -76,49 +76,6 @@ $(document).ready(function() {
         });
     });
 
-    let $bubbles = $('.bubbles');
-    if ($bubbles.length > 0) {
-        (function($){
-
-            // Define a blank array for the effect positions. This will be populated based on width of the title.
-            let bArray = [];
-            // Define a size array, this will be used to vary bubble sizes
-            let sArray = [4,6,8,10,16,25];
-
-            // Push the header width values to bArray
-            for (let i = 0; i < $bubbles.width(); i++) {
-                bArray.push(i);
-            }
-
-            // Function to select random array element
-            // Used within the setInterval a few times
-            function randomValue(arr) {
-                return arr[Math.floor(Math.random() * arr.length)];
-            }
-
-            // setInterval function used to create new bubble every 350 milliseconds
-            setInterval(function(){
-
-                // Get a random size, defined as variable so it can be used for both width and height
-                let size = randomValue(sArray);
-                // New bubble appeneded to div with it's size and left position being set inline
-                // Left value is set through getting a random value from bArray
-                $bubbles.append('<div class="bubble" style="left: ' + randomValue(bArray) + 'px; width: ' + size + 'px; height:' + size + 'px;"></div>');
-
-                // Animate each bubble to the top (bottom 100%) and reduce opacity as it moves
-                // Callback function used to remove finsihed animations from the page
-                $('.bubble').animate({
-                        'bottom': '100%',
-                        'opacity' : '-=0.7'
-                    }, 3000, function(){
-                        $(this).remove()
-                    }
-                );
-            }, 350);
-
-        })($);
-    }
-
     $('input:file').on('change', function() {
         let $target = $(this);
         let $parent = $target.parents('fieldset');
@@ -201,6 +158,7 @@ $(document).ready(function() {
 
     });
 
+    /*
     let $jumbotron = $('.jumbotron');
     if ($jumbotron.length > 0) {
         setTimeout(function () {
@@ -209,6 +167,7 @@ $(document).ready(function() {
             });
         }, 3000);
     }
+     */
 
     $(document).on('submit', '.comment-form', function(e){
         e.preventDefault();

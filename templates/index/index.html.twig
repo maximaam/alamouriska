@@ -16,30 +16,8 @@
 
     <div class="container start-page">
 
-        {% if app.request.cookies.get('jumbotron') is same as(null) %}
-        <div class="jumbotron">
-            <div class="bubbles" style="width: 100%">
-                <h1>{{ app_name }} - {{ 'slogan' | trans }}</h1>
-            </div>
-        </div>
-        {% endif %}
-
-        <div class="row text-dark mt-3">
+        <div class="row text-dark">
             <div class="col-sm-4">
-
-                {% if app.user is same as(null) %} {# For non users only #}
-                <div class="card bg-happy mb-3">
-                    <div class="card-header font-weight-bold">{{ app_name }}, keskissik?</div>
-
-                    <div class="card-body">
-                        {% if page | length %}
-                            <p>{{ page.description | raw }}</p>
-                            <a href="{{ path('index_page', { alias: 'keskissik' }) }}" class="btn btn-primary">En savoir plus</a>
-                        {% endif %}
-                    </div>
-                </div>
-                {% endif %}
-
                 <div class="card mb-3">
                     <div class="card-header font-weight-bold">Les publications récentes</div>
                     <div class="card-body">
@@ -134,6 +112,20 @@
                         </div>
                     </div>
                 </div>
+
+                {% if app.user is same as(null) %} {# For non users only #}
+                    <div class="card bg-happy mb-3">
+                        <div class="card-header font-weight-bold">{{ app_name }}, keskissik?</div>
+
+                        <div class="card-body">
+                            {% if page | length %}
+                                <p>{{ page.description | raw }}</p>
+                                <a href="{{ path('index_page', { alias: 'keskissik' }) }}" class="btn btn-primary">En savoir plus</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endif %}
+
             </div>
 
             <div class="col-sm-8">
@@ -178,6 +170,7 @@
                         {% endfor %}
                     </ul>
                 </div>
+
             </div>
 
         </div>

@@ -38,7 +38,7 @@
         <link rel="shortcut icon" sizes="32x32" href="{{ asset('favicon.ico') }}" type="image/x-icon">
     </head>
 
-    <body{{ app.request.get('_route') == 'index_index' ? ' class="cp"'}} data-fb-logged="{{ app.user ? 'true' : 'false' }}">
+    <body data-fb-logged="{{ app.user ? 'true' : 'false' }}">
 
     <script src="{{ asset('js/fb.js') }}"></script>
 
