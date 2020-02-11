@@ -60,6 +60,10 @@
 
                     {{ knp_menu_render('main') }}
 
+                    {% block search %}
+                        {{ include('partials/search.html.twig', { domain : 'tout' }) }}
+                    {% endblock %}
+
                     <div class="user-cont mr-2">
                         <!--
                         <a href="/#journal-public" class="d-lg-none btn btn-primary">Journal</a>
@@ -76,10 +80,6 @@
                             </a>
                         {% endif %}
                     </div>
-
-                    {% block search %}
-                        {{ include('partials/search.html.twig', { domain : 'tout' }) }}
-                    {% endblock %}
 
                 </div>
             </div>

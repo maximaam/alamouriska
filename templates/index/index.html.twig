@@ -30,6 +30,15 @@
                             {% endfor %}
                         </ul>
                     </div>
+                    <div class="card-footer">
+                        <select name="quick-post" id="quick-post" class="form-control" onchange="location.href=this.value">
+                            <option value="">Publier un mot, expression...</option>
+                            <option value="{{ path('post_index', {'domain':'mots-algeriens'}) }}">Publier Un Mot</option>
+                            <option value="{{ path('post_index', {'domain':'expressions-algeriennes'}) }}">Publier Une Expresion</option>
+                            <option value="{{ path('post_index', {'domain':'proverbes-algeriens'}) }}">Publier Un Proverbe</option>
+                            <option value="{{ path('post_index', {'domain':'blagues-algeriennes'}) }}">Publier Une Blague</option>
+                        </select>
+                    </div>
                 </div>
 
                 <div class="card mb-3">

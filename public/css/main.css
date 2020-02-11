@@ -350,13 +350,19 @@ fieldset.form-group legend {
 }
 
 @media only screen and (min-width : 320px) and (max-width : 1024px) {
+    .navbar-collapse {
+        background: #87ceeb;
+        padding: 0 10px;
+    }
+    .form-inline {
+        display: block !important;
+    }
     .nav-item {
         border-right: 0;
         text-align: left;
     }
     .user-cont {
-        border-top: 1px solid #fff;
-        padding: 10px 0;
+        padding: 5px 0;
         text-align: center;
     }
 
