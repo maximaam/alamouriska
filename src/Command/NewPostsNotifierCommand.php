@@ -5,11 +5,9 @@ namespace App\Command;
 use App\Entity\Blog;
 use App\Entity\Expression;
 use App\Entity\Joke;
-use App\Entity\LatestPosts;
 use App\Entity\Proverb;
 use App\Entity\User;
 use App\Entity\Word;
-use App\Service\NotificationManager;
 use App\Utils\ModelUtils;
 use App\Utils\PhpUtils;
 use Doctrine\ORM\EntityManagerInterface;
@@ -20,6 +18,9 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Twig\Environment;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 /**
  * Class NewPostsNotifierCommand
@@ -54,6 +55,14 @@ class NewPostsNotifierCommand extends Command
      */
     private $mailer;
 
+    /**
+     * NewPostsNotifierCommand constructor.
+     * @param EntityManagerInterface $entityManager
+     * @param ContainerInterface $container
+     * @param UrlGeneratorInterface $urlGenerator
+     * @param Environment $twig
+     * @param \Swift_Mailer $mailer
+     */
     public function __construct(EntityManagerInterface $entityManager, ContainerInterface $container, UrlGeneratorInterface $urlGenerator, Environment $twig, \Swift_Mailer $mailer)
     {
         parent::__construct();
@@ -73,13 +82,13 @@ class NewPostsNotifierCommand extends Command
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
-     * @return int|void|null
+     * @return int
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      * @throws \ReflectionException
-     * @throws \Twig\Error\LoaderError
-     * @throws \Twig\Error\RuntimeError
-     * @throws \Twig\Error\SyntaxError
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
 
@@ -90,6 +99,10 @@ class NewPostsNotifierCommand extends Command
         $blogs = $this->entityManager->getRepository(Blog::class)->findBy([], ['id' => 'DESC'], 5);
 
         $all = \array_merge($words, $expressions, $proverbs, $jokes, $blogs);
+
+        if (empty($all)) {
+            exit(1);
+        }
 
         $io->note(\sprintf('Starting notifications. Found %d case(s)', \count($all)));
 
@@ -138,5 +151,7 @@ class NewPostsNotifierCommand extends Command
         $this->mailer->send($message);
 
         $io->success('Finished.');
+
+        return 0;
     }
 }
