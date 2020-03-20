@@ -26,12 +26,13 @@ class WordType extends SharedType
     {
         $builder
             ->add('post', null, [
-                'label' => 'label.latin_char',
+                'label' => 'label.word',
                 'help' => 'label.required_no_spaces',
                 'attr'  => [
                     'autocomplete' => 'off'
                 ]
             ])
+            /*
             ->add('inTamazight', null, [
                 'label' => 'label.tamazight_char',
                 'help'  => 'label.optional_wished',
@@ -46,7 +47,9 @@ class WordType extends SharedType
                     'autocomplete' => 'off',
                     'dir'   => 'rtl'
                 ]
-            ]);
+            ])
+            */
+        ;
 
         parent::buildForm($builder, $options);
     }

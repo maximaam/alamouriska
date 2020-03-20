@@ -52,17 +52,11 @@
                     <div class="p-3">
                         {% if domain == 'mots-algeriens' %}
                             <h1 class="mb-2" title="Mot">{{ post.post }}</h1>
-                            <h2 class="mt-0 pb-2 text-muted border-bottom">
-                                <span>{{ 'label.tamazight_char' | trans }}: {{ post.inTamazight | default('...') }}</span>
-                                <br>
-                                <span>{{ 'label.arabic_char' | trans }}: {{ post.inArabic | default('...') }}</span>
-                            </h2>
                             <p>{{ post.description | nl2br }}</p>
                         {% elseif domain == 'blagues-algeriennes' %}
                             <p class="mb-0 pb-2">
                                 {{ post.post | nl2br }}
                             </p>
-
                         {% elseif domain == 'blogs-algeriens' %}
                             <h1 class="mb-3">{{ post.post }}</h1>
                             <p>{{ post.description | nl2br }}</p>

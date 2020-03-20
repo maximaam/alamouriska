@@ -58,9 +58,9 @@ a, a:hover {
 
 .navbar {
     height: 50px;
-    background: #fff;
+    background: #87ceeb;
     padding: 0 1rem;
-    border-bottom: 3px solid #87ceeb;
+    border-bottom: 1px solid #fff;
     /*
     background: #87CEEB url(../images/bg-sky.jpg) no-repeat;
     background-size: contain;

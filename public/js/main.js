@@ -86,10 +86,10 @@ $(document).ready(function() {
     });
 
     if ($('.almrsk-post').length) {
-        $('#word_inTamazight_help').append('<a href="https://www.lexilogos.com/clavier/tamazight.htm" target="_blank" class="ml-2">Clavier Tamazight <i class="fa fa-external-link"></i></a>');
-        $('#word_inArabic_help').append('<a href="https://www.lexilogos.com/clavier/araby.htm" target="_blank" class="ml-2">Clavier Arabe <i class="fa fa-external-link"></i></a>');
-
-        $('#expression_post_help').append('<a href="https://www.lexilogos.com/clavier/tamazight.htm" target="_blank" class="ml-2" title="Clavier Tamazight">Tamazight</a> | <a href="https://www.lexilogos.com/clavier/araby.htm" target="_blank" title="Clavier Arabe">Arabe <i class="fa fa-external-link"></i></a>');
+        $('#word_post_help').append('<br><a href="https://www.lexilogos.com/clavier/tamazight.htm" target="_blank" class="mr-2">Clavier Tamazight <i class="fa fa-external-link"></i></a> <a href="https://www.lexilogos.com/clavier/araby.htm" target="_blank">Clavier Arabe <i class="fa fa-external-link"></i></a>');
+        //$('#word_inTamazight_help').append('<a href="https://www.lexilogos.com/clavier/tamazight.htm" target="_blank" class="ml-2">Clavier Tamazight <i class="fa fa-external-link"></i></a>');
+        //$('#word_inArabic_help').append('<a href="https://www.lexilogos.com/clavier/araby.htm" target="_blank" class="ml-2">Clavier Arabe <i class="fa fa-external-link"></i></a>');
+        //$('#expression_post_help').append('<a href="https://www.lexilogos.com/clavier/tamazight.htm" target="_blank" class="ml-2" title="Clavier Tamazight">Tamazight</a> | <a href="https://www.lexilogos.com/clavier/araby.htm" target="_blank" title="Clavier Arabe">Arabe <i class="fa fa-external-link"></i></a>');
 
         $('#word_question').parents('.form-group').addClass('almrsk-form-question');
     }

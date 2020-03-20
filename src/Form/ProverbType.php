@@ -5,7 +5,6 @@ namespace App\Form;
 use App\Entity\Proverb;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Vich\UploaderBundle\Form\Type\VichImageType;
 
 /**
  * Class ProverbeType
