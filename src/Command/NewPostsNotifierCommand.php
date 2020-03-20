@@ -140,6 +140,11 @@ class NewPostsNotifierCommand extends Command
             ];
         }
 
+        if (empty($posts)) {
+            $io->writeln('Exit. No posts.');
+            exit(1);
+        }
+
         $message = (new \Swift_Message('Publications récentes sur ' . $this->container->getParameter('app_name')))
             ->setFrom($this->container->getParameter('app_notifier_email'), $this->container->getParameter('app_name'))
             ->setTo($appMailerReceiver)
