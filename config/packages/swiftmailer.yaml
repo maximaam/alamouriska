@@ -5,5 +5,6 @@ swiftmailer:
     password:  '%env(MAILER_PASSWORD)%'
     port:      '%env(MAILER_PORT)%'
     encryption: '%env(MAILER_ENCRYPTION)%'
+    auth_mode: 'login'
     spool:
         type: 'memory'

@@ -10,7 +10,6 @@ use App\Entity\Proverb;
 use App\Utils\ModelUtils;
 use App\Utils\PhpUtils;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\Routing\Generator\UrlGenerator;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig;
@@ -113,7 +112,7 @@ class NotificationManager
                     'post'  => $post, 'post_url' => $permalink]
             ), 'text/html');
 
-        $headers =& $messageToOwner->getHeaders();
+        $headers = $messageToOwner->getHeaders();
         //$id = \md5($permalink . time());
         //$headers->addIdHeader('Message-ID', $id . '@alamouriska.com');
         $headers->addTextHeader('MIME-Version', '1.0');
@@ -131,7 +130,7 @@ class NotificationManager
                         'post'  => $post, 'post_url' => $permalink]
                 ), 'text/html');
 
-            $headers =& $messageToParticipants->getHeaders();
+            $headers = $messageToParticipants->getHeaders();
             //$id = \md5($permalink . time());
             //$headers->addIdHeader('Message-ID', $id . '@alamouriska.com');
             $headers->addTextHeader('MIME-Version', '1.0');
