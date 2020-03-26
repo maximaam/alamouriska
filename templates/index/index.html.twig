@@ -25,19 +25,21 @@
                             {%  for latest_post in latest_posts %}
                                 <li class="media mb-2 border-bottom">
                                     {%  include 'partials/avatar.html.twig' with {'username': latest_post.username, 'size': 32, 'has_avatar': latest_post.hasAvatar } only %}
-                                    <a href="{{ latest_post.permalink }}" title="Par: {{ latest_post.username }} - Le: {{ latest_post.createdAt | date }}">{{ latest_post.post }}</a>
+                                    <a href="{{ latest_post.permalink }}" title="Par: {{ latest_post.username }} - Le: {{ latest_post.createdAt | date }}" class="fit-content">{{ latest_post.post }}</a>
                                 </li>
                             {% endfor %}
                         </ul>
                     </div>
                     <div class="card-footer">
-                        <select name="quick-post" id="quick-post" class="form-control" onchange="location.href=this.value">
-                            <option value="">Publier un mot, expression...</option>
-                            <option value="{{ path('post_index', {'domain':'mots-algeriens'}) }}#post-anchor">Publier Un Mot</option>
-                            <option value="{{ path('post_index', {'domain':'expressions-algeriennes'}) }}#post-anchor">Publier Une Expresion</option>
-                            <option value="{{ path('post_index', {'domain':'proverbes-algeriens'}) }}#post-anchor">Publier Un Proverbe</option>
-                            <option value="{{ path('post_index', {'domain':'blagues-algeriennes'}) }}#post-anchor">Publier Une Blague</option>
-                        </select>
+                        <label for="quick-post" class="d-block">
+                            <select name="quick-post" id="quick-post" class="form-control bg-happy" onchange="location.href=this.value">
+                                <option value="">Publier un mot, expression...</option>
+                                <option value="{{ path('post_index', {'domain':'mots-algeriens'}) }}#post-anchor">Publier Un Mot</option>
+                                <option value="{{ path('post_index', {'domain':'expressions-algeriennes'}) }}#post-anchor">Publier Une Expresion</option>
+                                <option value="{{ path('post_index', {'domain':'proverbes-algeriens'}) }}#post-anchor">Publier Un Proverbe</option>
+                                <option value="{{ path('post_index', {'domain':'blagues-algeriennes'}) }}#post-anchor">Publier Une Blague</option>
+                            </select>
+                        </label>
                     </div>
                 </div>
 

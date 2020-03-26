@@ -8,6 +8,10 @@ main {
     margin-top: 50px;
 }
 
+.fit-content {
+    width: fit-content;
+}
+
 .start-page h1 {
     visibility: hidden;
 }
