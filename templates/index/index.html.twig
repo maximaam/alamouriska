@@ -21,14 +21,14 @@
                 <div class="card mb-3">
                     <div class="card-header font-weight-bold">Les publications récentes</div>
                     <div class="card-body">
-                        <ul class="pl-0 mb-2">
-                            {%  for latest_post in latest_posts %}
-                                <li class="media mb-2 border-bottom">
-                                    {%  include 'partials/avatar.html.twig' with {'username': latest_post.username, 'size': 32, 'has_avatar': latest_post.hasAvatar } only %}
-                                    <a href="{{ latest_post.permalink }}" title="Par: {{ latest_post.username }} - Le: {{ latest_post.createdAt | date }}" class="fit-content">{{ latest_post.post }}</a>
-                                </li>
-                            {% endfor %}
-                        </ul>
+
+                        {%  for latest_post in latest_posts %}
+                            <div class="media mb-2 pb-1 border-bottom">
+                                {%  include 'partials/avatar.html.twig' with {'username': latest_post.username, 'size': 32, 'has_avatar': latest_post.hasAvatar } only %}
+                                <a href="{{ latest_post.permalink }}" title="Par: {{ latest_post.username }} - Le: {{ latest_post.createdAt | date }}" class="media-body">{{ latest_post.post }}</a>
+                            </div>
+                        {% endfor %}
+
                     </div>
                     <div class="card-footer">
                         <label for="quick-post" class="d-block">
@@ -46,16 +46,14 @@
                 <div class="card mb-3">
                     <div class="card-header font-weight-bold">Les commentaires récents</div>
                     <div class="card-body">
-                        <ul class="pl-0 mb-2">
-                            {%  for latest_comment in latest_comments %}
-                                <li class="media mb-2 border-bottom">
-                                    {%  include 'partials/avatar.html.twig' with {'username': latest_comment.user.username, 'size': 32, 'current_user': latest_comment.user } only %}
-                                    <a href="{{ path('post_show', { 'domain': domain_by_post(latest_comment.post), 'id': latest_comment.post.id, 'slug': latest_comment.post.slug | default('slug') }) }}">
-                                        {{ latest_comment.message | truncate(30) | wordwrap }}
-                                    </a>
-                                </li>
-                            {% endfor %}
-                        </ul>
+                        {%  for latest_comment in latest_comments %}
+                            <div class="media mb-2 pb-1 border-bottom">
+                                {%  include 'partials/avatar.html.twig' with {'username': latest_comment.user.username, 'size': 32, 'current_user': latest_comment.user } only %}
+                                <a class="media-body" href="{{ path('post_show', { 'domain': domain_by_post(latest_comment.post), 'id': latest_comment.post.id, 'slug': latest_comment.post.slug | default('slug') }) }}">
+                                    {{ latest_comment.message | truncate(30) | wordwrap }}
+                                </a>
+                            </div>
+                        {% endfor %}
                     </div>
                 </div>
 
