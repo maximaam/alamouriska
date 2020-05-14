@@ -80,7 +80,7 @@ class CommentatorNotifierCommand extends Command
             $this->notificationManager->send($post);
         }
 
-        //$this->truncateTable($this->entityManager->getClassMetadata(CommentMailQueue::class)->getTableName());
+        $this->truncateTable($this->entityManager->getClassMetadata(CommentMailQueue::class)->getTableName());
 
         $io->success('Finished.');
     }
