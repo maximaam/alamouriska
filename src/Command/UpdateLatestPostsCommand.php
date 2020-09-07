@@ -10,7 +10,9 @@ use App\Entity\Proverb;
 use App\Entity\Word;
 use App\Service\NotificationManager;
 use App\Utils\ModelUtils;
+use Doctrine\DBAL\DBALException;
 use Doctrine\ORM\EntityManagerInterface;
+use ReflectionException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -56,8 +58,8 @@ class UpdateLatestPostsCommand extends Command
      * @param InputInterface $input
      * @param OutputInterface $output
      * @return int|void|null
-     * @throws \Doctrine\DBAL\DBALException
-     * @throws \ReflectionException
+     * @throws DBALException
+     * @throws ReflectionException
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {

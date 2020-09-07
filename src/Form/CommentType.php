@@ -27,7 +27,8 @@ class CommentType extends AbstractType
                 'attr'  => [
                     'minlength' => 25,
                     'maxlength' => 2000
-                ]
+                ],
+                'help' => 'Minimum 25 caractères, maximum 2000',
             ])
             ->add('type', HiddenType::class, [
                 'mapped' => false,

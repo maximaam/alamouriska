@@ -11,6 +11,8 @@ use App\Entity\Word;
 use App\Utils\ModelUtils;
 use App\Utils\PhpUtils;
 use Doctrine\ORM\EntityManagerInterface;
+use ReflectionException;
+use Swift_Mailer;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -51,7 +53,7 @@ class NewPostsNotifierCommand extends Command
     private $twig;
 
     /**
-     * @var \Swift_Mailer
+     * @var Swift_Mailer
      */
     private $mailer;
 
@@ -61,9 +63,9 @@ class NewPostsNotifierCommand extends Command
      * @param ContainerInterface $container
      * @param UrlGeneratorInterface $urlGenerator
      * @param Environment $twig
-     * @param \Swift_Mailer $mailer
+     * @param Swift_Mailer $mailer
      */
-    public function __construct(EntityManagerInterface $entityManager, ContainerInterface $container, UrlGeneratorInterface $urlGenerator, Environment $twig, \Swift_Mailer $mailer)
+    public function __construct(EntityManagerInterface $entityManager, ContainerInterface $container, UrlGeneratorInterface $urlGenerator, Environment $twig, Swift_Mailer $mailer)
     {
         parent::__construct();
 
@@ -86,7 +88,7 @@ class NewPostsNotifierCommand extends Command
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {

@@ -8,7 +8,9 @@ use App\Entity\Joke;
 use App\Entity\Proverb;
 use App\Entity\Word;
 use App\Service\NotificationManager;
+use Doctrine\DBAL\DBALException;
 use Doctrine\ORM\EntityManagerInterface;
+use ReflectionException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -56,8 +58,8 @@ class CommentatorNotifierCommand extends Command
      * @throws Twig\Error\LoaderError
      * @throws Twig\Error\RuntimeError
      * @throws Twig\Error\SyntaxError
-     * @throws \Doctrine\DBAL\DBALException
-     * @throws \ReflectionException
+     * @throws DBALException
+     * @throws ReflectionException
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -88,7 +90,7 @@ class CommentatorNotifierCommand extends Command
     /**
      * @param $table
      * @param bool $cascade
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws DBALException
      */
     private function truncateTable($table, $cascade = true): void
     {

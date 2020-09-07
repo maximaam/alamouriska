@@ -9,6 +9,7 @@ use App\Entity\Word;
 use App\Entity\Proverb;
 use App\Utils\ModelUtils;
 use App\Utils\PhpUtils;
+use ReflectionException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -74,7 +75,7 @@ class NotificationManager
      * @throws Twig\Error\LoaderError
      * @throws Twig\Error\RuntimeError
      * @throws Twig\Error\SyntaxError
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     public function send($post): void
     {
